@@ -2,8 +2,7 @@ File này chỉ đọc ở trên local
 Thư mục gốc
 |   index.php                           -> Trang chủ Dự án
                                         URL: http://localhost/DuAnMot/index.php
-|   
-+---assets                              -> Thư mục chứa các file resources (CSS, JS, Images, Videos, ...)
+|   dsadasdasdasdc file resources (CSS, JS, Images, Videos, ...)
 |   +---backend                         -> Thư mục chứa các file resources dành cho Backend (Admin)
 |   |   +---css
 |   |   |       style-print.css
