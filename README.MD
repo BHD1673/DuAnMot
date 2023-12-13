@@ -1,3 +1,4 @@
+File này chỉ đọc ở trên local
 Thư mục gốc
 |   index.php                           -> Trang chủ Dự án
                                         URL: http://localhost/DuAnMot/index.php
