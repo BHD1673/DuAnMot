@@ -21,17 +21,11 @@ include "view/footer.php";
 // Hàm để xử lý điều hướng hành động
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
-        case 'roomlist':
-            include('view/roomlist.php');
+        case 'danhsachsanpham':
+            showCategoryItem();
             break;
-        case 'phong':
-            hienThiPhong();
-            break;
-        case 'chitietphong':
-            hienThiChiTietPhong();
-            break;
-        case 'danhmuc':
-            include "view/thuvien.php";
+        case 'chitietsanpham':
+            showCustomItem();
             break;
         case 'dangxuat':
             dangXuatNguoiDung();
@@ -51,20 +45,19 @@ function xuLyHanhDong($hanhDong) {
         case 'capnhatthongtin':
             capNhatThongTinCaNhan();
             break;
-        case 'datphong':
-            
-            break;
         case 'hoadon':
             hienThiHoaDon();
             break;
         case 'gioithieu':
-            include "view/danhgia.php";
+            gioiThieu();
             break;
         default:
             hienThiTrangChu();
             break;
     }
 }
+
+function maGiamGia() {}
 
 function chiTietTaiKhoan() {
     // if (isset($_POST['capnhat'])) {
@@ -92,43 +85,43 @@ function hienThiTrangChu() {
 
 //Cái này chắc không cần giải thích :v 
 function hienThiChiTietSanPham() {
-    include "stearm/chiTietSanPham.php";
+    // include "stearm/chiTietSanPham.php";
 }
 
 //unset thế này toác hết cả site đấy :v
 //Hiệp xem sửa lại chỗ này
 function dangXuatNguoiDung() {
-    session_unset['log-in'];
-    header('Location: index.php');
+    // session_unset['log-in'];
+    // header('Location: index.php');
 }
 
 
 //Cần Hiệp ghi chú lại phần này
 function dangNhapNguoiDung() {
-    if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
-        $user = $_POST['user'];
-        $pass = $_POST['pass'];
-        $checkuser = checkuser($user, $pass);
-        if (is_array($checkuser)) {
-            $_SESSION['user'] = $checkuser;
+    // if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
+    //     $user = $_POST['user'];
+    //     $pass = $_POST['pass'];
+    //     $checkuser = checkuser($user, $pass);
+    //     if (is_array($checkuser)) {
+    //         $_SESSION['user'] = $checkuser;
 
-            // Kiểm tra vai trò
-            if ($checkuser['Role'] == 1) {
-                // Nếu vai trò là 1 (admin), chuyển hướng đến trang quản trị admin
-                echo "<script>
-                    window.location.href='admin.php';
-                </script>";
-            } else {
-                // Nếu vai trò là người dùng thông thường, chuyển hướng đến trang chính
-                echo "<script>
-                    window.location.href='index.php';
-                </script>";
-            }
-        } else {
-            $thongbao = "Tài khoản không tồn tại";
-        }
-    }
-    include "view/user/singup.php";
+    //         // Kiểm tra vai trò
+    //         if ($checkuser['Role'] == 1) {
+    //             // Nếu vai trò là 1 (admin), chuyển hướng đến trang quản trị admin
+    //             echo "<script>
+    //                 window.location.href='admin.php';
+    //             </script>";
+    //         } else {
+    //             // Nếu vai trò là người dùng thông thường, chuyển hướng đến trang chính
+    //             echo "<script>
+    //                 window.location.href='index.php';
+    //             </script>";
+    //         }
+    //     } else {
+    //         $thongbao = "Tài khoản không tồn tại";
+    //     }
+    // }
+    // include "view/user/singup.php";
 }
 
 
@@ -180,16 +173,24 @@ function xacNhanThongTin() {
     // include "stearm/checkout.php";
 }
 
-
+//Hàm này xử lý 
 function hienThiHoaDon() {
-    // if (isset($_GET['idkh']) && ($_GET['idkh'] > 0)) {
-    //     $id = $_GET['idkh'];
-    // }
-    // include "stearm/bill.php";
+
 }
 
+//Về chúng tôi
 function aboutUs() {
     include "view/review.php";
+}
+
+//Thông tin chung về cửa hàng
+function infor() {
+
+}
+
+//Chính sách đổi trả
+function rule() {
+
 }
 
 ?>
