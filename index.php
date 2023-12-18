@@ -1,12 +1,11 @@
 <?php
 session_start();
 ob_start();
-
 include "global.php";
-
-include "view/header.php";
-
-
+include "user/view/head.php";
+?>
+<body>
+<?php 
 // Phần điều hướng sản phẩm chính
 if (isset($_GET['act'])) {
     $hanhDong = $_GET['act'];
@@ -16,8 +15,11 @@ if (isset($_GET['act'])) {
 }
 
 // Bao gồm phần cuối trang
-include "view/footer.php";
-
+include "user/view/footer.php";
+include "user/view/hidden.php";
+?>
+</body>
+<?php 
 // Hàm để xử lý điều hướng hành động
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
@@ -52,22 +54,12 @@ function xuLyHanhDong($hanhDong) {
             gioiThieu();
             break;
         case 'baiviet':
-            function xuLyBaiViet() {};
+            baiViet();
             break;
         default:
             hienThiTrangChu();
             break;
     }
-}
-
-function baiViet() {}
-
-function gioiThieu() {}
-
-function maGiamGia() {}
-
-function showSanPham() {
-
 }
 
 function taoTaiKhoanMoi() {
@@ -96,9 +88,7 @@ function chiTietTaiKhoan() {
 }
 
 function hienThiTrangChu() {
-    // include "view/banner.php";
-    // xuLyFormTimPhong();
-    // include "view/trangchu.php";
+
 }
 
 
@@ -146,7 +136,7 @@ function dangNhapNguoiDung() {
 
 
 function hienThiDanhSachSanPham() {
-    
+    include "test.html";
 }
 
 function dangKyNguoiDung() {
@@ -196,10 +186,7 @@ function xacNhanThongTin() {
     // include "stearm/checkout.php";
 }
 
-//Hàm này xử lý 
-function hienThiHoaDon() {
-
-}
+function hienThiHoaDon() {}
 
 //Về chúng tôi
 function aboutUs() {
@@ -207,13 +194,13 @@ function aboutUs() {
 }
 
 //Thông tin chung về cửa hàng
-function infor() {
-
-}
+function infor() {}
 
 //Chính sách đổi trả
-function rule() {
+function rule() {}
 
-}
+function baiViet() {}
+
+function gioiThieu() {}
 
 ?>
