@@ -6,6 +6,10 @@ include "user/view/head.php";
 ?>
 <body>
 <?php 
+
+// Header trang bao gồm thanh nav với vài thứ linh tinh
+include "user/view/header.php";
+
 // Phần điều hướng sản phẩm chính
 if (isset($_GET['act'])) {
     $hanhDong = $_GET['act'];
@@ -61,6 +65,12 @@ function xuLyHanhDong($hanhDong) {
             break;
     }
 }
+function hienThiTrangChu() {
+    include "user/view/section1.php";
+    include "user/view/section2.php";
+    include "user/view/sanPhamNoiBat.php";
+}
+
 
 function taoTaiKhoanMoi() {
     if (isset($_POST['dangky']) && ($_POST['dangky'])) {
@@ -87,9 +97,6 @@ function chiTietTaiKhoan() {
     // }
 }
 
-function hienThiTrangChu() {
-
-}
 
 
 
@@ -106,7 +113,7 @@ function dangXuatNguoiDung() {
 }
 
 
-//Cần Hiệp ghi chú lại phần này
+
 function dangNhapNguoiDung() {
     // if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
     //     $user = $_POST['user'];
@@ -136,7 +143,7 @@ function dangNhapNguoiDung() {
 
 
 function hienThiDanhSachSanPham() {
-    include "test.html";
+    include "user/view/allsp.php";
 }
 
 function dangKyNguoiDung() {
