@@ -22,10 +22,10 @@ include "view/footer.php";
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
         case 'danhsachsanpham':
-            showCategoryItem();
+            hienThiDanhSachSanPham();
             break;
         case 'chitietsanpham':
-            showCustomItem();
+            hienThiChiTietSanPham();
             break;
         case 'dangxuat':
             dangXuatNguoiDung();
@@ -51,8 +51,8 @@ function xuLyHanhDong($hanhDong) {
         case 'gioithieu':
             gioiThieu();
             break;
-        case 'baiviet'
-            baiViet();
+        case 'baiviet':
+            function xuLyBaiViet() {};
             break;
         default:
             hienThiTrangChu();
@@ -65,6 +65,20 @@ function baiViet() {}
 function gioiThieu() {}
 
 function maGiamGia() {}
+
+function showSanPham() {
+
+}
+
+function taoTaiKhoanMoi() {
+    if (isset($_POST['dangky']) && ($_POST['dangky'])) {
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+        $user = $_POST['user'];
+        Insert_taikhoan($email, $user, $pass);
+    }
+    include "view/user/singin.php";
+}
 
 function chiTietTaiKhoan() {
     // if (isset($_POST['capnhat'])) {
@@ -131,6 +145,9 @@ function dangNhapNguoiDung() {
 }
 
 
+function hienThiDanhSachSanPham() {
+    
+}
 
 function dangKyNguoiDung() {
     // if (isset($_POST['dangky']) && ($_POST['dangky'])) {
