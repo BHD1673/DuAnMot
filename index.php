@@ -70,17 +70,20 @@ function hienThiTrangChu() {
     include "user/view/section2.php";
     include "user/view/section3.php";
     include "user/view/section4.php";
+    include "user/view/section5.php";
+    include "user/view/section6.php";
+    include "user/view/newletter.php";
 }
 
 
-function taoTaiKhoanMoi() {
-    if (isset($_POST['dangky']) && ($_POST['dangky'])) {
+function dangNhapNguoiDung() {
+    if (isset($_POST['dangNhap']) && ($_POST['dangky'])) {
         $email = $_POST['email'];
         $pass = $_POST['pass'];
         $user = $_POST['user'];
         Insert_taikhoan($email, $user, $pass);
     }
-    include "view/user/singin.php";
+    include "user/view/sign_in.php";
 }
 
 function chiTietTaiKhoan() {
@@ -115,7 +118,7 @@ function dangXuatNguoiDung() {
 
 
 
-function dangNhapNguoiDung() {
+function dangNhapNguoiDungs() {
     // if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
     //     $user = $_POST['user'];
     //     $pass = $_POST['pass'];
