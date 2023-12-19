@@ -68,7 +68,8 @@ function xuLyHanhDong($hanhDong) {
 function hienThiTrangChu() {
     include "user/view/section1.php";
     include "user/view/section2.php";
-    include "user/view/sanPhamNoiBat.php";
+    include "user/view/section3.php";
+    include "user/view/section4.php";
 }
 
 
