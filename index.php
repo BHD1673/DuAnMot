@@ -77,14 +77,34 @@ function hienThiTrangChu() {
 
 
 function dangNhapNguoiDung() {
-    if (isset($_POST['dangNhap']) && ($_POST['dangky'])) {
-        $email = $_POST['email'];
-        $pass = $_POST['pass'];
-        $user = $_POST['user'];
-        Insert_taikhoan($email, $user, $pass);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Nhận giá trị từ form
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+    
+        // Thực hiện validate
+        if (empty($username) || empty($password)) {
+            echo "Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.";
+        } elseif (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            echo "Vui lòng nhập đúng định dạng email";
+        } else {
+            // Xử lý phần xác nhận sau khi validate thành công ở đây
+            
+            // Cái này là dữ liệu giả
+            $validUsername = "your_username";
+            $validPassword = "your_password";
+    
+            // Xử lý mật khẩu kỹ hơn
+            if ($username === $validUsername && password_verify($password, $validPassword)) {
+                echo "Đăng nhập thành công!";
+            } else {
+                echo "Tên tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.";
+            }
+        }
     }
     include "user/view/sign_in.php";
 }
+
 
 function chiTietTaiKhoan() {
     // if (isset($_POST['capnhat'])) {

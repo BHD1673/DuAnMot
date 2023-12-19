@@ -3,26 +3,26 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h3 class="text-center">Login</h3>
+          <h3 class="text-center">Đăng nhập</h3>
         </div>
         <div class="card-body">
-          <form class="needs-validation" novalidate>
+          <form class="needs-validation" method="post" novalidate>
             <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" name="username" required>
+              <label for="username" class="form-label">Tên tài khoản :</label>
+              <input type="text" class="form-control" id="username" name="username" value="<?php echo isset($username) ? $username : ''; ?>">
               <div class="invalid-feedback">
-                Please enter your username.
+                  <?php echo isset($username) ? 'Vui lòng nhập một địa chỉ email hợp lệ.' : 'Vui lòng nhập tên tài khoản.'; ?>
               </div>
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" required>
+              <label for="password" class="form-label">Mật khẩu</label>
+              <input type="text" class="form-control" id="password" name="password" value="<?php echo isset($password) ? $password : ''; ?>">
               <div class="invalid-feedback">
-                Please enter your password.
+                  <?php echo isset($password) ? 'Vui lòng nhập mật khẩu chính xác.' : 'Vui lòng nhập mật khẩu.'; ?>
               </div>
             </div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Login</button>
+              <button type="submit" class="btn btn-primary">Đăng nhập</button>
             </div>
           </form>
         </div>
@@ -30,16 +30,3 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  // jQuery validation
-  $(document).ready(function () {
-    $('form').submit(function (event) {
-      if (this.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      $(this).addClass('was-validated');
-    });
-  });
-</script>
