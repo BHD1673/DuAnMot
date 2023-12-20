@@ -1,7 +1,8 @@
 <?php
 session_start();
 ob_start();
-include "global.php";
+include "DAO/DAO.php";
+include "DAO/PDO.php";
 include "user/view/head.php";
 ?>
 <body>
@@ -137,47 +138,30 @@ function dangXuatNguoiDung() {
 }
 
 
-
-function dangNhapNguoiDungs() {
-    // if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
-    //     $user = $_POST['user'];
-    //     $pass = $_POST['pass'];
-    //     $checkuser = checkuser($user, $pass);
-    //     if (is_array($checkuser)) {
-    //         $_SESSION['user'] = $checkuser;
-
-    //         // Kiểm tra vai trò
-    //         if ($checkuser['Role'] == 1) {
-    //             // Nếu vai trò là 1 (admin), chuyển hướng đến trang quản trị admin
-    //             echo "<script>
-    //                 window.location.href='admin.php';
-    //             </script>";
-    //         } else {
-    //             // Nếu vai trò là người dùng thông thường, chuyển hướng đến trang chính
-    //             echo "<script>
-    //                 window.location.href='index.php';
-    //             </script>";
-    //         }
-    //     } else {
-    //         $thongbao = "Tài khoản không tồn tại";
-    //     }
-    // }
-    // include "view/user/singup.php";
-}
-
-
 function hienThiDanhSachSanPham() {
     include "user/view/allsp.php";
 }
 
 function dangKyNguoiDung() {
-    // if (isset($_POST['dangky']) && ($_POST['dangky'])) {
-    //     $email = $_POST['email'];
-    //     $pass = $_POST['pass'];
-    //     $user = $_POST['user'];
-    //     insert_taikhoan($email, $user, $pass);
-    // }
-    // include "view/user/singup.php";
+    if (isset($_POST["submit"])) {
+        $register_email = $_POST["email"];
+        $register_password = $_POST['password'];
+        $register_dob = $_POST['dob'];
+        $register_sex = $_POST['sex'];
+    
+        // Handle image upload
+        $imagePath = "assests/upload/";
+        $upload_file = $imagePath . basename($_FILES['profile_image']['name']);
+    
+        if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_file)) {
+            // Image uploaded successfully, register the user
+            register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
+            echo "Registration successful!";
+        } else {
+            echo "Error uploading the image.";
+        }
+    }
+    include "user/view/register.php";
 }
 
 function quenMatKhau() {
