@@ -4,13 +4,13 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i>0936520709</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>thiendvph42781@fpt.edu.vn</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i>Trường Cao Đăng FPT POLYTECHNIC</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i>0365486687</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i>duongbhph41427@fpt.edu.vn</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i>Tài Khoản</a></li>
+						<li><a href="index.php?act=dangnhap"><i class="fa fa-user-o"></i>Đăng nhập</a></li>
+						<li><a href="index.php?act=dangky"><i class="fa fa-user-o"></i>Đăng ký tài khoản mới</a></li>
 					</ul>
 				</div>
 			</div>
@@ -39,11 +39,9 @@
 									<select class="input-select">
 										<option value="0">Tất cả</option>
 										<option value="1">LapTop</option>
-										<option value="1">Cammera</option>
-										<option value="1">HeadPhone</option>
 									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+									<input class="input" placeholder="Tìm ở đây">
+									<button class="search-btn">Tìm kiếm</button>
 								</form>
 							</div>
 						</div>
@@ -88,18 +86,18 @@
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+													<h4 class="product-price"><span class="qty">3x</span> VNĐ</h4>
 												</div>
 												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<small>3 sản phẩm đã chọn</small>
+											<h5>Tổng đơn hàng : 500.000 VNĐ</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="index.php?act=cart">Xem giỏ hàng</a>
+											<a href="index.php?act=cart">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -133,13 +131,13 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="index.php?act=sanpham">Home</a></li>
-						<li><a href="#">Cửa Hàng</a></li>
-						<li><a href="#">Đăng ký</a></li>
-						<li><a href="#">Đăng nhập</a></li>
-						<li><a href="#">Hỗ trợ</a></li>
-						<li><a href="#">Thông báo</a></li>
-						<li><a href="#">Đánh giá</a></li>
+						<li><a href="index.php">Trang chủ</a></li>
+						<li><a href="index.php?act=danhsachsanpham">Tìm kiếm sản phẩm</a></li>
+						<li><a href="index.php?act=register">Đăng ký</a></li>
+						<li><a href="index.php?act=login">Đăng nhập</a></li>
+						<li><a href="index.php?act=support">Hỗ trợ</a></li>
+						<li><a href="index.php?act=news">Báo</a></li>
+						<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

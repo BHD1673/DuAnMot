@@ -1,3 +1,5 @@
+
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -9,16 +11,16 @@
           <form class="needs-validation" method="post" novalidate>
             <div class="mb-3">
               <label for="username" class="form-label">Tên tài khoản :</label>
-              <input type="text" class="form-control" id="username" name="username" value="<?php echo isset($username) ? $username : ''; ?>">
+              <input type="text" class="form-control" id="username" name="username" value="<?= isset($username) ? $username : ''; ?>">
               <div class="invalid-feedback">
-                  <?php echo isset($username) ? 'Vui lòng nhập một địa chỉ email hợp lệ.' : 'Vui lòng nhập tên tài khoản.'; ?>
+                <?= isset($usernameError) ? $usernameError : ''; ?>
               </div>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Mật khẩu</label>
-              <input type="text" class="form-control" id="password" name="password" value="<?php echo isset($password) ? $password : ''; ?>">
+              <input type="password" class="form-control" id="password" name="password" value="<?= isset($password) ? $password : ''; ?>">
               <div class="invalid-feedback">
-                  <?php echo isset($password) ? 'Vui lòng nhập mật khẩu chính xác.' : 'Vui lòng nhập mật khẩu.'; ?>
+                <?= isset($passwordError) ? $passwordError : ''; ?>
               </div>
             </div>
             <div class="d-grid">
