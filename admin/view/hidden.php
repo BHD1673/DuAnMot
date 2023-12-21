@@ -1,39 +1,25 @@
-<!-- Nút event kéo lên trên-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Nhấn đăng xuất nếu bạn thực sự muốn thoát</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                <a class="btn btn-primary" href="index.php?act=dangnhap">Đăng xuất</a>
-            </div>
-        </div>
+<div>
+        <script src="assets/admin/libs/jquery/assets/admin/dist/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="assets/admin/libs/popper.js/assets/admin/dist/umd/popper.min.js"></script>
+        <script src="assets/admin/libs/bootstrap/assets/admin/dist/js/bootstrap.min.js"></script>
+        <script src="assets/admin/libs/perfect-scrollbar/assets/admin/dist/perfect-scrollbar.jquery.min.js"></script>
+        <script src="assets/admin/extra-libs/sparkline/sparkline.js"></script>
+        <!--Wave Effects -->
+        <script src="assets/admin/dist/js/waves.js"></script>
+        <!--Menu sidebar -->
+        <script src="assets/admin/dist/js/sidebarmenu.js"></script>
+        <!--Custom JavaScript -->
+        <script src="assets/admin/dist/js/custom.min.js"></script>
+        <!--This page JavaScript -->
+        <!-- <script src="assets/admin/dist/js/pages/dashboards/dashboard1.js"></script> -->
+        <!-- Charts js Files -->
+        <script src="assets/admin/libs/flot/excanvas.js"></script>
+        <script src="assets/admin/libs/flot/jquery.flot.js"></script>
+        <script src="assets/admin/libs/flot/jquery.flot.pie.js"></script>
+        <script src="assets/admin/libs/flot/jquery.flot.time.js"></script>
+        <script src="assets/admin/libs/flot/jquery.flot.stack.js"></script>
+        <script src="assets/admin/libs/flot/jquery.flot.crosshair.js"></script>
+        <script src="assets/admin/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+        <script src="assets/admin/dist/js/pages/chart/chart-page-init.js"></script>
     </div>
-</div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="startbootstrap-sb-admin-2-gh-pages/vendor/jquery/jquery.min.js"></script>
-<script src="startbootstrap-sb-admin-2-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="startbootstrap-sb-admin-2-gh-pages/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="startbootstrap-sb-admin-2-gh-pages/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="startbootstrap-sb-admin-2-gh-pages/js/demo/chart-area-demo.js"></script>
-<script src="startbootstrap-sb-admin-2-gh-pages/js/demo/chart-pie-demo.js"></script>
