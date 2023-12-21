@@ -8,19 +8,19 @@
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="assets/user/img/product01.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+								<img src="assets/user/img/product03.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+								<img src="assets/user/img/product06.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="assets/user/img/product08.png" alt="">
 							</div>
 						</div>
 					</div>
@@ -30,19 +30,19 @@
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
 							<div class="product-preview">
-								<img src="./img/product01.png" alt="">
+								<img src="assets/user/img/product01.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product03.png" alt="">
+								<img src="assets/user/img/product03.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product06.png" alt="">
+								<img src="assets/user/img/product06.png" alt="">
 							</div>
 
 							<div class="product-preview">
-								<img src="./img/product08.png" alt="">
+								<img src="assets/user/img/product08.png" alt="">
 							</div>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 					<!-- Product details -->
 					<div class="col-md-5">
 						<div class="product-details">
-							<h2 class="product-name">product name goes here</h2>
+							<h2 class="product-name">tên sản phẩm ở đây</h2>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -356,7 +356,7 @@
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="./img/product01.png" alt="">
+								<img src="assets/user/img/product01.png" alt="">
 								<div class="product-label">
 									<span class="sale">-30%</span>
 								</div>
@@ -384,7 +384,7 @@
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="./img/product02.png" alt="">
+								<img src="assets/user/img/product02.png" alt="">
 								<div class="product-label">
 									<span class="new">NEW</span>
 								</div>
@@ -419,7 +419,7 @@
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="./img/product03.png" alt="">
+								<img src="assets/img/product03.png" alt="">
 							</div>
 							<div class="product-body">
 								<p class="product-category">Category</p>
@@ -449,7 +449,7 @@
 					<div class="col-md-3 col-xs-6">
 						<div class="product">
 							<div class="product-img">
-								<img src="./img/product04.png" alt="">
+								<img src="assets/user/img/product04.png" alt="">
 							</div>
 							<div class="product-body">
 								<p class="product-category">Category</p>

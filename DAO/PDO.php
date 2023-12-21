@@ -5,10 +5,10 @@ function pdo_get_connection(){
     $password = "";
     try {
         // đặt lỗi PDO
-        $conn = new PDO("mysql:host=$servername;dbname=duan1", $username, $password);
+        $conn = new PDO("mysql:host=$servername;dbname=DuAnMot", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
-    } catch(PDOException $e) {
+    } catch(PDOException $e) {  
         echo "Connection failed: " . $e->getMessage();
     }
 }

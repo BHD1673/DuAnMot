@@ -23,5 +23,6 @@
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="assets/user/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="assets/user/css/Customstyle.css">
     <!-- CSS mặc dù đúng link nhưng nó không ăn cho phần index, lạ thiệc -->
 </head>

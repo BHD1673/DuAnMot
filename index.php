@@ -11,7 +11,7 @@ include "user/view/head.php";
 // Header trang bao gồm thanh nav với vài thứ linh tinh
 include "user/view/header.php";
 
-// Phần điều hướng sản phẩm chính
+// Phần điều hướng chính
 if (isset($_GET['act'])) {
     $hanhDong = $_GET['act'];
     xuLyHanhDong($hanhDong);
@@ -93,9 +93,9 @@ function dangNhapNguoiDung() {
       } elseif (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
         $usernameError = "Vui lòng nhập đúng định dạng email";
       } else {
-        // Dummy data for validation (replace this with your actual validation logic)
-        $validUsername = "your_username";
-        $validPassword = "your_password";
+        // Data test tạm thời chưa lấy từ database về
+        $validUsername = "bhd@gmail.com";
+        $validPassword = "11111111111";
     
         // More secure password handling
         if ($username !== $validUsername || !password_verify($password, $validPassword)) {
@@ -127,7 +127,7 @@ function chiTietTaiKhoan() {
 
 //Cái này chắc không cần giải thích :v 
 function hienThiChiTietSanPham() {
-    // include "stearm/chiTietSanPham.php";
+    include "user/view/product.php";
 }
 
 //unset thế này toác hết cả site đấy :v
@@ -139,6 +139,7 @@ function dangXuatNguoiDung() {
 
 
 function hienThiDanhSachSanPham() {
+    
     include "user/view/allsp.php";
 }
 
