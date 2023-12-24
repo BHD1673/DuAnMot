@@ -62,9 +62,38 @@ function xuLyHanhDong($hanhDong) {
             break;
     }
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý bài viết 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function taoBaiViet() {
+    include "admin/view/BaiViet/BaiViet.Create.php";
+}
 
+function hienThiBaiViet() {
+    include "admin/view/BaiViet/BaiViet.All.php";
+}
 
+function hienThiBaiVietChiTiet() {
+    include "admin/view/BaiViet/BaiViet.Custom.php";
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý danh mục bài viết
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function taoLoaiBaiViet() {
+    include "admin/view/LoaiBaiViet/LoaiBaiViet.Create.php";
+}
 
+function hienThiChiTietDanhMucBaiViet() {
+    include "admin/view/LoaiBaiViet/LoaiBaiViet.Custom.php";
+}
+
+function hienThiDanhMucBaiViet() {
+    include "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý danh mục/loại sản phẩm
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function taoLoaiSanPham() {
     include "admin/view/LoaiSanPham/LoaiSanPham.Create.php";
 }
@@ -77,6 +106,9 @@ function hienThiChiTietLoaiSanPham() {
     include "admin/view/LoaiSanPham/LoaiSanPham.Custom.php";
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý tài khoản
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Phần tạo tài khoản sẽ bao gồm cả phần tạo thêm địa chỉ trong trường 
 //hợp muốn tạo đơn ship cho khách hàng. Hoặc tùy. Chúa chịu đoạn này đang
 //hơi lú
@@ -93,6 +125,9 @@ function hienThiTaiKhoan() {
     include "admin/view/TaiKhoan/TaiKhoan.All.php";
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý đơn hàng
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Onlan = Đặt hàng trực tiếp tại của hàng
 //Online = Đặt hàng cho khách làm online
 function taoDonHangOnLan() {
@@ -111,10 +146,16 @@ function hienThiDonHang() {
     include "admin/view/DonHang/DonHang.All.php";
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Trang chủ
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function hienThiTrangChuAdmin() {
-    include "admin/view/index.php";
+    include "admin/view/TrangChu/index.php";
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Thống kê (Phần này chưa cần để ý lắm)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function thongKe() {
     include "admin/view/ThongKe/ThongKe.php";
 }
@@ -122,27 +163,39 @@ function thongKe() {
 //Cái của nợ bên dưới nên cho hẳn một file khác
 ?>
 
-
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
-<?php include "admin/view/head.php"; ?>
-<body>
-    <div id="main-wrapper" data-sidebartype="full">
-        <?php 
-        include "admin/view/topbar.php";
-        include "admin/view/leftSidebar.php";
+<html lang="en">
+<?php include "admin/view/Body/Body.Head.php"; ?>
 
-        if (isset($_GET['act'])) {
-            $hanhDong = $_GET['act'];
-            xuLyHanhDong($hanhDong);
-        } else {
-            hienThiTrangChuAdmin();
-        }
 
-        ?>
-    </div>
-    <?php include "admin/view/hidden.php"; ?>
-    <div class="flotTip" style="display: none; position: absolute;"></div>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <?php include "admin/view/Body/Body.Sidebar.php"; ?>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <?php include "admin/view/Body/Body.Topbar.php"; ?>
+
+                <?php 
+                if (isset($_GET['act'])) {
+                    $hanhDong = $_GET['act'];
+                    xuLyHanhDong($hanhDong);
+                } else {
+                    hienThiTrangChuAdmin();
+                }
+                ?>
+
+            </div>
+            <!-- End of Main Content -->
+
+        <?php include "admin/view/Body/Body.Hidden.php"; ?>
 </body>
 </html>
 
