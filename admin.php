@@ -1,5 +1,6 @@
-
 <?php 
+include "DAO/DAO.php";
+include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
