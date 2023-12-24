@@ -29,7 +29,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="admin.php?act=donhang">
                     <i class="fas fa-fw fa-hand"></i>
                     <span>Thông tin đơn hàng</span></a>
             </li>

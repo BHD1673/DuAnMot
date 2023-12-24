@@ -31,7 +31,7 @@ function xuLyHanhDong($hanhDong) {
         case 'hienthichitietdonhang':
             hienThiChiTietDonHang();
             break;
-        case 'hienthidonhang':
+        case 'donhang':
             hienThiDonHang();
             break;
         case 'hienthitrangchuadmin':
