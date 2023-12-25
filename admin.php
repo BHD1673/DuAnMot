@@ -4,19 +4,22 @@ include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
-        case 'taoloaisanpham':
-            taoLoaiSanPham();
+        case 'taosanpham':
+            taoSanPham();
+            break;
+        case 'sanpham':
+            hienThiSanPham();
+            break;
+        case 'chitietsanpham';
+            hienthiChiTietSanPham();
             break;
         case 'hienthiloaisanpham':
             hienThiLoaiSanPham();
             break;
-        case 'hienthichitietloaisanpham':
-            hienThiChiTietLoaiSanPham();
-            break;
         case 'taotaikhoan':
             taoTaiKhoan();
             break;
-        case 'hienthichitiettaikhoan':
+        case 'chitiettaikhoan':
             hienThiChiTietTaiKhoan();
             break;
         case 'hienthitaikhoan':
@@ -28,7 +31,7 @@ function xuLyHanhDong($hanhDong) {
         case 'taodonhangonline':
             taoDonHangOnline();
             break;
-        case 'hienthichitietdonhang':
+        case 'chitietdon':
             hienThiChiTietDonHang();
             break;
         case 'donhang':
@@ -95,16 +98,23 @@ function hienThiDanhMucBaiViet() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý danh mục/loại sản phẩm
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function taoLoaiSanPham() {
-    include "admin/view/LoaiSanPham/LoaiSanPham.Create.php";
-}
-
 function hienThiLoaiSanPham() {
     include "admin/view/LoaiSanPham/LoaiSanPham.All.php";
 }
 
-function hienThiChiTietLoaiSanPham() {
-    include "admin/view/LoaiSanPham/LoaiSanPham.Custom.php";
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý danh mục/loại sản phẩm
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function taoSanPham() {
+    include "admin/view/SanPham/SanPham.Add.php";
+}
+
+function hienThiSanPham() {
+    include "admin/view/SanPham/SanPham.All.php";
+}
+
+function hienThiChiTietSanPham() {
+    include "admin/view/SanPham/SanPham.Custom.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +146,7 @@ function taoDonHangOnLan() {
 }
 
 function taoDonHangOnline() {
-    include "admin/view/DonHang/DonHang.Create.OnLine.php";
+    include "admin/view/DonHang/DonHang.Add.php";
 }
 
 function hienThiChiTietDonHang() {
@@ -184,6 +194,8 @@ function thongKe() {
 
                 <?php include "admin/view/Body/Body.Topbar.php"; ?>
 
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
                 <?php 
                 if (isset($_GET['act'])) {
                     $hanhDong = $_GET['act'];
@@ -192,7 +204,8 @@ function thongKe() {
                     hienThiTrangChuAdmin();
                 }
                 ?>
-
+                </div>
+                <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
 

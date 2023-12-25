@@ -16,7 +16,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="admin.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Quay về trang chủ</span></a>
+                    <span>Quay về trang tổng quan</span></a>
             </li>
 
             <!-- Divider -->
@@ -29,6 +29,13 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
+                <a class="nav-link" href="admin.php?act=sanpham">
+                    <i class="fas fa-fw fa-hand"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
                 <a class="nav-link" href="admin.php?act=donhang">
                     <i class="fas fa-fw fa-hand"></i>
                     <span>Thông tin đơn hàng</span></a>
@@ -37,14 +44,14 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="admin.php?act=khachhang">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Thông tin khách hàng</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="admin.php?act=khohang">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Kho hàng</span></a>
             </li>
@@ -52,9 +59,16 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="admin.php?act=thongke">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Thống kê</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?act=cauhinh">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Cấu hình trang</span></a>
             </li>
 
 
@@ -62,6 +76,13 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Chuyển về trang khách hàng</span></a>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

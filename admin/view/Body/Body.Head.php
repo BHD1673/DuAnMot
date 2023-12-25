@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Trang chủ</title>
-
+    <title>Trang admin</title>
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" type="text/css" href="assets/admin/vendor/fontawesome-free/css/all.min.css">
     <link
@@ -16,5 +14,12 @@
 
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="assets/admin/css/sb-admin-2.min.css">
-
+    <link rel="stylesheet" href="https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Include DataTables CSS and JS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 </head>

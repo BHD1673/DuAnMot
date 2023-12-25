@@ -54,3 +54,9 @@
   });
 
 })(jQuery); // End of use strict
+
+
+// Enable Bootstrap tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
