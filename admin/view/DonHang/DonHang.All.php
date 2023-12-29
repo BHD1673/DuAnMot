@@ -21,7 +21,8 @@ $orders = [
       </select>
     </div>
     <div class="col-auto">
-      <button type="button" class="btn btn-primary">Thêm mới sản phẩm</button>
+      <button type="button" class="btn btn-primary">Tạo đơn hàng online mới</button>
+      <button type="button" class="btn btn-primary">Tạo đơn hàng tại cửa hàng mới</button>
     </div>
   </div>
 </div>
@@ -60,9 +61,15 @@ $orders = [
                 <td><?php echo $order['quantity']; ?></td>
                 <td>$<?php echo $order['sub_total']; ?></td>
                 <td>$<?php echo $order['total']; ?></td>
-                <td>
-                    <a href="admin.php?act=chitietdon&id=<?php echo $order['id']; ?>">
-                        <button class="btn btn-primary">Xem chi tiết đơn</button>
+                <td>  
+                    <select class="form-control" id="limit">
+                      <option>Trạng thái đơn</option> 
+                      <option value="1">Đơn hàng đang được chuẩn bị</option>
+                      <option value="2">Đơn hàng đang được giao</option>
+                      <option value="3">Đơn hàng đã được hoàn thiện</option>
+                    </select>
+                    <a href="admin.php?act=chitietdon&id=<?php echo $order['id']; ?>"><br>
+                        <button class="btn btn-warning">Xem chi tiết đơn</button>
                     </a>
                     <button class="btn btn-danger">Xóa đơn</button>
                 </td>

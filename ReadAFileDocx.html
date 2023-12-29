@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đọc sách từ file Word</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.0.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <input type="file" id="wordFileInput" accept=".docx">
+    <div id="displayContent"></div>
+
+    <script>
+        document.getElementById('wordFileInput').addEventListener('change', handleFile);
+
+        function handleFile(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const arrayBuffer = e.target.result;
+
+                    mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+                        .then(displayContent)
+                        .catch(handleError);
+                };
+
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function displayContent(result) {
+            const content = result.value;
+            document.getElementById('displayContent').innerHTML = content;
+        }
+
+        function handleError(err) {
+            console.error('Lỗi in file:', err);
+        }
+    </script>
+</body>
+</html>

@@ -1,94 +1,106 @@
-CREATE TABLE `danhmuc` (
-  `id_danh_muc` int NOT NULL,
-  `ten_danh_muc` varchar(225) DEFAULT NULL,
-  `mo_ta_danh_muc` text,
-  `ngay_tao` datetime DEFAULT CURRENT_TIMESTAMP,
-  `ngay_cap_nhat` datetime DEFAULT CURRENT_TIMESTAMP
+
+CREATE TABLE `brand` (
+  `id_brand` int NOT NULL,
+  `ten_brand` varchar(255) NOT NULL,
+  `mo_ta_brand` text
 );
-CREATE TABLE `diachikhachhang` (
-  `id_dia_chi` int NOT NULL,
-  `id_khach_hang` int DEFAULT NULL,
-  `dia_chi` varchar(225) DEFAULT NULL,
-  `thanh_pho` varchar(225) DEFAULT NULL,
-  `huyen` varchar(225) DEFAULT NULL,
-  `xa` varchar(225) DEFAULT NULL,
-  `so_dien_thoai` varchar(225) DEFAULT NULL
-);
-CREATE TABLE `giohang` (
+
+
+CREATE TABLE `giohang_session` (
   `id_gio_hang` int NOT NULL,
   `id_khach_hang` int DEFAULT NULL,
-  `tong_gio_hang` int DEFAULT NULL
+  `id_san_pham` int DEFAULT NULL,
+  `so_luong` int DEFAULT NULL,
+  `gia_san_pham` decimal(10,3) DEFAULT NULL
 );
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `hoadon`
+--
+
 CREATE TABLE `hoadon` (
   `id_hoa_don` int NOT NULL,
   `id_khach_hang` int DEFAULT NULL,
-  `ten_san_pham` text,
-  `gia_tri_san_pham` text,
-  `so_luong_san_pham` text,
-  `tong_gia_tri_tung_san_pham` text,
-  `tong_don_hang` text
+  `ten_san_pham` varchar(255) DEFAULT NULL,
+  `tong_gia_tri` decimal(10,3) DEFAULT NULL
 );
-CREATE TABLE `item_giohang` (
-  `id_item` int NOT NULL,
-  `id_gio_hang` int DEFAULT NULL,
-  `id_san_pham` int DEFAULT NULL,
-  `so_luong_san_pham` int DEFAULT NULL
-);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `khachhang`
+--
+
 CREATE TABLE `khachhang` (
   `id_khach_hang` int NOT NULL,
   `ten_khach_hang` varchar(225) DEFAULT NULL,
   `email_khach_hang` varchar(225) DEFAULT NULL,
-  `so_dien_thoai` varchar(225) DEFAULT NULL,
-  `hinh_anh` text,
-  `ngay_tao` datetime DEFAULT CURRENT_TIMESTAMP,
-  `ngay_cap_nhat` datetime DEFAULT CURRENT_TIMESTAMP,
-  `mat_khau` varchar(225) DEFAULT NULL
+  `so_dien_thoai` varchar(20) DEFAULT NULL,
+  `ngay_tao_tai_khoan` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ngay_cap_nhat` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `mat_khau` varchar(255) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL
 );
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `loaisanpham`
+--
+
+CREATE TABLE `loaisanpham` (
+  `id_loai_san_pham` int NOT NULL,
+  `ten_loai_san_pham` varchar(255) NOT NULL,
+  `mo_ta` varchar(225) DEFAULT NULL,
+  `ngay_tao` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `sanpham`
+--
+
 CREATE TABLE `sanpham` (
   `id_san_pham` int NOT NULL,
-  `id_danh_muc` int DEFAULT NULL,
-  `so_luong_san_pham` int DEFAULT NULL,
-  `ten_san_pham` varchar(225) DEFAULT NULL,
-  `mo_ta_san_pham` text,
-  `hinh_anh` text,
-  `gia_san_pham` decimal(10,3) DEFAULT NULL,
-  `so_luot_xem` int DEFAULT '0',
-  `so_luot_mua` int DEFAULT '0',
-  `ngay_tao` datetime DEFAULT CURRENT_TIMESTAMP,
-  `ngay_cap_nhat` datetime DEFAULT CURRENT_TIMESTAMP
+  `ten_san_pham` varchar(255) DEFAULT NULL,
+  `gia_ban_le` decimal(10,3) DEFAULT NULL,
+  `gia_ban_buon` decimal(10,3) DEFAULT NULL,
+  `gia_nhap_hang` decimal(10,3) DEFAULT NULL,
+  `so_luong` int DEFAULT NULL,
+  `mo_ta` text,
+  `id_loai_san_pham` int DEFAULT NULL,
+  `id_brand` int DEFAULT NULL,
+  `mau_sac` varchar(50) DEFAULT NULL,
+  `nam_san_xuat` date DEFAULT NULL,
+  `ngay_tao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ngay_cap_nhat` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-ALTER TABLE `danhmuc`
-  ADD PRIMARY KEY (`id_danh_muc`);
+--
+-- Chỉ mục cho các bảng đã đổ
+--
 
 --
--- Chỉ mục cho bảng `diachikhachhang`
+-- Chỉ mục cho bảng `brand`
 --
-ALTER TABLE `diachikhachhang`
-  ADD PRIMARY KEY (`id_dia_chi`),
-  ADD KEY `id_khach_hang` (`id_khach_hang`);
+ALTER TABLE `brand`
+  ADD PRIMARY KEY (`id_brand`);
 
 --
--- Chỉ mục cho bảng `giohang`
+-- Chỉ mục cho bảng `giohang_session`
 --
-ALTER TABLE `giohang`
-  ADD PRIMARY KEY (`id_gio_hang`),
-  ADD KEY `id_khach_hang` (`id_khach_hang`);
+ALTER TABLE `giohang_session`
+  ADD PRIMARY KEY (`id_gio_hang`);
 
 --
 -- Chỉ mục cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id_hoa_don`),
-  ADD KEY `id_khach_hang` (`id_khach_hang`);
-
---
--- Chỉ mục cho bảng `item_giohang`
---
-ALTER TABLE `item_giohang`
-  ADD PRIMARY KEY (`id_item`),
-  ADD KEY `id_gio_hang` (`id_gio_hang`),
-  ADD KEY `id_san_pham` (`id_san_pham`);
+  ADD KEY `fk_hoadon_khachhang` (`id_khach_hang`);
 
 --
 -- Chỉ mục cho bảng `khachhang`
@@ -97,26 +109,31 @@ ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`id_khach_hang`);
 
 --
+-- Chỉ mục cho bảng `loaisanpham`
+--
+ALTER TABLE `loaisanpham`
+  ADD PRIMARY KEY (`id_loai_san_pham`);
+
+--
 -- Chỉ mục cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  ADD PRIMARY KEY (`id_san_pham`),
-  ADD KEY `id_danh_muc` (`id_danh_muc`);
+  ADD PRIMARY KEY (`id_san_pham`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT cho bảng `diachikhachhang`
+-- AUTO_INCREMENT cho bảng `brand`
 --
-ALTER TABLE `diachikhachhang`
-  MODIFY `id_dia_chi` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `brand`
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `giohang`
+-- AUTO_INCREMENT cho bảng `giohang_session`
 --
-ALTER TABLE `giohang`
+ALTER TABLE `giohang_session`
   MODIFY `id_gio_hang` int NOT NULL AUTO_INCREMENT;
 
 --
@@ -126,30 +143,31 @@ ALTER TABLE `hoadon`
   MODIFY `id_hoa_don` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `item_giohang`
+-- AUTO_INCREMENT cho bảng `khachhang`
 --
-ALTER TABLE `item_giohang`
-  MODIFY `id_item` int NOT NULL AUTO_INCREMENT;
-
 ALTER TABLE `khachhang`
   MODIFY `id_khach_hang` int NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT cho bảng `loaisanpham`
+--
+ALTER TABLE `loaisanpham`
+  MODIFY `id_loai_san_pham` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `sanpham`
+--
 ALTER TABLE `sanpham`
   MODIFY `id_san_pham` int NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE `diachikhachhang`
-  ADD CONSTRAINT `diachikhachhang_ibfk_1` FOREIGN KEY (`id_khach_hang`) REFERENCES `khachhang` (`id_khach_hang`);
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
 
-ALTER TABLE `giohang`
-  ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`id_khach_hang`) REFERENCES `khachhang` (`id_khach_hang`);
-
+--
+-- Các ràng buộc cho bảng `hoadon`
+--
 ALTER TABLE `hoadon`
-  ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`id_khach_hang`) REFERENCES `khachhang` (`id_khach_hang`);
-
-ALTER TABLE `item_giohang`
-  ADD CONSTRAINT `item_giohang_ibfk_1` FOREIGN KEY (`id_gio_hang`) REFERENCES `giohang` (`id_gio_hang`),
-  ADD CONSTRAINT `item_giohang_ibfk_2` FOREIGN KEY (`id_san_pham`) REFERENCES `sanpham` (`id_san_pham`);
-
-ALTER TABLE `sanpham`
-  ADD CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`id_danh_muc`) REFERENCES `danhmuc` (`id_danh_muc`);
+  ADD CONSTRAINT `fk_hoadon_khachhang` FOREIGN KEY (`id_khach_hang`) REFERENCES `khachhang` (`id_khach_hang`);
 COMMIT;
+

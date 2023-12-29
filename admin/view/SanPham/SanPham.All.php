@@ -1,11 +1,13 @@
 <?php
 $products = [
     ['id' => 1, 'name' => 'Product 1', 'price' => 50, 'quantity' => 10, 'description' => 'Description 1', 'category' => 'Category 1', 'brand' => 'Brand 1', 'color' => 'Red', 'year' => 2022, 'created_at' => '2023-01-01', 'updated_at' => '2023-01-05'],
-    ['id' => 2, 'name' => 'Product 2', 'price' => 75, 'quantity' => 8, 'description' => 'Description 2', 'category' => 'Category 2', 'brand' => 'Brand 2', 'color' => 'Blue', 'year' => 2021, 'created_at' => '2023-01-02', 'updated_at' => '2023-01-04'],
-    // Add more product data as needed
+    ['id' => 2, 'name' => 'Product 2', 'price' => 100, 'quantity' => 8, 'description' => 'Description 2', 'category' => 'Category 2', 'brand' => 'Brand 2', 'color' => 'Blue', 'year' => 2021, 'created_at' => '2023-01-02', 'updated_at' => '2023-01-04'],
+    // Data ảo
+    // Phần show sản phẩm thì chỉ cần show ý chính, vào chi tiết thì mới hiện là sản phẩm có những cái gì
 ];
+
 ?>
-<div class="container mt-5">
+<div class="container-fluid">
   <h2>Danh sách sản phẩm</h2>
   
   <div class="container">
@@ -20,7 +22,7 @@ $products = [
         </select>
       </div>
       <div class="col-auto">
-        <button type="button" class="btn btn-primary">Thêm mới sản phẩm</button>
+        <a href="admin.php?act=taosanpham"><button type="button" class="btn btn-primary">Thêm mới sản phẩm</button></a>
       </div>
     </div>
   </div>
@@ -37,12 +39,7 @@ $products = [
         <th>ID sản phẩm</th>
         <th>Tên sản phẩm</th>
         <th>Giá thành</th>
-        <th>Số lượng</th>
-        <th>Miêu tả</th>
-        <th>Tên danh mục</th>
-        <th>Tên nhãn hiệu</th>
-        <th>Màu sắc</th>
-        <th>Năm sản xuất</th>
+        <th>Số lượng sản phẩm</th>
         <th>Thêm vào lúc</th>
         <th>Cập nhật gần nhất</th>
         <th>Thao tác</th>
@@ -59,19 +56,14 @@ $products = [
         </td>
         <td><?php echo $product['id']; ?></td>
         <td><?php echo $product['name']; ?></td>
-        <td>$<?php echo $product['price']; ?></td>
+        <td><?php echo $product['price']; ?> VNĐ</td>
         <td><?php echo $product['quantity']; ?></td>
-        <td><?php echo $product['description']; ?></td>
-        <td><?php echo $product['category']; ?></td>
-        <td><?php echo $product['brand']; ?></td>
-        <td><?php echo $product['color']; ?></td>
-        <td><?php echo $product['year']; ?></td>
         <td><?php echo $product['created_at']; ?></td>
         <td><?php echo $product['updated_at']; ?></td>
         <td>
             <!-- Add your action buttons here -->
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+            <a href="admin.php?act=chitietsanpham&id=<?php echo $product['id']; ?>"><button class="btn btn-primary">Chi tiết sản phẩm</button></a>
+            <button class="btn btn-danger">Xóa sản phẩm</button>
         </td>
     </tr>
 <?php endforeach; ?>

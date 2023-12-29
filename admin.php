@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 include "DAO/DAO.php";
 include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
@@ -36,10 +37,7 @@ function xuLyHanhDong($hanhDong) {
             break;
         case 'donhang':
             hienThiDonHang();
-            break;
-        case 'hienthitrangchuadmin':
-            hienThiTrangChuAdmin();
-            break;
+            break;  
         case 'thongke':
             thongKe();
             break;
@@ -48,6 +46,9 @@ function xuLyHanhDong($hanhDong) {
             break;
         case 'baiviet':
             baiViet();
+            break;
+        default:
+            hienThiTrangChuAdmin();
             break;
         // case 'dangxuat':
         //     dangXuatNguoiDung();
@@ -61,9 +62,6 @@ function xuLyHanhDong($hanhDong) {
         // case 'quenmatkhau':
         //     quenMatKhau();
         //     break;
-        default:
-            hienThiTrangChuAdmin();
-            break;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,8 +104,61 @@ function hienThiLoaiSanPham() {
 // Phần xử lý danh mục/loại sản phẩm
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function taoSanPham() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Phần lấy data form
+        $itemName = isset($_POST['itemName']) ? $_POST['itemName'] : "";
+        $itemBrand = isset($_POST['itemBrand']) ? $_POST['itemBrand'] : "";
+        $itemDescription = isset($_POST['itemDescription']) ? $_POST['itemDescription'] : "";
+        $itemSelectedColors = isset($_POST['selectedColors']) ? $_POST['selectedColors'] : "";
+        $itemType = isset($_POST['itemType']) ? $_POST['itemType'] : "";
+        $itemSmallSellPrice = isset($_POST['itemSmallSellPrice']) ? $_POST['itemSmallSellPrice'] : "";
+        $itemBigSellPrice = isset($_POST['itemBigSellPrice']) ? $_POST['itemBigSellPrice'] : "";
+        $itemBuyPrice = isset($_POST['itemBuyPrice']) ? $_POST['itemBuyPrice'] : "";
+
+        if (empty($itemName) || empty($itemBrand) || empty($itemDescription) || empty($itemSelectedColors) || empty($itemType) || empty($itemSmallSellPrice) || empty($itemBigSellPrice) || empty($itemBuyPrice)) {
+            echo 'Không được bỏ trống bất kì trường nào';
+        } else {
+            // Địa chỉ ảnh được cho 
+            $uploadDir = "assets/upload/";
+            
+            // Lấy tên file
+            $fileName = isset($_FILES['itemImage']['name']) ? $_FILES['itemImage']['name'] : "";
+            
+            // Đặt vị trí file sẽ được cho vào
+            $targetFile = $uploadDir . $fileName;
+
+            // Kiểm tra nếu có file trùng tên
+            // Nếu có file trùng tên thật thì sẽ thêm (số) vào tên file
+            // để tránh conflict file
+            $counter = 1;
+            while (file_exists($targetFile)) {
+                $fileInfo = pathinfo($fileName);
+                $fileName = $fileInfo['filename'] . "($counter)." . $fileInfo['extension'];
+                $targetFile = $uploadDir . $fileName;   
+                $counter++;
+            }
+
+            var_dump($itemName, $itemBrand, $itemDescription, $itemSelectedColors, $itemType, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $fileName);
+
+            // Xử lý tập tin đã được gửi lên chưa
+            if (move_uploaded_file(isset($_FILES['itemImage']['tmp_name']) ? $_FILES['itemImage']['tmp_name'] : "", $targetFile)) {
+                echo 'File đã được gửi hoàn';
+            } else {
+                echo 'Lỗi tải file.';
+            }
+
+            // Phần thế header vì lỗi quần què gì đấy. Đặt mặc định là 5000 mili sec cho 5 giây
+            echo '
+            <script>
+            setTimeout(function() {
+                window.location.href = "admin.php";
+            }, 5000); // 5000 milliseconds = 5 seconds
+            </script>';
+        }
+    }
     include "admin/view/SanPham/SanPham.Add.php";
 }
+
 
 function hienThiSanPham() {
     include "admin/view/SanPham/SanPham.All.php";
