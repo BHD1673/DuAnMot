@@ -1,20 +1,32 @@
 <?php 
-function register_user($email, $password, $dob, $sex, $profile_image_path) {
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (email, password, dob, sex, profile_image) 
-            VALUES (?, ?, ?, ?, ?)";
-
-    pdo_execute($sql, $email, $hashed_password, $dob, $sex, $profile_image_path);
+//////////////////////////////////////////////////////////////
+// Category
+/////////////////////////////////////////////////////////////
+function insertCategory($categoryName, $categoryDescription) {
+    $sql = "INSERT INTO loaisanpham (ten_loai_san_pham, mo_ta) VALUES (?, ?)";    
+    return pdo_execute($sql, $categoryName, $categoryDescription);
 }
 
-function login($username, $password) {
-    $sql = "SELECT * FROM taikhoan WHERE Email = ? AND Password = ?";
-    return pdo_query($sql, $username, $password);
+function viewCategory() {
+    $sql = "SELECT * FROM loaisanpham";
+    return pdo_query($sql);
 }
 
-function forgotPassword($username) {
-    
+function viewCategoryOne() {
+    $sql = "SELECT * FROM loaisanpham WHERE id_loai_san_pham = '?'";
+    return pdo_query_one($sql);
 }
+
+function updateCategory($categoryName, $categoryDescription) {
+    $sql = "UPDATE `loaisanpham` SET `ten_loai_san_pham`='?',`mo_ta`='?' WHERE id_loai_san_pham = '?'";
+    return pdo_execute($sql, $categoryName, $categoryDescription);
+}
+
+function deleteCategory($categoryID) {
+    $sql = "DELETE FROM `loaisanpham` WHERE id_loai_san_pham = '?'";
+    return pdo_execute($sql, $categoryID);
+}
+
 
 ?>

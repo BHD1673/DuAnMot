@@ -9,6 +9,7 @@ $products = [
 ?>
 <div class="container-fluid">
   <h2>Danh sách sản phẩm</h2>
+  <a href="admin.php?act=loaisp"><button class="btn btn-primary">Sang loại sản phẩm</button></a>
   
   <div class="container">
     <div class="form-row mb-3 justify-content-between">
@@ -61,7 +62,7 @@ $products = [
         <td><?php echo $product['created_at']; ?></td>
         <td><?php echo $product['updated_at']; ?></td>
         <td>
-            <!-- Add your action buttons here -->
+            <!-- Phần chi tiếts sản phẩm ở đây -->
             <a href="admin.php?act=chitietsanpham&id=<?php echo $product['id']; ?>"><button class="btn btn-primary">Chi tiết sản phẩm</button></a>
             <button class="btn btn-danger">Xóa sản phẩm</button>
         </td>

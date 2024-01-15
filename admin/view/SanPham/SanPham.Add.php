@@ -4,6 +4,10 @@
         <div class="col-md-8">
             <div class="border p-3">
                 <h2>Thêm sản phẩm mới</h2>
+                <!-- Add a button to trigger the modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Thêm danh mục sản phẩm nhanh
+                </button>
                 <a href="admin.php?act=sanpham">Xem danh sách sản phẩm</a>
                 <div class="form-group">
                     <label for="itemName">Tên sản phẩm</label>

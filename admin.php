@@ -1,5 +1,6 @@
 <?php 
 ob_start();
+include "DAO/Validate.php";
 include "DAO/DAO.php";
 include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
@@ -14,54 +15,15 @@ function xuLyHanhDong($hanhDong) {
         case 'chitietsanpham';
             hienthiChiTietSanPham();
             break;
-        case 'hienthiloaisanpham':
+        case 'loaisp':
             hienThiLoaiSanPham();
             break;
-        case 'taotaikhoan':
-            taoTaiKhoan();
-            break;
-        case 'chitiettaikhoan':
-            hienThiChiTietTaiKhoan();
-            break;
-        case 'hienthitaikhoan':
-            hienThiTaiKhoan();
-            break;
-        case 'taodonhangonlan':
-            taoDonHangOnLan();
-            break;
-        case 'taodonhangonline':
-            taoDonHangOnline();
-            break;
-        case 'chitietdon':
-            hienThiChiTietDonHang();
-            break;
-        case 'donhang':
-            hienThiDonHang();
-            break;  
-        case 'thongke':
-            thongKe();
-            break;
-        case 'gioithieu':
-            gioiThieu();
-            break;
-        case 'baiviet':
-            baiViet();
+        case 'editloaisp':
+            hienThiChiTietLoaiSanPham();
             break;
         default:
             hienThiTrangChuAdmin();
             break;
-        // case 'dangxuat':
-        //     dangXuatNguoiDung();
-        //     break;
-        // case 'dangnhap':
-        //     dangNhapNguoiDung();
-        //     break;
-        // case 'dangky':
-        //     dangKyNguoiDung();
-        //     break;
-        // case 'quenmatkhau':
-        //     quenMatKhau();
-        //     break;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,75 +59,86 @@ function hienThiDanhMucBaiViet() {
 // Phần xử lý danh mục/loại sản phẩm
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function hienThiLoaiSanPham() {
-    include "admin/view/LoaiSanPham/LoaiSanPham.All.php";
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Phần xử lý danh mục/loại sản phẩm
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function taoSanPham() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Phần lấy data form
-        $itemName = isset($_POST['itemName']) ? $_POST['itemName'] : "";
-        $itemBrand = isset($_POST['itemBrand']) ? $_POST['itemBrand'] : "";
-        $itemDescription = isset($_POST['itemDescription']) ? $_POST['itemDescription'] : "";
-        $itemSelectedColors = isset($_POST['selectedColors']) ? $_POST['selectedColors'] : "";
-        $itemType = isset($_POST['itemType']) ? $_POST['itemType'] : "";
-        $itemSmallSellPrice = isset($_POST['itemSmallSellPrice']) ? $_POST['itemSmallSellPrice'] : "";
-        $itemBigSellPrice = isset($_POST['itemBigSellPrice']) ? $_POST['itemBigSellPrice'] : "";
-        $itemBuyPrice = isset($_POST['itemBuyPrice']) ? $_POST['itemBuyPrice'] : "";
-
-        if (empty($itemName) || empty($itemBrand) || empty($itemDescription) || empty($itemSelectedColors) || empty($itemType) || empty($itemSmallSellPrice) || empty($itemBigSellPrice) || empty($itemBuyPrice)) {
-            echo 'Không được bỏ trống bất kì trường nào';
-        } else {
-            // Địa chỉ ảnh được cho 
-            $uploadDir = "assets/upload/";
-            
-            // Lấy tên file
-            $fileName = isset($_FILES['itemImage']['name']) ? $_FILES['itemImage']['name'] : "";
-            
-            // Đặt vị trí file sẽ được cho vào
-            $targetFile = $uploadDir . $fileName;
-
-            // Kiểm tra nếu có file trùng tên
-            // Nếu có file trùng tên thật thì sẽ thêm (số) vào tên file
-            // để tránh conflict file
-            $counter = 1;
-            while (file_exists($targetFile)) {
-                $fileInfo = pathinfo($fileName);
-                $fileName = $fileInfo['filename'] . "($counter)." . $fileInfo['extension'];
-                $targetFile = $uploadDir . $fileName;   
-                $counter++;
-            }
-
-            var_dump($itemName, $itemBrand, $itemDescription, $itemSelectedColors, $itemType, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $fileName);
-
-            // Xử lý tập tin đã được gửi lên chưa
-            if (move_uploaded_file(isset($_FILES['itemImage']['tmp_name']) ? $_FILES['itemImage']['tmp_name'] : "", $targetFile)) {
-                echo 'File đã được gửi hoàn';
+        if (isset($_POST["create"])) {
+            // Nhận dữ liệu
+            $ten_loai_san_pham = $_POST["ten_loai_san_pham"];
+            $mo_ta = $_POST["mo_ta"];
+    
+            // Validate dữ liệu từ form
+            $validationErrors = validateCreate($ten_loai_san_pham, $mo_ta);
+    
+            // Nếu mảng dữ liệu trống thì sẽ gửi
+            if (empty($validationErrors)) {
+                insertCategory($ten_loai_san_pham, $mo_ta);
+                // displaySuccessModal("Product Type created successfully!", 3000); // 3000 milliseconds = 3 seconds
+                header("Location: admin.php?act=loaisp");
             } else {
-                echo 'Lỗi tải file.';
+                // Validate có dữ liệu không đạt yêu cầu, trả lại kết quả.
+                // Đặt lỗi trong mảng, nên sẽ foreach ra kết quả. Có thể dùng modal box
+                foreach ($validationErrors as $error): ?>
+                    <p>Error: <?= $error ?></p>
+                <?php endforeach;
             }
-
-            // Phần thế header vì lỗi quần què gì đấy. Đặt mặc định là 5000 mili sec cho 5 giây
-            echo '
-            <script>
-            setTimeout(function() {
-                window.location.href = "admin.php";
-            }, 5000); // 5000 milliseconds = 5 seconds
-            </script>';
+        } elseif (isset($_POST["delete"])) {
+            // Delete operation
+            $id_loai_san_pham_to_delete = $_POST["id_loai_san_pham"];
+            deleteCategory($id_loai_san_pham_to_delete);
         }
     }
-    include "admin/view/SanPham/SanPham.Add.php";
+    $rows = viewCategory();
+    ?>
+    <?php 
+    require_once "admin/view/LoaiSanPham/LoaiSanPham.All.php";
+}
+
+function hienThiChiTietLoaiSanPham() {
+    // Nhận Id danh mục từ URL
+    if (isset($_GET['id'])) {
+        $category_id = $_GET['id'];
+
+        // Thao tác SQL
+        $category_details = viewCategoryOne();
+
+        if (!$category_details) {
+            echo "Danh mục không tồn tại.";
+            exit;
+        }
+    } else {
+        require_once "admin/view/Error/404.php";
+        exit;
+    }
+
+    // Xử lý form
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["update"])) {
+            // Như trên.
+            $new_ten_loai_san_pham = $_POST["new_ten_loai_san_pham"];
+            $new_mo_ta = $_POST["new_mo_ta"];
+            updateCategory($new_ten_loai_san_pham, $new_mo_ta, $category_id);
+            header("Location: admin.php?act=loaisp");
+        }
+    }
+    require_once "admin/view/LoaiSanPham/LoaiSanPham.Custom.php";
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý sản phẩm
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function taoSanPham() {
+    
+
+    require_once "admin/view/SanPham/SanPham.Add.php";
 }
 
 
 function hienThiSanPham() {
-    include "admin/view/SanPham/SanPham.All.php";
+    require_once "admin/view/SanPham/SanPham.All.php";
 }
 
 function hienThiChiTietSanPham() {
-    include "admin/view/SanPham/SanPham.Custom.php";
+    require_once "admin/view/SanPham/SanPham.Custom.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +148,7 @@ function hienThiChiTietSanPham() {
 //hợp muốn tạo đơn ship cho khách hàng. Hoặc tùy. Chúa chịu đoạn này đang
 //hơi lú
 function taoTaiKhoan() {
-    include "admin/view/TaiKhoan/TaiKhoan.Create.php";
+    require_once "admin/view/TaiKhoan/TaiKhoan.Create.php";
 }
 
 //Hàm này sẽ bao gồm cả phần cập nhật, vì vẫn có khả năng có người vào chỉ muốn xem thông tin trang
@@ -227,25 +200,17 @@ function thongKe() {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php include "admin/view/Body/Body.Head.php"; ?>
+<?php require_once("admin/view/Body/Body.Head.php");?>
 
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <?php include "admin/view/Body/Body.Sidebar.php"; ?>
-
-        <!-- Content Wrapper -->
+        <?php require_once ("admin/view/Body/Body.Sidebar.php") ?>
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <?php include "admin/view/Body/Body.Topbar.php"; ?>
-
-                <!-- Begin Page Content -->
+                <?php require_once ("admin/view/Body/Body.Topbar.php"); ?>
                 <div class="container-fluid">
                 <?php 
                 if (isset($_GET['act'])) {
@@ -256,11 +221,8 @@ function thongKe() {
                 }
                 ?>
                 </div>
-                <!-- /.container-fluid -->
             </div>
-            <!-- End of Main Content -->
-
-        <?php include "admin/view/Body/Body.Hidden.php"; ?>
+        <?php require_once("admin/view/Body/Body.Hidden.php"); ?>
 </body>
 </html>
 

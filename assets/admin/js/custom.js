@@ -17,16 +17,6 @@ function previewImage(event) {
     }
 }
 
-var quill = new Quill('#editor', {
-    theme: 'snow',
-    style: 'height: 1000px;',
-  });
-
-// Update the hidden input value when the Quill content changes
-quill.on('text-change', function() {
-document.getElementById('itemDescription').value = quill.root.innerHTML;
-});
-
 $(document).ready(function(){
     $("input[type='checkbox']").change(function(){
         var colorValue = $(this).val();

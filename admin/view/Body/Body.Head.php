@@ -25,4 +25,6 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
+    <!-- TinyMCE link ở đây. Tạm thời cái này không thể dùng được. -->
+    <!-- <script src="https://cdn.tiny.cloud/1/1ob8hr2vlgyf4nb7jpf22nvkrtstxg6j6r2gcaha3f8zoz35/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
 </head>

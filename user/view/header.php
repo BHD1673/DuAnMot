@@ -4,9 +4,10 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i>0365486687</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>duongbhph41427@fpt.edu.vn</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
+						<li><a href="admin.php"><i class="fa fa-phone"></i>0365486687</a></li>
+						<li><a href="admin.php"><i class="fa fa-envelope-o"></i>duongbhph41427@fpt.edu.vn</a></li>
+						<li><a href="admin.php"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
+						<li><a href="admin.php"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="index.php?act=dangnhap"><i class="fa fa-user-o"></i>Đăng nhập</a></li>
