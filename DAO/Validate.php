@@ -115,3 +115,18 @@ function validateQuill($inputValue)
 
     return $errors;
 }
+
+function validateCreateBrand($inputValue) {
+    $errors = [];
+
+    if (empty($inputValue)) {
+        return $errors[] = "Không được bỏ trống tên Brand";
+    }
+
+    if (strlen($inputValue) < 5) {
+        $errors[] = "Tên brand phải nhiều hơn 5 ký tự";
+    }
+
+    return $errors;
+    
+}

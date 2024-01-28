@@ -6,6 +6,18 @@ include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
+        case 'deletebrand':
+            xoaBrand();
+            break;
+        case 'editbrand':
+            hienThiChiTietBrand();
+            break;
+        case 'taobrand': 
+            taoBrand();
+            break;
+        case 'brand':
+            hienThiBrand();
+            break;
         case 'taosanpham':
             taoSanPham();
             break;
@@ -25,6 +37,40 @@ function xuLyHanhDong($hanhDong) {
             hienThiTrangChuAdmin();
             break;
     }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý brand
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function taoBrand() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $brandName = $_POST["brand_name"];
+        $brandDescription = $_POST["quill_content"];
+        $createBrandErrors = validateCreateBrand($brandName);
+        $brandDescriptionError = validateQuill($brandDescription);
+        // echo "<pre>";
+        // var_dump($brandName, htmlentities($brandDescription));
+        // var_dump($brandDescriptionError);
+        // var_dump($createBrandErrors);
+        // echo "</pre>";
+        if (empty($createBrandErrors) || empty($brandDescriptionError)) {
+            insertBrand($brandName, $brandDescription);
+            header ("Location: admin.php?act=brand");
+        } else {
+            echo "b";
+        }
+    }
+    require_once "admin/view/Brand/Brand.Create.php";
+}
+
+function hienThiBrand() {
+    $brandInfor = viewBrand();
+    include "admin/view/Brand/Brand.View.php";
+}
+
+function hienThiChiTietBrand() {    
+    // $id = $_GET["id"];
+    // echo $id;
+    include "admin/view/Brand/Brand.Custom.php";
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý bài viết 
