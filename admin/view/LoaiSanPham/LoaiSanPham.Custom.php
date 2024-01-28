@@ -12,6 +12,8 @@
             <label for="new_mo_ta">Mô tả:</label>
             <textarea class="form-control" id="new_mo_ta" name="new_mo_ta"><?php echo $category_details['mo_ta']; ?></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" name="update">Update</button>
+        <button type="submit" class="btn btn-primary" name="update">Cập nhật</button>
+        <a href="admin.php?act=loaisp" class="btn btn-secondary">Quay về trang danh sách danh mục</a>
+        <a href="admin.php?act=sanpham" class="btn btn-secondary">Quay về trang danh sách sản phẩm</a>
     </form>
 </div>

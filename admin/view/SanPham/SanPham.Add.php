@@ -1,14 +1,45 @@
+<?php
+$categorySelect = viewCategory();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Giả sử bạn có các trường form cần thiết trong mảng $_POST
+    //$createErrors = validateCreate($_POST['ten_loai_san_pham'], $_POST['mo_ta']);
+    $createNewItemErrors = validateCreateNewItem(
+        $_POST['itemName'],
+        $_POST['itemBrand'],
+        $_POST['itemCategory'],
+        $_POST['itemSmallSellPrice'],
+        $_POST['itemBigSellPrice'],
+        $_POST['itemBuyPrice']
+    );
+    $imageFileErrors = validateImageFile($_FILES['itemImage']);
+    $quillErrors = validateQuill($_POST['quill_content']);
+
+    echo '<pre>';
+    var_dump($createNewItemErrors);
+    var_dump($quillErrors);
+    var_dump($imageFileErrors);
+    echo '</pre>';
+
+    if (!empty($createNewItemErrors) && !empty($quillErrors) && !empty($imageFileErrors)) {
+        
+    } //else {
+    //     echo "clgt";
+    // }
+
+    // tạm thời xong
+}
+
+
+?>
+
 <form method="post" enctype="multipart/form-data">
     <div class="container mt-10">
         <div class="row justify-content-between">
         <div class="col-md-8">
             <div class="border p-3">
                 <h2>Thêm sản phẩm mới</h2>
-                <!-- Add a button to trigger the modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Thêm danh mục sản phẩm nhanh
-                </button>
-                <a href="admin.php?act=sanpham">Xem danh sách sản phẩm</a>
+                <a href="admin.php?act=sanpham" class="btn btn-primary">Xem danh sách sản phẩm</a>
                 <div class="form-group">
                     <label for="itemName">Tên sản phẩm</label>
                     <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Đặt tên sản phẩm">
@@ -18,59 +49,22 @@
                     <input type="text" class="form-control" id="itemBrand" name="itemBrand" placeholder="Đặt tên nhãn hiệu">
                 </div>
                 <div class="form-group">
-                    <label for="colorPicker">Chọn màu sắc:</label>
-                    <div id="colorOptions">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="redCheckbox" value="red">
-                            <label class="form-check-label" for="redCheckbox">Đỏ</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="orangeCheckbox" value="orange">
-                            <label class="form-check-label" for="orangeCheckbox">Cam</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="yellowCheckbox" value="yellow">
-                            <label class="form-check-label" for="yellowCheckbox">Vàng</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="greenCheckbox" value="green">
-                            <label class="form-check-label" for="greenCheckbox">Lục</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="blueCheckbox" value="blue">
-                            <label class="form-check-label" for="blueCheckbox">Xanh</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="indigoCheckbox" value="indigo">
-                            <label class="form-check-label" for="indigoCheckbox">Chàm</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="violetCheckbox" value="violet">
-                            <label class="form-check-label" for="violetCheckbox">Tím</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="selectedColors[]" id="rgbCheckBox" value="rgb">
-                            <label class="form-check-label" for="rgbCheckBox">RGB</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="selectedColors">Màu sắc đã chọn:</label>
-                    <div id="selectedColors"></div>
-                </div>
-                <div class="form-group">
-                    <label for="itemType">Loại sản phẩm:</label>
-                    <select class="form-control" id="itemType" name="itemType">
-                        <option >==Vui lòng chọn==</option>
-                        <option value="card">Card đồ họa</option>
-                        <option value="mouse">Chuột máy tính </option>
-                        <!-- Tạo vòng lặp foreach ở đây để fetch thông tin ra  -->
+                    <label for="itemCategory">Loại sản phẩm:</label>
+                    <select class="form-control" id="itemCategory" name="itemCategory">
+                        <option value="#">-- Chọn loại --</option>
+                        <?php
+                        foreach ($categorySelect as $category) :
+                            $categoryId = $category['id_loai_san_pham'];
+                            $categoryName = $category['ten_loai_san_pham'];
+                        ?>
+                            <option value="<?= $categoryId ?>"><?= $categoryName ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="itemDescription">Mô tả sản phẩm</label>
-                    <div id="editor"></div>
-                    <input type="hidden" name="itemDescription" id="itemDescription" value="">
+                    <label for="editor">Mô tả sản phẩm</label>
+                    <div id="editor" style="height: 200px;"></div>
+                    <input type="hidden" name="quill_content" id="quill_content" />
                 </div>
                 <div class="form-group">
                     <label for="itemImage">Hình ảnh sản phẩm</label>
@@ -118,3 +112,21 @@
         </div>
     </div>
 </form>
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+    });
+
+    // Add an event listener to capture changes in the Quill editor
+    quill.on('text-change', function() {
+        // Get the HTML content from the Quill editor
+        var quillContent = quill.root.innerHTML;
+
+        // Log the content to the console
+        console.log('Quill Content:', quillContent);
+
+        // Update the hidden input field with the Quill content
+        document.getElementById('quill_content').value = quillContent;
+    });
+</script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>

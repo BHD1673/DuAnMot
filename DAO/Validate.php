@@ -1,53 +1,12 @@
-<?php 
-// function validateFormCategoryAdd($categoryName, $categoryDescription) {
-//     $errors = [];
+<?php
 
-//     // Validate Category Name
-//     if (empty($categoryName)) {
-//         $errors[] = "Tên danh mục không được bỏ trống.";
-//     } elseif (strlen($categoryName) > 1) {
-//         $errors[] = "Tên danh mục không được quá dài 225 kí tự.";
-//     }
-
-//     // Validate Category Description
-//     if (empty($categoryDescription)) {
-//         $errors[] = "Chi tiết danh mục không được bỏ thiếu.";
-//     } elseif (strlen($categoryDescription) > 1000) {
-//         $errors[] = "Chi tiết danh mục không được dài quá 1000 kí tự.";
-//     }
-
-//     return $errors;
-// }
-
-// function validateFormCategoryUpdate($categoryName, $categoryDescription) {
-//     $errors = [];
-
-//     // Validate Category Name
-//     if (empty($categoryName)) {
-//         $errors[] = "Tên danh mục không được bỏ trống.";
-//     } elseif (strlen($categoryName) > 1) {
-//         $errors[] = "Tên danh mục không được quá dài 225 kí tự.";
-//     }
-
-//     // Validate Category Description
-//     if (empty($categoryDescription)) {
-//         $errors[] = "Chi tiết danh mục không được bỏ thiếu.";
-//     } elseif (strlen($categoryDescription) > 1) {
-//         $errors[] = "Chi tiết danh mục không được dài quá 1000 kí tự.";
-//     }
-
-//     return $errors;
-// }
-
-function validateCreate($ten_loai_san_pham, $mo_ta) {
+function validateCreate($ten_loai_san_pham, $mo_ta){
     $errors = [];
 
-    // Validate the ten_loai_san_pham fields
     if (empty($ten_loai_san_pham)) {
         $errors[] = "Tên loại sản phẩm không được bỏ trống.";
     }
 
-    // Validate the mo_ta fields
     if (empty($mo_ta)) {
         $errors[] = "Phần mô tả không được bỏ trống.";
     }
@@ -55,22 +14,104 @@ function validateCreate($ten_loai_san_pham, $mo_ta) {
     return $errors;
 }
 
+function validateCreateNewItem(
+    $itemName,
+    $itemBrand,
+    $itemCategory,
+    $itemSmallSellPrice,
+    $itemBigSellPrice,
+    $itemBuyPrice
+) {
+    $errors = [];
 
+    if (empty($itemName) ||
+        empty($itemBrand) ||
+        empty($itemCategory) ||
+        empty($itemSmallSellPrice) ||
+        empty($itemBigSellPrice) ||
+        empty($itemBuyPrice)
+    ) {
+        return $errors[] = "Không được bỏ trống các trường này";
+    }
 
+    // Tên sản phẩm phải ít nhất 5 ký tự
+    if (strlen($itemName) < 5) {
+        $errors[] = "Tên sản phẩm phải nhiều hơn 5 ký tự";
+    }
 
-// Function to display success message in Bootstrap modal
-function displaySuccessModal($message, $timeout) {
-    ?>
-    <script>
-        $(document).ready(function() {
-            $("#successModalBody").html("<p><?= $message ?></p>");
-            $("#successModal").modal("show");
-            setTimeout(function() {
-                $("#successModal").modal("hide");
-            }, <?= $timeout ?>);
-        });
-    </script>
-    <?php
+    // Nhãn hiệu sản phẩm phải ít nhất 5 ký tự
+    if (strlen($itemBrand) < 5) {
+        $errors[] = "Nhãn hiệu sản phẩm phải nhiều hơn 5 ký tự";
+    }
+
+    // Loại sản phẩm phải là số, đảm bảo người dùng không can thiệp vào chế độ phát triển
+    if (!is_numeric($itemCategory)) {
+        $errors[] = "Loại sản phẩm phải có giá trị là số, bạn đang can thiệp không liên quan đến dữ liệu";
+    }
+
+    // Giá sản phẩm phải là số, có thể chuyển đổi thành float sau này
+    if (!is_numeric($itemSmallSellPrice) || !is_numeric($itemBigSellPrice) || !is_numeric($itemBuyPrice)) {
+        $errors[] = "Giá nhập vào phải là số, vui lòng nhập lại";
+    }
+
+    // Giá sản phẩm phải lớn hơn hoặc bằng 0
+    if ($itemSmallSellPrice < 0 || $itemBigSellPrice < 0 || $itemBuyPrice < 0) {
+        $errors[] = "Giá sản phẩm phải là số không âm";
+    }
+
+    return $errors;
 }
 
-?>
+function validateImageFile($file)
+{
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+    $fileName = $file['name'];
+    $fileSize = $file['size'];
+    $fileType = $file['type'];
+    $fileTmpName = $file['tmp_name'];
+
+    $errors = [];
+
+    if ($fileSize == 0) {
+        return $errors[] = "File trống.";
+    }
+
+    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    if (!in_array($fileExtension, $allowedExtensions)) {
+        $errors[] = "Bạn đang đăng không phải là file ảnh, vui lòng chỉ được đăng file theo định dạng sau: " . implode(', ', $allowedExtensions);
+    }
+
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!in_array($fileType, $allowedMimeTypes)) {
+        $errors[] = "Không phải định dạng file ảnh: " . implode(', ', $allowedMimeTypes);
+    }
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        $errors[] = "Lỗi không thể tải ảnh lên: " . $file['error'];
+    }
+
+    if (empty($errors)) {
+        $destination = 'assets/uploads/' . $fileName;
+        move_uploaded_file($fileTmpName, $destination);
+    }
+
+    return $errors;
+}
+
+function validateQuill($inputValue)
+{
+    $errors = [];
+    // Bỏ phần HTML ra khỏi biến
+    $plainInputValue = strip_tags($inputValue);
+
+    if (empty($plainInputValue)) {
+        return $errors[] = "Phần mô tả không được bỏ trống.";
+    }
+
+    if (strlen($plainInputValue) < 5) {
+        $errors[] = "Phần mô tả phải nhiều hơn 5 ký tự";
+    }
+
+    return $errors;
+}

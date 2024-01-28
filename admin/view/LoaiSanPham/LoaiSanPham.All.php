@@ -1,12 +1,14 @@
 <body>
 <div class="container mt-5">
     <h2>Danh sách loại sản phẩm</h2>
+    <a href="admin.php?act=sanpham" class="btn btn-secondary">Quay về trang sản phẩm</a>
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Tên loại</th>
                 <th>Mô tả</th>
+                <th>Ngày tạo</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -16,6 +18,7 @@
                     <td><?= $row['id_loai_san_pham'] ?></td>
                     <td><?= $row['ten_loai_san_pham'] ?></td>
                     <td><?= $row['mo_ta'] ?></td>
+                    <td><?= $row['ngay_tao'] ?></td>
                     <td>
                         <a href='admin.php?act=editloaisp&id=<?= $row['id_loai_san_pham'] ?>' class="btn btn-info btn-sm">Cập nhật</a>
                         <form method='post' style='display:inline;'>

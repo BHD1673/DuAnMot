@@ -96,9 +96,8 @@ function hienThiChiTietLoaiSanPham() {
     // Nhận Id danh mục từ URL
     if (isset($_GET['id'])) {
         $category_id = $_GET['id'];
-
         // Thao tác SQL
-        $category_details = viewCategoryOne();
+        $category_details = viewCategoryOne($category_id);
 
         if (!$category_details) {
             echo "Danh mục không tồn tại.";
@@ -115,7 +114,11 @@ function hienThiChiTietLoaiSanPham() {
             // Như trên.
             $new_ten_loai_san_pham = $_POST["new_ten_loai_san_pham"];
             $new_mo_ta = $_POST["new_mo_ta"];
-            updateCategory($new_ten_loai_san_pham, $new_mo_ta, $category_id);
+            $newData = array(
+                "ten_loai_san_pham" => $new_ten_loai_san_pham,
+                "mo_ta" => $new_mo_ta
+            );
+            updateCategory($category_id, $newData);
             header("Location: admin.php?act=loaisp");
         }
     }
