@@ -35,7 +35,7 @@ function deleteCategory($categoryID) {
 
 //////////////////////////////////////////////////////////////
 // Item
-/////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 // function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice) {
 //     $sql = "INSERT INTO `sanpham`(
@@ -69,6 +69,23 @@ function deleteCategory($categoryID) {
     
 // }
 
+//////////////////////////////////////////////////////////////
+// Brand
+//////////////////////////////////////////////////////////////
+function viewAllProductFollowBrand($id) {
+    $sql = "SELECT
+    `id_san_pham`,
+    `ten_san_pham`,
+    `mo_ta`,
+    `gia_ban_le`
+FROM
+    `sanpham`
+WHERE
+    `id_brand` = ?";
+
+    return pdo_query($sql, $id);
+}
+
 function insertBrand($brandName, $brandDescription) {
     $sql = "INSERT INTO `brand`(`ten_brand`, `mo_ta_brand`) VALUES (?, ?)";
     return pdo_execute($sql, $brandName, $brandDescription);
@@ -82,4 +99,9 @@ function viewBrand() {
 function viewBrandCustom($id) {
     $sql = "SELECT * FROM `brand` WHERE id_brand = ?";
     return pdo_query_one($sql, $id);
+}
+
+function updateBrand($id, $newBrandName, $newBrandDescription) {
+    $sql = "UPDATE `brand` SET `ten_brand` = ?, `mo_ta_brand` = ? WHERE `id_brand` = ?";
+    return pdo_execute($sql, $newBrandName, $newBrandDescription, $id);
 }

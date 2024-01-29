@@ -116,7 +116,7 @@ function validateQuill($inputValue)
     return $errors;
 }
 
-function validateCreateBrand($inputValue) {
+function validateBrandValue($inputValue) {
     $errors = [];
 
     if (empty($inputValue)) {
