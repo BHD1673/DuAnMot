@@ -16,12 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($newBrandName) && !empty($stripBrandDescription)) {
         updateBrand($id, $newBrandName, $newBrandDescription,);
-        $_SESSION['message']['categoryUpdate'] = "Sản phẩm sửa lại thành công";
+        $_SESSION['message']['brandUpdate'] = "Sản phẩm sửa lại thành công";
         header("LOCATION: admin.php?act=brand");
         exit();
     } else {
-        $_SESSION['message']['categoryUpdate'] = "Có lỗi trong quá trình gửi dữ liệu, xin thông cảm.";
-        header("LOCATION: admin.php?act=brand");
+        $_SESSION['message']['brandUpdate'] = "Có lỗi trong quá trình gửi dữ liệu, xin thông cảm.";
+        header("LOCATION: admin.php?act=edit");
+        exit();
     }
 
     // echo "<pre>";

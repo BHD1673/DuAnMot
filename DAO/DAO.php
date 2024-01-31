@@ -37,6 +37,30 @@ function deleteCategory($categoryID) {
 // Item
 //////////////////////////////////////////////////////////////
 
+function getAllProducts() {
+    // $sql = "SELECT
+    // sp.id_san_pham,
+    // sp.ten_san_pham,
+    // sp.gia_ban_le,
+    // sp.gia_ban_buon,
+    // sp.gia_nhap_hang,
+    // sp.so_luong,
+    // lsp.ten_loai_san_pham,
+    // b.ten_brand,
+    // sp.ngay_tao,
+    // sp.ngay_cap_nhat
+    // FROM
+    //     sanpham sp
+    // JOIN
+    //     loaisanpham lsp ON sp.id_loai_san_pham = lsp.id_loai_san_pham
+    // JOIN
+    //     brand b ON sp.id_brand = b.id_brand;    
+    //     ";
+
+    $sql = "SELECT * FROM sanpham";
+    return pdo_query($sql);
+}
+
 // function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice) {
 //     $sql = "INSERT INTO `sanpham`(
 //         `ten_san_pham`,
@@ -104,4 +128,9 @@ function viewBrandCustom($id) {
 function updateBrand($id, $newBrandName, $newBrandDescription) {
     $sql = "UPDATE `brand` SET `ten_brand` = ?, `mo_ta_brand` = ? WHERE `id_brand` = ?";
     return pdo_execute($sql, $newBrandName, $newBrandDescription, $id);
+}
+
+function deleteBrand($id) {
+    $sql = "DELETE FROM `brand` WHERE `id_brand` = ?";
+    return pdo_execute($sql, $id);
 }

@@ -1,5 +1,6 @@
 <?php 
 ob_start();
+session_start();
 include "DAO/Validate.php";
 include "DAO/DAO.php";
 include "DAO/PDO.php";
@@ -45,7 +46,7 @@ function taoBrand() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $brandName = $_POST["brand_name"];
         $brandDescription = $_POST["quill_content"];
-        $createBrandErrors = validateCreateBrand($brandName);
+        $createBrandErrors = validateBrandValue($brandName);
         $brandDescriptionError = validateQuill($brandDescription);
         // echo "<pre>";
         // var_dump($brandName, htmlentities($brandDescription));
@@ -71,6 +72,13 @@ function hienThiChiTietBrand() {
     // $id = $_GET["id"];
     // echo $id;
     include "admin/view/Brand/Brand.Custom.php";
+}
+
+function xoaBrand() {
+    $id = $_GET["id"];
+    deleteBrand($id);
+    $_SESSION['message']['deleteBrand'] = "Đã xoá danh mục sản phẩm thành công";
+    header("Location: admin.php?act=brand");
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý bài viết 
