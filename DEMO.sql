@@ -5,6 +5,18 @@ CREATE TABLE `brand` (
   `mo_ta_brand` text
 );
 
+--
+-- Dumping data for table `brand`
+--
+
+INSERT INTO `brand` (`id_brand`, `ten_brand`, `mo_ta_brand`) VALUES
+(3, 'Nvidia', '<p>a</p>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `giohang_session`
+--
 
 CREATE TABLE `giohang_session` (
   `id_gio_hang` int NOT NULL,
@@ -17,7 +29,7 @@ CREATE TABLE `giohang_session` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoadon`
+-- Table structure for table `hoadon`
 --
 
 CREATE TABLE `hoadon` (
@@ -30,7 +42,7 @@ CREATE TABLE `hoadon` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `khachhang`
+-- Table structure for table `khachhang`
 --
 
 CREATE TABLE `khachhang` (
@@ -47,7 +59,7 @@ CREATE TABLE `khachhang` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `loaisanpham`
+-- Table structure for table `loaisanpham`
 --
 
 CREATE TABLE `loaisanpham` (
@@ -57,10 +69,17 @@ CREATE TABLE `loaisanpham` (
   `ngay_tao` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+--
+-- Dumping data for table `loaisanpham`
+--
+
+INSERT INTO `loaisanpham` (`id_loai_san_pham`, `ten_loai_san_pham`, `mo_ta`, `ngay_tao`) VALUES
+(2, 'Card đồ hoạ', 'ádasdasd', '2024-02-04 16:36:50');
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `sanpham`
+-- Table structure for table `sanpham`
 --
 
 CREATE TABLE `sanpham` (
@@ -73,101 +92,111 @@ CREATE TABLE `sanpham` (
   `mo_ta` text,
   `id_loai_san_pham` int DEFAULT NULL,
   `id_brand` int DEFAULT NULL,
-  `mau_sac` varchar(50) DEFAULT NULL,
-  `nam_san_xuat` date DEFAULT NULL,
-  `ngay_tao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ngay_tao` timestamp NULL DEFAULT NULL,
   `ngay_cap_nhat` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Dumping data for table `sanpham`
+--
+
+INSERT INTO `sanpham` (`id_san_pham`, `ten_san_pham`, `gia_ban_le`, `gia_ban_buon`, `gia_nhap_hang`, `so_luong`, `mo_ta`, `id_loai_san_pham`, `id_brand`, `image`, `ngay_tao`, `ngay_cap_nhat`) VALUES
+(2, 'Product Name', '50.990', '45.990', '35.990', 100, 'Product Description', 2, 1, 'image_path.jpg', NULL, '2024-02-04 16:33:21'),
+(3, 'Card màn hình ASUS Tuf GTX 1660 SUPER 6G GDDR6', '5690000.000', '5690000.000', '5690000.000', NULL, NULL, 2, 3, NULL, NULL, '2024-02-04 16:39:41');
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `brand`
+-- Indexes for table `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id_brand`);
 
 --
--- Chỉ mục cho bảng `giohang_session`
+-- Indexes for table `giohang_session`
 --
 ALTER TABLE `giohang_session`
   ADD PRIMARY KEY (`id_gio_hang`);
 
 --
--- Chỉ mục cho bảng `hoadon`
+-- Indexes for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`id_hoa_don`),
   ADD KEY `fk_hoadon_khachhang` (`id_khach_hang`);
 
 --
--- Chỉ mục cho bảng `khachhang`
+-- Indexes for table `khachhang`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`id_khach_hang`);
 
 --
--- Chỉ mục cho bảng `loaisanpham`
+-- Indexes for table `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
   ADD PRIMARY KEY (`id_loai_san_pham`);
 
 --
--- Chỉ mục cho bảng `sanpham`
+-- Indexes for table `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD PRIMARY KEY (`id_san_pham`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `brand`
+-- AUTO_INCREMENT for table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_brand` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `giohang_session`
+-- AUTO_INCREMENT for table `giohang_session`
 --
 ALTER TABLE `giohang_session`
   MODIFY `id_gio_hang` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `hoadon`
+-- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
   MODIFY `id_hoa_don` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `khachhang`
+-- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
   MODIFY `id_khach_hang` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `loaisanpham`
+-- AUTO_INCREMENT for table `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
-  MODIFY `id_loai_san_pham` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_loai_san_pham` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `sanpham`
+-- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id_san_pham` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_san_pham` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `hoadon`
+-- Constraints for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `fk_hoadon_khachhang` FOREIGN KEY (`id_khach_hang`) REFERENCES `khachhang` (`id_khach_hang`);
 COMMIT;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
