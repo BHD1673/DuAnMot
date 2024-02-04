@@ -1,8 +1,8 @@
 <?php
 $categorySelect = viewCategory();
+$brandSelect = viewBrand();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $createErrors = validateCreate($_POST['ten_loai_san_pham'], $_POST['mo_ta']);
     $createNewItemErrors = validateCreateNewItem(
         $_POST['itemName'],
         $_POST['itemBrand'],
@@ -14,20 +14,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imageFileErrors = validateImageFile($_FILES['itemImage']);
     $quillErrors = validateQuill($_POST['quill_content']);
 
-    // echo '<pre>';
-    // var_dump($createNewItemErrors);
-    // var_dump($quillErrors);
-    // var_dump($imageFileErrors);
-    // echo '</pre>';
+    echo '<pre>';
+    var_dump($createNewItemErrors);
+    var_dump($quillErrors);
+    var_dump($imageFileErrors);
+    echo '</pre>';
 
-    if (!empty($createNewItemErrors) && !empty($quillErrors) && !empty($imageFileErrors)) {
+    if (empty($createNewItemErrors) && empty($quillErrors) && empty($imageFileErrors)) {
         insertItem(
             $_POST['itemName'],
             $_POST['itemBrand'],
             $_POST['itemCategory'],
             $_POST['itemSmallSellPrice'],
             $_POST['itemBigSellPrice'],
-            $_POST['itemBuyPrice']
+            $_POST['itemBuyPrice'],
+            $_POST['itemAmount'],
+            $_POST['itemDescription'],
+            $_POST['itemImage']
         );
 
         $_SESSION['message']['createNewItem'] = "Bạn đã tạo mới sản phẩm thành công";
@@ -51,8 +54,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" class="form-control" id="itemName" name="itemName" placeholder="Đặt tên sản phẩm">
                 </div>
                 <div class="form-group">
-                    <label for="itemBrand">Nhãn hiệu sản phẩm</label>
-                    <input type="text" class="form-control" id="itemBrand" name="itemBrand" placeholder="Đặt tên nhãn hiệu">
+                    <label for="itemBrand">Nhãn hiệu sản phẩm:</label>
+                    <select class="form-control" id="itemBrand" name="itemBrand">
+                        <option value="#">-- Chọn loại --</option>
+                        <?php
+                        foreach ($brandSelect as $brand) :
+                            $brandId = $brand['id_brand'];
+                            $brandName = $brand['ten_brand'];
+                        ?>
+                            <option value="<?= $brandId ?>"><?= $brandName ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="itemCategory">Loại sản phẩm:</label>

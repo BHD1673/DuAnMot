@@ -39,11 +39,6 @@ function validateCreateNewItem(
         $errors[] = "Tên sản phẩm phải nhiều hơn 5 ký tự";
     }
 
-    // Nhãn hiệu sản phẩm phải ít nhất 5 ký tự
-    if (strlen($itemBrand) < 5) {
-        $errors[] = "Nhãn hiệu sản phẩm phải nhiều hơn 5 ký tự";
-    }
-
     // Loại sản phẩm phải là số, đảm bảo người dùng không can thiệp vào chế độ phát triển
     if (!is_numeric($itemCategory)) {
         $errors[] = "Loại sản phẩm phải có giá trị là số, bạn đang can thiệp không liên quan đến dữ liệu";

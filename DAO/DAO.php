@@ -61,26 +61,33 @@ function getAllProducts() {
     return pdo_query($sql);
 }
 
-function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice) {
-    $sql = "INSERT INTO `sanpham`(
+function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $itemAmount, $itemDescription, $itemImage) {
+    $sql = "INSERT INTO `sanpham` (
         `ten_san_pham`,
+        `id_brand`,
+        `id_loai_san_pham`,
         `gia_ban_le`,
         `gia_ban_buon`,
         `gia_nhap_hang`,
         `so_luong`,
         `mo_ta`,
-        `id_loai_san_pham`,
-        `id_brand`,
-        `nam_san_xuat`,
-        `ngay_tao`,
-        `ngay_cap_nhat`
-    )
-    VALUES(
-        ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()
-    )";
-    return pdo_execute($sql, $itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice);
+        `image`
+    ) VALUES (
+        ?,
+        ?,  -- Replace with the actual id_brand
+        ?,  -- Replace with the actual id_loai_san_pham
+        ? , -- Replace with the actual gia_ban_le
+        ? , -- Replace with the actual gia_ban_buon
+        ? , -- Replace with the actual gia_nhap_hang
+        ? , -- Replace with the actual so_luong
+        ? ,
+        ?   -- Replace with the actual image path
+    );
+    ";
+    return pdo_execute($sql, $itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $itemAmount, $itemDescription, $itemImage );
     
 }
+
 
 //////////////////////////////////////////////////////////////
 // Brand
