@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     var_dump($quillErrors);
     var_dump($imageFileErrors);
     echo '</pre>';
+    // TODO: Nhớ chuyển cái này sang dạng value để in ra trên giao diện
 
     if (empty($createNewItemErrors) && empty($quillErrors) && empty($imageFileErrors)) {
         insertItem(
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_POST['itemBuyPrice'],
             $_POST['itemAmount'],
             $_POST['itemDescription'],
-            $_POST['itemImage']
+            $_POST['itemImage'] // TODO: Sửa lại cái chỗ hình với cái chỗ số lượng, phải thêm cái số lượng sản phẩm
         );
 
         $_SESSION['message']['createNewItem'] = "Bạn đã tạo mới sản phẩm thành công";
