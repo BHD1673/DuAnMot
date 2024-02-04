@@ -55,7 +55,8 @@ function taoBrand() {
         // echo "</pre>";
         if (empty($createBrandErrors) || empty($brandDescriptionError)) {
             insertBrand($brandName, $brandDescription);
-            header ("Location: admin.php?act=brand");
+            $_SESSION['message']['insertBrand'] = "Đã tạo brand mới";
+            header("Location: admin.php?act=brand");
         } else {
             echo "b";
         }

@@ -1,13 +1,16 @@
 <?php
 
 echo $_SESSION['message']['brandUpdate'];
+echo $_SESSION['message']['insertBrand'];
 $_SESSION['message']['brandUpdate'] = "";
+$_SESSION['message']['insertBrand'] = "";
 
 ?>
 <div class="container mt-4">
     <h1>Danh sách các Brand</h1>
     <a href="admin.php?act=loaisp"><button class="btn btn-primary">Sang loại sản phẩm</button></a>
     <a href="admin.php?act=sanpham"><button class="btn btn-primary">Sang danh sách sản phẩm</button></a>
+    <a href="admin.php?act=taobrand"><button class="btn btn-primary">Tạo loại brand mới</button></a>
     <table id="brandTable" class="table">
         <thead>
             <tr>

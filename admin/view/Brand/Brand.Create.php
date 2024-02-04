@@ -9,7 +9,7 @@
         <div id="editor" name="editor" style="min-height: 200px;"></div>
         <input type="hidden" name="quill_content" id="quill_content">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Gửi</button>
     </form>
 </div>
 

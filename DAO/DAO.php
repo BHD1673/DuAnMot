@@ -61,37 +61,26 @@ function getAllProducts() {
     return pdo_query($sql);
 }
 
-// function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice) {
-//     $sql = "INSERT INTO `sanpham`(
-//         `ten_san_pham`,
-//         `gia_ban_le`,
-//         `gia_ban_buon`,
-//         `gia_nhap_hang`,
-//         `so_luong`,
-//         `mo_ta`,
-//         `id_loai_san_pham`,
-//         `id_brand`,
-//         `nam_san_xuat`,
-//         `ngay_tao`,
-//         `ngay_cap_nhat`
-//     )
-//     VALUES(
-//         '[value-2]',
-//         '[value-3]',
-//         '[value-4]',
-//         '[value-5]',
-//         '[value-6]',
-//         '[value-7]',
-//         '[value-8]',
-//         '[value-9]',
-//         '[value-10]',
-//         '[value-11]',
-//         '[value-12]',
-//         '[value-13]'
-//     )";
-//     return pdo_execute($sql, $itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice);
+function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice) {
+    $sql = "INSERT INTO `sanpham`(
+        `ten_san_pham`,
+        `gia_ban_le`,
+        `gia_ban_buon`,
+        `gia_nhap_hang`,
+        `so_luong`,
+        `mo_ta`,
+        `id_loai_san_pham`,
+        `id_brand`,
+        `nam_san_xuat`,
+        `ngay_tao`,
+        `ngay_cap_nhat`
+    )
+    VALUES(
+        ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()
+    )";
+    return pdo_execute($sql, $itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice);
     
-// }
+}
 
 //////////////////////////////////////////////////////////////
 // Brand

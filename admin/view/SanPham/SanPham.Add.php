@@ -2,8 +2,7 @@
 $categorySelect = viewCategory();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Giả sử bạn có các trường form cần thiết trong mảng $_POST
-    //$createErrors = validateCreate($_POST['ten_loai_san_pham'], $_POST['mo_ta']);
+    $createErrors = validateCreate($_POST['ten_loai_san_pham'], $_POST['mo_ta']);
     $createNewItemErrors = validateCreateNewItem(
         $_POST['itemName'],
         $_POST['itemBrand'],
@@ -15,19 +14,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imageFileErrors = validateImageFile($_FILES['itemImage']);
     $quillErrors = validateQuill($_POST['quill_content']);
 
-    echo '<pre>';
-    var_dump($createNewItemErrors);
-    var_dump($quillErrors);
-    var_dump($imageFileErrors);
-    echo '</pre>';
+    // echo '<pre>';
+    // var_dump($createNewItemErrors);
+    // var_dump($quillErrors);
+    // var_dump($imageFileErrors);
+    // echo '</pre>';
 
     if (!empty($createNewItemErrors) && !empty($quillErrors) && !empty($imageFileErrors)) {
-        
-    } //else {
-    //     echo "clgt";
-    // }
+        insertItem(
+            $_POST['itemName'],
+            $_POST['itemBrand'],
+            $_POST['itemCategory'],
+            $_POST['itemSmallSellPrice'],
+            $_POST['itemBigSellPrice'],
+            $_POST['itemBuyPrice']
+        );
 
-    // tạm thời xong
+        $_SESSION['message']['createNewItem'] = "Bạn đã tạo mới sản phẩm thành công";
+        header("LOCATION: admin.php?act=sanpham");
+        exit();
+    }
 }
 
 
