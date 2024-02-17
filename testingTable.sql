@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Feb 08, 2024 at 02:58 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -18,308 +9,344 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wwwwwwww`
+-- Database: `testdatabase`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Table structure for table `attribute`
 --
 
-CREATE TABLE `customers` (
-  `customer_id` int NOT NULL,
-  `name` varchar(225) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(225) NOT NULL,
-  `phone_number` varchar(20) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT (now()),
-  `updated_at` timestamp NULL DEFAULT (now()),
-  `role` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `attribute` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL
+);
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `attribute`
 --
 
-INSERT INTO `customers` (`customer_id`, `name`, `password`, `email`, `phone_number`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'John Doe', 'password123', 'john@example.com', '1234567890', '2024-02-07 19:30:00', '2024-02-07 19:30:00', 1),
-(2, 'Jane Smith', 'abc123', 'jane@example.com', '9876543210', '2024-02-07 19:31:00', '2024-02-07 19:31:00', 2),
-(3, 'Alice Johnson', 'pass456', 'alice@example.com', '5556667777', '2024-02-07 19:32:00', '2024-02-07 19:32:00', 1),
-(4, 'Bob Williams', 'test789', 'bob@example.com', '9998887777', '2024-02-07 19:33:00', '2024-02-07 19:33:00', 2),
-(5, 'Eve Brown', 'pass123', 'eve@example.com', '1112223333', '2024-02-07 19:34:00', '2024-02-07 19:34:00', 1);
+INSERT INTO `attribute` (`id`, `name`) VALUES
+(1, 'Color'),
+(2, 'Size'),
+(3, 'Material');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `images`
+-- Table structure for table `brand`
 --
 
-CREATE TABLE `images` (
-  `image_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `image_path` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `images`
---
-
-INSERT INTO `images` (`image_id`, `product_id`, `image_path`) VALUES
-(1, 1, '/images/product1.jpg'),
-(2, 2, '/images/product2.jpg'),
-(3, 3, '/images/product3.jpg'),
-(4, 4, '/images/product4.jpg'),
-(5, 5, '/images/product5.jpg');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoices`
---
-
-CREATE TABLE `invoices` (
-  `invoice_id` int NOT NULL,
-  `customer_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `product_price` decimal(10,3) NOT NULL,
-  `total_price` decimal(10,3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `invoices`
---
-
-INSERT INTO `invoices` (`invoice_id`, `customer_id`, `product_id`, `product_price`, `total_price`) VALUES
-(1, 1, 1, '10.990', '10.990'),
-(2, 2, 2, '15.990', '15.990'),
-(3, 3, 3, '20.990', '20.990'),
-(4, 4, 4, '25.990', '25.990'),
-(5, 5, 5, '30.990', '30.990');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `product_id` int NOT NULL,
+CREATE TABLE `brand` (
+  `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
+  `description` text
+);
+
+--
+-- Dumping data for table `brand`
+--
+
+INSERT INTO `brand` (`id`, `name`, `description`) VALUES
+(1, 'Nike', 'Sportswear and equipment manufacturer'),
+(2, 'Adidas', 'Sportswear manufacturer'),
+(3, 'Apple', 'Technology company known for its electronic devices');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_session`
+--
+
+CREATE TABLE `cart_session` (
+  `id` int NOT NULL,
+  `customer_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `product_price` decimal(10,3) DEFAULT NULL
+);
+
+--
+-- Dumping data for table `cart_session`
+--
+
+INSERT INTO `cart_session` (`id`, `customer_id`, `product_id`, `quantity`, `product_price`) VALUES
+(1, 1, 1, 2, '49.990'),
+(2, 1, 2, 1, '99.990'),
+(3, 2, 3, 1, '199.990');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int NOT NULL,
+  `name` varchar(225) DEFAULT NULL,
+  `email` varchar(225) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `password` varchar(255) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL
+);
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `name`, `email`, `phone_number`, `created_at`, `updated_at`, `password`, `role`) VALUES
+(1, 'John Doe', 'john@example.com', '+1234567890', '2024-02-15 19:13:00', '2024-02-17 10:37:54', 'password123', '1'),
+(2, 'Jane Smith', 'jane@example.com', '+0987654321', '2024-02-15 19:13:00', '2024-02-17 10:38:02', 'password456', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `id` int NOT NULL,
+  `customer_id` int DEFAULT NULL,
+  `total_price` decimal(10,3) DEFAULT NULL,
+  `product_group` varchar(225) DEFAULT NULL,
+  `price_group` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int DEFAULT NULL
+);
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `customer_id`, `total_price`, `product_group`, `price_group`, `create_at`, `status`) VALUES
+(1, 1, '149.970', NULL, '', '2024-02-16 09:28:09', NULL),
+(2, 2, '199.990', NULL, '', '2024-02-16 09:28:09', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `id` int NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `retail_price` decimal(10,3) DEFAULT NULL,
+  `wholesale_price` decimal(10,3) DEFAULT NULL,
+  `purchase_price` decimal(10,3) DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
   `description` text,
-  `smallSellPrice` decimal(10,3) DEFAULT NULL,
-  `bigSellPrice` decimal(10,3) DEFAULT NULL,
-  `buyPrice` decimal(10,3) DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `manufacturer` varchar(100) DEFAULT NULL,
-  `create_at` datetime NOT NULL DEFAULT (now()),
-  `update_at` datetime NOT NULL DEFAULT (now()),
-  `category_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `category_id` int DEFAULT NULL,
+  `brand_id` int DEFAULT NULL,
+  `image` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
 --
--- Dumping data for table `products`
+-- Dumping data for table `product`
 --
 
-INSERT INTO `products` (`product_id`, `name`, `description`, `smallSellPrice`, `bigSellPrice`, `buyPrice`, `amount`, `manufacturer`, `create_at`, `update_at`, `category_id`) VALUES
-(1, 'Product 1', 'Description for Product 1', '9.990', '19.990', '5.990', 100, 'Manufacturer A', '2024-02-08 02:35:00', '2024-02-08 02:35:00', 1),
-(2, 'Product 2', 'Description for Product 2', '14.990', '24.990', '10.990', 200, 'Manufacturer B', '2024-02-08 02:36:00', '2024-02-08 02:36:00', 2),
-(3, 'Product 3', 'Description for Product 3', '19.990', '29.990', '15.990', 150, 'Manufacturer C', '2024-02-08 02:37:00', '2024-02-08 02:37:00', 3),
-(4, 'Product 4', 'Description for Product 4', '24.990', '34.990', '20.990', 120, 'Manufacturer A', '2024-02-08 02:38:00', '2024-02-08 02:38:00', 4),
-(5, 'Product 5', 'Description for Product 5', '29.990', '39.990', '25.990', 180, 'Manufacturer B', '2024-02-08 02:39:00', '2024-02-08 02:39:00', 5);
+INSERT INTO `product` (`id`, `name`, `retail_price`, `wholesale_price`, `purchase_price`, `quantity`, `description`, `category_id`, `brand_id`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Running Shoes', '59.990', '39.990', '29.990', 50, 'High-performance running shoes', 1, 1, 'running_shoes.jpg', '2024-02-15 19:13:00', '2024-02-15 19:13:00'),
+(2, 'Soccer Ball', '29.990', '19.990', '14.990', 100, 'Official size and weight soccer ball', 2, 2, 'soccer_ball.jpg', '2024-02-15 19:13:00', '2024-02-15 19:13:00'),
+(3, 'iPhone 15', '999.990', '799.990', '699.990', 20, 'Latest model of iPhone', 3, 3, 'iphone_15.jpg', '2024-02-15 19:13:00', '2024-02-15 19:13:00'),
+(4, 'silly kat', '3000.000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-16 03:41:28', '2024-02-16 03:41:28'),
+(5, 'silly kat', '3000.000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-16 03:51:16', '2024-02-16 03:51:16'),
+(6, '1', '10000.000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-16 03:51:36', '2024-02-16 03:51:36'),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-16 03:59:28', '2024-02-16 03:59:28'),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-02-16 03:59:36', '2024-02-16 03:59:36'),
+(9, 'Bàn phím máy tính hỏng', '1111.000', '111.000', '111.000', 1111, '1111', 1, 1, '2', '2024-02-16 04:00:09', '2024-02-16 04:00:09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_attributes`
+-- Table structure for table `product_attribute_detail`
 --
 
-CREATE TABLE `product_attributes` (
-  `attribute_id` int NOT NULL,
-  `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `product_attributes`
---
-
-INSERT INTO `product_attributes` (`attribute_id`, `name`) VALUES
-(1, 'Attribute 1'),
-(2, 'Attribute 2'),
-(3, 'Attribute 3'),
-(4, 'Attribute 4'),
-(5, 'Attribute 5');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_attribute_values`
---
-
-CREATE TABLE `product_attribute_values` (
-  `value_id` int NOT NULL,
-  `attribute_id` int NOT NULL,
+CREATE TABLE `product_attribute_detail` (
+  `id` int NOT NULL,
   `product_id` int NOT NULL,
-  `value` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `attribute_id` int NOT NULL,
+  `value` varchar(255) DEFAULT NULL
+);
 
 --
--- Dumping data for table `product_attribute_values`
+-- Dumping data for table `product_attribute_detail`
 --
 
-INSERT INTO `product_attribute_values` (`value_id`, `attribute_id`, `product_id`, `value`) VALUES
-(1, 1, 1, 'Value 1 for Product 1'),
-(2, 2, 2, 'Value 2 for Product 2'),
-(3, 3, 3, 'Value 3 for Product 3'),
-(4, 4, 4, 'Value 4 for Product 4'),
-(5, 5, 5, 'Value 5 for Product 5');
+INSERT INTO `product_attribute_detail` (`id`, `product_id`, `attribute_id`, `value`) VALUES
+(1, 1, 1, 'Black'),
+(2, 1, 2, '10'),
+(3, 2, 1, 'White'),
+(4, 3, 1, 'Space Gray');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_categories`
+-- Table structure for table `product_category`
 --
 
-CREATE TABLE `product_categories` (
-  `category_id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `create_at` datetime NOT NULL DEFAULT (now()),
-  `update_at` datetime NOT NULL DEFAULT (now())
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `product_category` (
+  `id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(225) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 --
--- Dumping data for table `product_categories`
+-- Dumping data for table `product_category`
 --
 
-INSERT INTO `product_categories` (`category_id`, `name`, `create_at`, `update_at`) VALUES
-(1, 'Category 1', '2024-02-08 02:40:00', '2024-02-08 02:40:00'),
-(2, 'Category 2', '2024-02-08 02:41:00', '2024-02-08 02:41:00'),
-(3, 'Category 3', '2024-02-08 02:42:00', '2024-02-08 02:42:00'),
-(4, 'Category 4', '2024-02-08 02:43:00', '2024-02-08 02:43:00'),
-(5, 'Category 5', '2024-02-08 02:44:00', '2024-02-08 02:44:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `shopping_carts`
---
-
-CREATE TABLE `shopping_carts` (
-  `cart_id` int NOT NULL,
-  `customer_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int NOT NULL,
-  `price` decimal(10,3) NOT NULL,
-  `total_price` decimal(10,3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `shopping_carts`
---
-
-INSERT INTO `shopping_carts` (`cart_id`, `customer_id`, `product_id`, `quantity`, `price`, `total_price`) VALUES
-(1, 1, 1, 2, '9.990', '19.980'),
-(2, 2, 2, 1, '14.990', '14.990'),
-(3, 3, 3, 3, '19.990', '59.970'),
-(4, 4, 4, 1, '24.990', '24.990'),
-(5, 5, 5, 2, '29.990', '59.980');
+INSERT INTO `product_category` (`id`, `name`, `description`, `created_at`) VALUES
+(1, 'Footwear', 'Shoes, sandals, and boots', '2024-02-15 19:13:00'),
+(2, 'Sports Equipment', 'Equipment for various sports', '2024-02-15 19:13:00'),
+(3, 'Electronics', 'Electronic devices and accessories', '2024-02-15 19:13:00');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `customers`
+-- Indexes for table `attribute`
 --
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`customer_id`);
+ALTER TABLE `attribute`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `images`
+-- Indexes for table `brand`
 --
-ALTER TABLE `images`
-  ADD PRIMARY KEY (`image_id`),
+ALTER TABLE `brand`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart_session`
+--
+ALTER TABLE `cart_session`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `invoices`
+-- Indexes for table `customer`
 --
-ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`invoice_id`),
-  ADD KEY `product_id` (`product_id`),
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
--- Indexes for table `products`
+-- Indexes for table `product`
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`),
-  ADD KEY `category_id` (`category_id`);
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `brand_id` (`brand_id`);
 
 --
--- Indexes for table `product_attributes`
+-- Indexes for table `product_attribute_detail`
 --
-ALTER TABLE `product_attributes`
-  ADD PRIMARY KEY (`attribute_id`);
+ALTER TABLE `product_attribute_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `attribute_id` (`attribute_id`);
 
 --
--- Indexes for table `product_attribute_values`
+-- Indexes for table `product_category`
 --
-ALTER TABLE `product_attribute_values`
-  ADD PRIMARY KEY (`value_id`),
-  ADD KEY `attribute_id` (`attribute_id`),
-  ADD KEY `product_id` (`product_id`);
+ALTER TABLE `product_category`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product_categories`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `product_categories`
-  ADD PRIMARY KEY (`category_id`);
 
 --
--- Indexes for table `shopping_carts`
+-- AUTO_INCREMENT for table `attribute`
 --
-ALTER TABLE `shopping_carts`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `product_id` (`product_id`);
+ALTER TABLE `attribute`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `brand`
+--
+ALTER TABLE `brand`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cart_session`
+--
+ALTER TABLE `cart_session`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `product_attribute_detail`
+--
+ALTER TABLE `product_attribute_detail`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `product_category`
+--
+ALTER TABLE `product_category`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `images`
+-- Constraints for table `cart_session`
 --
-ALTER TABLE `images`
-  ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `cart_session`
+  ADD CONSTRAINT `cart_session_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `cart_session_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
--- Constraints for table `invoices`
+-- Constraints for table `invoice`
 --
-ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
-  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
+ALTER TABLE `invoice`
+  ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
 
 --
--- Constraints for table `products`
+-- Constraints for table `product`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `product_categories` (`category_id`);
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`);
 
 --
--- Constraints for table `product_attribute_values`
+-- Constraints for table `product_attribute_detail`
 --
-ALTER TABLE `product_attribute_values`
-  ADD CONSTRAINT `product_attribute_values_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `product_attributes` (`attribute_id`),
-  ADD CONSTRAINT `product_attribute_values_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
-
---
--- Constraints for table `shopping_carts`
---
-ALTER TABLE `shopping_carts`
-  ADD CONSTRAINT `shopping_carts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  ADD CONSTRAINT `shopping_carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+ALTER TABLE `product_attribute_detail`
+  ADD CONSTRAINT `product_attribute_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `product_attribute_detail_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `attribute` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

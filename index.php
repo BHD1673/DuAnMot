@@ -156,7 +156,7 @@ function dangKyNguoiDung() {
     
         if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_file)) {
             // Image uploaded successfully, register the user
-            register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
+            // register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
             echo "Registration successful!";
         } else {
             echo "Error uploading the image.";
@@ -218,5 +218,5 @@ function rule() {}
 function baiViet() {}
 
 function gioiThieu() {}
-
+$productID = pdo_get_connection()->lastInsertId();
 ?>

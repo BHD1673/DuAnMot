@@ -1,132 +1,305 @@
-<?php 
+<?php
 
-//////////////////////////////////////////////////////////////
-// Category
-/////////////////////////////////////////////////////////////
-function insertCategory($categoryName, $categoryDescription) {
-    $sql = "INSERT INTO loaisanpham (ten_loai_san_pham, mo_ta) VALUES (?, ?)";    
-    return pdo_execute($sql, $categoryName, $categoryDescription);
+// Tất cả các query ở đây sẽ chỉ mang tính chất chung chung.
+// More custom will have to be create and write in the model folder in the future.
+
+// Attribute section
+function get_attribute($id = null)
+{
+    if ($id === null) {
+        $sql = "SELECT * FROM `attribute`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `attribute` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
 }
 
-function viewCategory() {
-    $sql = "SELECT * FROM loaisanpham";
-    return pdo_query($sql);
+function create_attribute($name)
+{
+    $sql = "INSERT INTO `attribute` (`name`) VALUES (?)";
+    pdo_execute($sql, $name);
 }
 
-function viewCategoryOne($id) {
-    $sql = "SELECT * FROM loaisanpham WHERE id_loai_san_pham = ?";
-    return pdo_query_one($sql, $id);
+function update_attribute($id, $name)
+{
+    $sql = "UPDATE `attribute` SET `name` = ? WHERE `id` = ?";
+    pdo_execute($sql, $name, $id);
 }
 
-function updateCategory($id, $newData) {
-    $setClause = implode(', ', array_map(function($column) {
-        return "$column = ?";
-    }, array_keys($newData)));
-
-    $sql = "UPDATE loaisanpham SET $setClause WHERE id_loai_san_pham = ?";
-    $params = array_merge(array_values($newData), [$id]);
-
-    pdo_execute($sql, ...$params);
-}
-function deleteCategory($categoryID) {
-    $sql = "DELETE FROM `loaisanpham` WHERE id_loai_san_pham = ?";
-    return pdo_execute($sql, $categoryID);
+function delete_attribute($id)
+{
+    $sql = "DELETE FROM `attribute` WHERE `id` = ?";
+    pdo_execute($sql, $id);
 }
 
-//////////////////////////////////////////////////////////////
-// Item
-//////////////////////////////////////////////////////////////
-
-function getAllProducts() {
-    // $sql = "SELECT
-    // sp.id_san_pham,
-    // sp.ten_san_pham,
-    // sp.gia_ban_le,
-    // sp.gia_ban_buon,
-    // sp.gia_nhap_hang,
-    // sp.so_luong,
-    // lsp.ten_loai_san_pham,
-    // b.ten_brand,
-    // sp.ngay_tao,
-    // sp.ngay_cap_nhat
-    // FROM
-    //     sanpham sp
-    // JOIN
-    //     loaisanpham lsp ON sp.id_loai_san_pham = lsp.id_loai_san_pham
-    // JOIN
-    //     brand b ON sp.id_brand = b.id_brand;    
-    //     ";
-
-    $sql = "SELECT * FROM sanpham";
-    return pdo_query($sql);
+// Brand section
+function create_brand($name, $description)
+{
+    $sql = "INSERT INTO `brand` (`name`, `description`) VALUES (?, ?)";
+    pdo_execute($sql, $name, $description);
 }
 
-function insertItem($itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $itemAmount, $itemDescription, $itemImage) {
-    $sql = "INSERT INTO `sanpham` (
-        `ten_san_pham`,
-        `id_brand`,
-        `id_loai_san_pham`,
-        `gia_ban_le`,
-        `gia_ban_buon`,
-        `gia_nhap_hang`,
-        `so_luong`,
-        `mo_ta`,
-        `image`
-    ) VALUES (
-        ?,
-        ?,  -- Replace with the actual id_brand
-        ?,  -- Replace with the actual id_loai_san_pham
-        ? , -- Replace with the actual gia_ban_le
-        ? , -- Replace with the actual gia_ban_buon
-        ? , -- Replace with the actual gia_nhap_hang
-        ? , -- Replace with the actual so_luong
-        ? ,
-        ?   -- Replace with the actual image path
-    );
+function get_brand($id = null)
+{
+    if ($id === null) {
+        $sql = "SELECT * FROM `brand`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `brand` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function update_brand($id, $name, $description)
+{
+    $sql = "UPDATE `brand` SET `name` = ?, `description` = ? WHERE `id` = ?";
+    pdo_execute($sql, $name, $description, $id);
+}
+
+function delete_brand($id)
+{
+    $sql = "DELETE FROM `brand` WHERE `id` = ?";
+    pdo_execute($sql, $id);
+}
+
+// Category section
+function get_category($id = null)
+{
+    if ($id === null) {
+        $sql = "SELECT * FROM `category`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `category` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function create_category($name, $description)
+{
+    $sql = "INSERT INTO `category` (`name`, `description`) VALUES (?, ?)";
+    pdo_execute($sql, $name, $description);
+}
+
+function update_category($id, $name, $description)
+{
+    $sql = "UPDATE `category` SET `name` = ?, `description` = ? WHERE `id` = ?";
+    pdo_execute($sql, $name, $description, $id);
+}
+
+function delete_category($id)
+{
+    $sql = "DELETE FROM `category` WHERE `id` = ?";
+    pdo_execute($sql, $id);
+}
+
+// Invoice section
+function get_invoice($id = null)
+{
+    if ($id === null) {
+        $sql = "SELECT * FROM `invoice`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `invoice` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function create_invoice(
+    $customer_id, 
+    $total_price, 
+    $product_group, 
+    $price_group, 
+    $status = 1)
+{
+    $sql = "INSERT INTO `invoice` (`customer_id`, `total_price`, `product_group`, `price_group`, `status`) VALUES (?, ?, ?, ?)";
+    pdo_execute($sql, $customer_id, $total_price, $product_group, $price_group, $status);
+}
+
+function update_invoice(
+    $id, 
+    $customer_id, 
+    $total_price, 
+    $product_group, 
+    $price_group, 
+    $status = 1)
+{
+    $sql = "UPDATE `invoice` SET `customer_id` = ?, `total_price` = ?, `product_group` = ?, `price_group` = ?, `status` = ? WHERE `id` = ?";
+    pdo_execute($sql, $customer_id, $total_price, $product_group, $price_group, $status, $id);
+}
+
+function delete_invoice($id)
+{
+    $sql = "DELETE FROM `invoice` WHERE `id` = ?";
+    pdo_execute($sql, $id);
+}
+
+// Cart session
+function get_cart($id = null) {
+    if ($id === null) {
+        $sql = "SELECT * FROM `cart`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT *
+        FROM cart_session
+        WHERE customer_id = ?;";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function add_to_cart($product_id, $quantity) {
+    $sql =
+    "INSERT INTO cart_session 
+    (id, 
+    customer_id, 
+    product_id, 
+    quantity, 
+    product_price)
+    VALUES (
+        ?, 
+        ?, 
+        ?, 
+        ?, 
+        '149.990');
     ";
-    return pdo_execute($sql, $itemName, $itemBrand, $itemCategory, $itemSmallSellPrice, $itemBigSellPrice, $itemBuyPrice, $itemAmount, $itemDescription, $itemImage );
-    
+    pdo_execute($sql, $product_id, $quantity);
 }
 
-
-//////////////////////////////////////////////////////////////
-// Brand
-//////////////////////////////////////////////////////////////
-function viewAllProductFollowBrand($id) {
-    $sql = "SELECT
-    `id_san_pham`,
-    `ten_san_pham`,
-    `mo_ta`,
-    `gia_ban_le`
-FROM
-    `sanpham`
-WHERE
-    `id_brand` = ?";
-
-    return pdo_query($sql, $id);
+function update_cart($id, $quantity) {
+    $sql = "UPDATE `cart_session` SET `quantity` = ? WHERE `id` = ?";
+    pdo_execute($sql, $quantity, $id);
 }
 
-function insertBrand($brandName, $brandDescription) {
-    $sql = "INSERT INTO `brand`(`ten_brand`, `mo_ta_brand`) VALUES (?, ?)";
-    return pdo_execute($sql, $brandName, $brandDescription);
+function delete_cart($id) {
+    $sql = "DELETE FROM `cart_session` WHERE `id` = ?";
+    pdo_execute($sql, $id);
 }
 
-function viewBrand() {
-    $sql = "SELECT * FROM `brand`";
-    return pdo_query($sql);
+// Customer 
+function get_customer($id = null) {
+    if ($id === null) {
+        $sql = "SELECT * FROM `customer`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `customer` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
 }
 
-function viewBrandCustom($id) {
-    $sql = "SELECT * FROM `brand` WHERE id_brand = ?";
-    return pdo_query_one($sql, $id);
+function create_customer(
+    $name,
+    $email,
+    $phone_number,
+    $password,
+    $role = 1,
+) {
+    $sql = "INSERT INTO `customer` (`name`, `email`, `phone_number`, `password`, `role`) VALUES (?, ?, ?, ?, ?)";
+    pdo_execute($sql, $name, $email, $phone_number, $password, $role);
 }
 
-function updateBrand($id, $newBrandName, $newBrandDescription) {
-    $sql = "UPDATE `brand` SET `ten_brand` = ?, `mo_ta_brand` = ? WHERE `id_brand` = ?";
-    return pdo_execute($sql, $newBrandName, $newBrandDescription, $id);
+function update_customer(
+    $customer_id,
+    $name,
+    $phone_number,
+    $password,
+    $role = 1,
+) {
+    $sql = "UPDATE `customer` SET `name` = ?, `phone_number` = ?, `password` = ?, `role` = ? WHERE `id` = ?";
+    pdo_execute($sql, $name, $phone_number, $password, $role, $customer_id);
 }
 
-function deleteBrand($id) {
-    $sql = "DELETE FROM `brand` WHERE `id_brand` = ?";
+function delete_customer($customer_id) {
+    $sql = "DELETE FROM `customer` WHERE `id` = ?";
+    pdo_execute($sql, $customer_id);
+}
+
+// Product section
+function get_product($id = null) {
+    if ($id === null) {
+        $sql = "SELECT * FROM `product`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `product` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function create_product(    
+)
+{
+    $sql = "INSERT INTO `product` 
+    (
+        `name`, 
+        `retail_price`, 
+        `wholesale_price`, 
+        `purchase_price`, 
+        `quantity`, 
+        `description`, 
+        `category_id`, 
+        `brand_id`, 
+        `image`) 
+    VALUES (
+        'New Product', 
+        '49.99', 
+        '29.99', 
+        '19.99', 
+        10, 
+        'Description of the new product', 
+        1, 
+        1, 
+        'new_product.jpg');
+    ";
+    pdo_execute($sql);
+}
+
+function update_product() {
+    $sql = "UPDATE `product` SET `name` = 'Updated Product Name', `retail_price` = '69.99' WHERE `id` = 1;
+    ";
+    pdo_execute($sql);
+}
+
+function delete_product($id) {
+    $sql = "DELETE FROM `product` WHERE `id` = ?";
+    pdo_execute($sql, $id);
+}
+
+// Attribute section
+
+function get_attribute_detail($id = null) {
+    if ($id === null) {
+        $sql = "SELECT * FROM `product_attribute_detail`";
+        return pdo_query($sql);
+    } else {
+        $sql = "SELECT * FROM `product_attribute_detail` WHERE `id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
+function create_attribute_detail(
+    $product_id,
+    $attribute_id,
+    $value
+) {
+    $sql = "INSERT INTO `product_attribute_detail` (`product_id`, `attribute_id`, `value`) VALUES (?, ?, ?)";
+    return pdo_execute($sql, $product_id, $attribute_id, $value);
+}
+
+function update_attribute_detail(
+    $id,
+    $product_id,
+    $attribute_id,
+    $value
+) {
+    $sql = "UPDATE `product_attribute_detail` SET `product_id` = ?, `attribute_id` = ?, `value` = ? WHERE `id` = ?";
+    return pdo_execute($sql, $product_id, $attribute_id, $value, $id);
+}
+
+function delete_attribute_detail($id) {
+    $sql = "DELETE FROM `product_attribute_detail` WHERE `id` = ?";
     return pdo_execute($sql, $id);
 }
+
+//TODO: Write based function for the address table and maybe user bank information
+//TODO: Also write about the article page and some more idk.
+
+// Everything new are have to write under this line.

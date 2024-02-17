@@ -1,7 +1,7 @@
 <?php
 
-echo $_SESSION['message']['brandUpdate'];
-echo $_SESSION['message']['insertBrand'];
+echo $_SESSION['message']['brandUpdate'] ?? "";
+echo $_SESSION['message']['insertBrand'] ?? "";
 $_SESSION['message']['brandUpdate'] = "";
 $_SESSION['message']['insertBrand'] = "";
 
