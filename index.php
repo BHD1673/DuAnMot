@@ -5,25 +5,7 @@ include "DAO/DAO.php";
 include "DAO/PDO.php";
 include "user/view/head.php";
 ?>
-<body>
-<?php 
 
-// Header trang bao gồm thanh nav với vài thứ linh tinh
-include "user/view/header.php";
-
-// Phần điều hướng chính
-if (isset($_GET['act'])) {
-    $hanhDong = $_GET['act'];
-    xuLyHanhDong($hanhDong);
-} else {
-    hienThiTrangChu();
-}
-
-// Bao gồm phần cuối trang
-include "user/view/footer.php";
-include "user/view/hidden.php";
-?>
-</body>
 <?php 
 // Hàm để xử lý điều hướng hành động
 function xuLyHanhDong($hanhDong) {
@@ -67,13 +49,13 @@ function xuLyHanhDong($hanhDong) {
     }
 }
 function hienThiTrangChu() {
-    include "user/view/section1.php";
-    include "user/view/section2.php";
-    include "user/view/section3.php";
-    include "user/view/section4.php";
-    include "user/view/section5.php";
-    include "user/view/section6.php";
-    include "user/view/newletter.php";
+    require_once "user/view/section1.php";
+    require_once "user/view/section2.php";
+    require_once "user/view/section3.php";
+    require_once "user/view/section4.php";
+    require_once "user/view/section5.php";
+    require_once "user/view/section6.php";
+    require_once "user/view/newletter.php";
 }
 
 
@@ -103,7 +85,7 @@ function dangNhapNguoiDung() {
         }
       }
     }
-    include "user/view/sign_in.php";
+    require_once "user/view/sign_in.php";
 }
 
 
@@ -144,39 +126,30 @@ function hienThiDanhSachSanPham() {
 }
 
 function dangKyNguoiDung() {
-    if (isset($_POST["submit"])) {
-        $register_email = $_POST["email"];
-        $register_password = $_POST['password'];
-        $register_dob = $_POST['dob'];
-        $register_sex = $_POST['sex'];
+    // if (isset($_POST["submit"])) {
+    //     $register_email = $_POST["email"];
+    //     $register_password = $_POST['password'];
+    //     $register_dob = $_POST['dob'];
+    //     $register_sex = $_POST['sex'];
     
-        // Handle image upload
-        $imagePath = "assests/upload/";
-        $upload_file = $imagePath . basename($_FILES['profile_image']['name']);
+    //     // Handle image upload
+    //     $imagePath = "assests/upload/";
+    //     $upload_file = $imagePath . basename($_FILES['profile_image']['name']);
     
-        if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_file)) {
-            // Image uploaded successfully, register the user
-            // register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
-            echo "Registration successful!";
-        } else {
-            echo "Error uploading the image.";
-        }
-    }
+    //     if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_file)) {
+    //         // Image uploaded successfully, register the user
+    //         // register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
+    //         echo "Registration successful!";
+    //     } else {
+    //         echo "Error uploading the image.";
+    //     }
+    // }
     include "user/view/register.php";
 }
 
 function quenMatKhau() {
-    // if (isset($_POST['guiemail']) && ($_POST['guiemail'])) {
-    //     $email = $_POST['email'];
 
-    //     $checkemail = checkemail($email);
-    //     if (is_array($checkemail)) {
-    //         $thongbao = "Mật khẩu của bạn là: " . $checkemail['MatKhau'];
-    //     } else {
-    //         $thongbao = "Email này không tồn tại";
-    //     }
-    // }
-    // include "view/user/forgot.php";
+
 }
 
 function capNhatThongTinCaNhan() {
@@ -184,22 +157,8 @@ function capNhatThongTinCaNhan() {
 }
 
 function xacNhanThongTin() {
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //     // Kiểm tra xem các trường dữ liệu đã được gửi từ biểu mẫu hay chưa
-    //     if (isset($_POST['book']) && isset($_POST['book'])) {
-    //         $name = $_POST['visitor_name'];
-    //         $email = $_POST['visitor_email'];
-    //         $phone = $_POST['visitor_phone'];
-    //         $dateIn = $_POST['DateIn'];
-    //         $dateOut = $_POST['DateOut'];
 
-    //         // Gọi hàm để thêm dữ liệu vào cơ sở dữ liệu
-    //         // insertData($checkin, $checkout, $name, $email,$phone);
-    //     } else {
-    //         echo "Bạn đang viết sai.";
-    //     }
-    // }
-    // include "stearm/checkout.php";
+
 }
 
 function hienThiHoaDon() {}
@@ -218,5 +177,31 @@ function rule() {}
 function baiViet() {}
 
 function gioiThieu() {}
+
+function doNothing($userId, $productID, $imagePath, $name, $price, $quantity, $totalPrice, $idbBill) {
+    $sql = "INSERT INTO bill_detail (id, bill_id, product_id, image, name, price, quantity, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    return pdo_execute($sql, $idbBill, $userId, $productID, $imagePath, $name, $price, $quantity, $totalPrice);
+}
 $productID = pdo_get_connection()->lastInsertId();
 ?>
+
+
+<body>
+<?php 
+
+// Header trang bao gồm thanh nav với vài thứ linh tinh
+include "user/view/header.php";
+
+// Phần điều hướng chính
+if (isset($_GET['act'])) {
+    $hanhDong = $_GET['act'];
+    xuLyHanhDong($hanhDong);
+} else {
+    hienThiTrangChu();
+}
+
+// Bao gồm phần cuối trang
+include "user/view/footer.php";
+include "user/view/hidden.php";
+?>
+</body>

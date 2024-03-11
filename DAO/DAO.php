@@ -51,6 +51,16 @@ function get_brand($id = null)
     }
 }
 
+function get_item_follow_brand($id)
+{
+    if ($id === null) {
+        echo "Error";
+    } else {
+        $sql = "SELECT * FROM `products` WHERE `brand_id` = ?";
+        return pdo_query_one($sql, $id);
+    }
+}
+
 function update_brand($id, $name, $description)
 {
     $sql = "UPDATE `brand` SET `name` = ?, `description` = ? WHERE `id` = ?";
