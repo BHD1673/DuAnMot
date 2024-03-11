@@ -103,8 +103,8 @@ function hienThiLoaiSanPham() {
                 <?php endforeach;
             }
         } elseif (isset($_POST["delete"])) {
-            // Delete operation
-            $id_loai_san_pham_to_delete = $_POST["id_loai_san_pham"];
+            // Xoá sản phẩm
+            $id_loai_san_pham_to_delete = $_POST["id"];
             delete_category($id_loai_san_pham_to_delete);
         }
     }
@@ -114,12 +114,12 @@ function hienThiLoaiSanPham() {
 }
 
 function hienThiChiTietLoaiSanPham() {
-    /*
+
         // Nhận Id danh mục từ URL
     if (isset($_GET['id'])) {
         $category_id = $_GET['id'];
         // Thao tác SQL
-        $category_details = viewCategoryOne($category_id);
+        $category_details = get_category($category_id);
 
         if (!$category_details) {
             echo "Danh mục không tồn tại.";
@@ -134,17 +134,14 @@ function hienThiChiTietLoaiSanPham() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["update"])) {
             // Như trên.
-            $new_ten_loai_san_pham = $_POST["new_ten_loai_san_pham"];
-            $new_mo_ta = $_POST["new_mo_ta"];
-            $newData = array(
-                "ten_loai_san_pham" => $new_ten_loai_san_pham,
-                "mo_ta" => $new_mo_ta
-            );
-            updateCategory($category_id, $newData);
+            $newName = $_POST["new_ten_loai_san_pham"];
+            $newDesc = $_POST["new_mo_ta"];
+
+            update_category($category_id, $newName, $newDesc);
             header("Location: admin.php?act=loaisp");
         }
     }
-    */
+
     require_once "admin/view/LoaiSanPham/LoaiSanPham.Custom.php";
 }
 
