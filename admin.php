@@ -82,7 +82,6 @@ function hienThiDanhMucBaiViet() {
 // Phần xử lý danh mục/loại sản phẩm
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function hienThiLoaiSanPham() {
-    /*
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST["create"])) {
             // Nhận dữ liệu
@@ -94,24 +93,21 @@ function hienThiLoaiSanPham() {
 
             // Nếu mảng dữ liệu trống thì sẽ gửi
             if (empty($validationErrors)) {
-                insertCategory($ten_loai_san_pham, $mo_ta);
-                // displaySuccessModal("Product Type created successfully!", 3000); // 3000 milliseconds = 3 seconds
+                create_category($ten_loai_san_pham, $mo_ta);
                 header("Location: admin.php?act=loaisp");
             } else {
                 // Validate có dữ liệu không đạt yêu cầu, trả lại kết quả.
                 // Đặt lỗi trong mảng, nên sẽ foreach ra kết quả. Có thể dùng modal box
                 foreach ($validationErrors as $error): ?>
-                    <p>Error: <?php //echo $error ?></p>
+                    <p>Error: <?php echo $error ?></p>
                 <?php endforeach;
             }
         } elseif (isset($_POST["delete"])) {
             // Delete operation
             $id_loai_san_pham_to_delete = $_POST["id_loai_san_pham"];
-            deleteCategory($id_loai_san_pham_to_delete);
+            delete_category($id_loai_san_pham_to_delete);
         }
     }
-    $rows = viewCategory();
-    */
     ?>
     <?php 
     require_once "admin/view/LoaiSanPham/LoaiSanPham.All.php";
