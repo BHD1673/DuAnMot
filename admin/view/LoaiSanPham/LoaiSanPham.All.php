@@ -1,4 +1,14 @@
 <body>
+
+<?php 
+
+$rows = get_category();
+
+// echo "<pre>";
+// var_dump($row);
+// echo "</pre>";
+
+?>
 <div class="container mt-5">
     <h2>Danh sách loại sản phẩm</h2>
     <a href="admin.php?act=sanpham" class="btn btn-secondary">Quay về trang sản phẩm</a>
@@ -15,14 +25,14 @@
         <tbody>
             <?php foreach ($rows as $row): ?>
                 <tr>
-                    <td><?= $row['id_loai_san_pham'] ?></td>
-                    <td><?= $row['ten_loai_san_pham'] ?></td>
-                    <td><?= $row['mo_ta'] ?></td>
-                    <td><?= $row['ngay_tao'] ?></td>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= $row['name'] ?></td>
+                    <td><?php echo $row['description'] ?? ""; ?></td>
+                    <td><?php echo $row['created_at'] ?? ""; ?></td>
                     <td>
-                        <a href='admin.php?act=editloaisp&id=<?= $row['id_loai_san_pham'] ?>' class="btn btn-info btn-sm">Cập nhật</a>
+                        <a href='admin.php?act=editloaisp&id=<?= $row['id'] ?>' class="btn btn-info btn-sm">Xem chi tiết sản phẩm</a>
                         <form method='post' style='display:inline;'>
-                            <input type='hidden' name='id_loai_san_pham' value='<?= $row['id_loai_san_pham'] ?>'>
+                            <input type='hidden' name='id' value='<?= $row['id'] ?>'>
                             <input type='submit' name='delete' value='Xóa' class='btn btn-danger btn-sm' onclick='return confirm("Bạn đã chắc chưa ?");'>
                         </form>
                     </td>
