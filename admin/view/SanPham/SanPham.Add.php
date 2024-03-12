@@ -1,7 +1,6 @@
 <?php
 
-$categories = getAllItemCategory();
-$brands = getAllBrands();
+$categories = get_category();
 
 ?>
 <div class="container">
@@ -17,15 +16,6 @@ $brands = getAllBrands();
             <option value="">Select Category</option>
             <?php foreach ($categories as $category) : ?>
                 <option value="<?= $category['id_category'] ?>"><?= $category['ten_danh_muc'] ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="category_id"><i class="fas fa-tags"></i> Brand:</label>
-        <select class="form-control" id="category_id" name="brand_id" required>
-            <option value="">Select Category</option>
-            <?php foreach ($brands as $brand) : ?>
-                <option value="<?= $brand['id_brand'] ?>"><?= $brand['brand_name'] ?></option>
             <?php endforeach; ?>
         </select>
     </div>

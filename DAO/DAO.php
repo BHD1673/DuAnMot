@@ -313,3 +313,14 @@ function delete_attribute_detail($id) {
 //TODO: Also write about the article page and some more idk.
 
 // Everything new are have to write under this line.
+
+
+function get_product_by_category($id) {
+    $sql = "SELECT * FROM `product` WHERE `category_id` = ?";
+    return pdo_query_one($sql, $id);
+}
+
+function get_comment_by_product($id) {
+    $sql = "SELECT * FROM `comment` WHERE `product_id` = ?";
+    return pdo_query_one($sql, $id);
+}

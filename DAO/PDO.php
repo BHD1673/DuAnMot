@@ -31,14 +31,12 @@ function pdo_execute($sql){
     }
 }
 // truy vấn nhiều dữ liệu
-function pdo_query($sql){
-    $sql_args=array_slice(func_get_args(),1);
-
+function pdo_query($sql, $params = array()){
     try{
-        $conn=pdo_get_connection();
-        $stmt=$conn->prepare($sql);
-        $stmt->execute($sql_args);
-        $rows=$stmt->fetchAll();
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll();
         return $rows;
     }
     catch(PDOException $e){

@@ -11,8 +11,7 @@ $products = [
 ?>
 <div class="container-fluid">
   <h2>Danh sách sản phẩm</h2>
-  <a href="admin.php?act=loaisp"><button class="btn btn-primary">Sang loại sản phẩm</button></a>
-  <a href="admin.php?act=brand"><button class="btn btn-primary">Sang brand sản phẩm</button></a>
+  <a href="admin.php?act=loaisp"><button class="btn btn-primary">Xem danh sách loại sản phẩm</button></a>
   
   <div class="container">
     <div class="form-row mb-3 justify-content-between">

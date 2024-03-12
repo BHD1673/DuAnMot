@@ -166,7 +166,6 @@ function taoSanPham() {
     require_once "admin/view/SanPham/SanPham.Add.php";
 }
 
-
 function hienThiSanPham() {
     require_once "admin/view/SanPham/SanPham.All.php";
 }
