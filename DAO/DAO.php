@@ -351,3 +351,15 @@ function get_product_by_index() {
 ";
     return pdo_query($sql);
 }
+
+function fetch_product_variants() {
+    $sql = "SELECT * FROM product_variant";
+    try {
+        $conn = pdo_get_connection();
+        $stmt = $conn->query($sql);
+        $variants = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $variants;
+    } catch(PDOException $e) {
+        throw $e;
+    }
+}

@@ -1,55 +1,87 @@
-<div class="container mt-5">
-    <div class="row">
-        <!-- Image on the left -->
-        <div class="col-md-6">
-            <img src="path/to/your/image.jpg" alt="Item Image" class="img-fluid">
+<?php 
+$categories = get_category();
+
+$productValue = get_product($_GET['id']);
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $sql = "UPDATE product SET name = ?, category_id = ?, description = ? WHERE id = ?";
+    pdo_execute($sql, $_POST['name'], $_POST['category_id'], $_POST['description'], $_GET['id']);
+    header("Location: admin.php?act=sanpham");
+}
+?>
+<div class="container">
+    <h1><i class="fas fa-edit"></i> Cập nhật sản phẩm</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name"><i class="fas fa-tag"></i> Tên sản phẩm:</label>
+            <input type="text" class="form-control" id="name" name="name" value="<?= $productValue['name'] ?>">
         </div>
-        <!-- Item details on the right -->
-        <div class="col-md-6">
-            <h2>Item Name</h2>
-            
-            <!-- Brand Choice -->
-            <div class="form-group">
-                <label for="brand">Brand:</label>
-                <select class="form-control" id="brand" name="brand">
-                    <option value="brand1">Brand 1</option>
-                    <option value="brand2">Brand 2</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
-            
-            <!-- Color -->
-            <div class="form-group">
-                <label for="color">Color:</label>
-                <input type="text" class="form-control" id="color" name="color">
-            </div>
-            
-            <!-- Year of Manufacture -->
-            <div class="form-group">
-                <label for="year">Year of Manufacture:</label>
-                <input type="text" class="form-control" id="year" name="year">
-            </div>
-            
-            <!-- Malfunction Checkbox -->
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="malfunction" name="malfunction">
-                <label class="form-check-label" for="malfunction">Malfunction</label>
-            </div>
-            
-            <!-- Price -->
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="text" class="form-control" id="price" name="price">
-            </div>
-            
-            <!-- Item Description -->
-            <div class="form-group">
-                <label for="description">Item Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="5"></textarea>
-            </div>
-            
-            <!-- Convert to Quill Button -->
-            <button type="button" class="btn btn-primary">Convert to Quill</button>
+        <div class="form-group">
+            <label for="category_id"><i class="fas fa-tags"></i> Danh mục sản phẩm:</label>
+            <select class="form-control" id="category_id" name="category_id" required>
+                <option value="">Chọn danh mục</option>
+                <?php foreach ($categories as $category) : ?>
+                    <?php $selected = ($category['id'] == $productValue['category_id']) ? 'selected' : ''; ?>
+                    <option value="<?= $category['id'] ?>" <?= $selected ?>><?= $category['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="description"><i class="fas fa-align-left"></i> Mô tả:</label>
+            <div id="editor" style="height: 300px;"></div>
+            <textarea id="description" name="description" style="display: none;"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <a href="admin.php?act=bienthesanpham&id=<?= $_GET['id'] ?>" class="btn btn-primary">Xem biến thể của sản phẩm</a>
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Cập nhật</button>
+                <a href="admin.php?act=sanpham" class="btn btn-secondary"><i class="fas fa-times"></i> Quay về trang danh sách</a>
+            </div>
+        </div>
+
+    </form>
 </div>
+
+<!-- Popper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Quill.js -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+
+<script>
+    // Initialize Quill editor
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'script': 'sub' }, { 'script': 'super' }],
+                [{ 'indent': '-1' }, { 'indent': '+1' }],
+                [{ 'direction': 'rtl' }],
+                [{ 'size': ['small', false, 'large', 'huge'] }],
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'font': [] }],
+                [{ 'align': [] }],
+                ['clean'],
+                ['link', 'image', 'video']
+            ]
+        },
+    });
+
+    // Set the initial content of Quill editor to the value of the description
+    var descriptionValue = <?= json_encode($productValue['description']) ?>;
+    quill.root.innerHTML = descriptionValue;
+
+    // Save the HTML content to the hidden textarea for form submission
+    quill.on('text-change', function () {
+        var html = quill.root.innerHTML;
+        document.getElementById('description').value = html;
+    });
+</script>
