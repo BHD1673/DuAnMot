@@ -9,7 +9,10 @@
 $products = get_product_by_index();
 
 
+// var_dump($_SESSION['msg']['xoadanhmuc'] ?? "");
 
+echo $_SESSION['msg']['xoadanhmuc'] ?? "";
+unset($_SESSION['msg']);
 ?>
 <div class="container-fluid">
   <h2>Danh sách sản phẩm</h2>
@@ -63,7 +66,12 @@ $products = get_product_by_index();
         <td><?php echo $product[0]; ?></td>
         <td><?php echo $product['product_name']; ?></td>
         <td><?php echo $product['total_variant_quantity']; ?></td>
-        <td><img class="img-thumbnail" src="<?php echo $product['product_image']; ?>" alt="<?php echo $product['product_image']; ?> "></td>
+        <td><img class="img-thumbnail" style="
+          max-width: 100px;
+          max-height: 100px;
+        
+        "
+         src="<?php echo $product['product_image']; ?>" alt="<?php echo $product['product_image']; ?> "></td>
         <td><a href="admin.php?act=editloaisp&id=<?php echo $product['category_id'] ?? ""; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category_id']; ?></a></td>
         <td><?php echo $product['product_created_at']; ?></td>
         <td><?php echo $product['product_update_at']; ?></td>

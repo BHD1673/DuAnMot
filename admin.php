@@ -175,8 +175,28 @@ function hienThiChiTietSanPham() {
 }
 
 function xoaSanPham() {
-    // Ở trang xoá sản phẩm thì chỉ cần tạo request với cái header
-    // còn confirm thì tạo từ trong phần danh sách từ trước luôn cho tiện
+
+    if (isset($_GET['id'])) {
+        try {
+            if (delete_product($_GET['id'])) {
+                $_SESSION['msg']['xoadanhmuc'] = "Xoá danh mục này.";
+                header('LOCATION: admin.php?act=sanpham');
+                die;
+            }
+        } catch (PDOException $e) {
+            if ($e->getCode() == '23000') { // Kiểm tra lỗi trả về
+                $_SESSION['msg']['xoadanhmuc'] = "Bạn phải xoá tất cả các biến thể của sản phẩm này thì mới có thể xoá được sản phẩm này. Vui lòng kiểm tra lại";
+                header('LOCATION: admin.php?act=sanpham');
+                die;
+            } else {
+                echo "Lỗi: " . $e->getMessage();
+            }
+        }
+    } else {
+        $_SESSION['msg']['xoadanhmuc'] = "Sản phẩm không tồn tại. Vui fomat thử được thay đổi.";
+    }
+    
+    
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý tài khoản

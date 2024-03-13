@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 13, 2024 at 11:29 AM
+-- Generation Time: Mar 13, 2024 at 12:15 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -59,7 +59,8 @@ INSERT INTO `category` (`id`, `name`, `description`, `created_at`, `update_at`) 
 (2, 'eum', 'Minima a ab dolor omnis deserunt dolorem.', '2024-03-04 02:13:54', '2024-03-13 10:29:17'),
 (3, 'non', 'Aspernatur deserunt a suscipit omnis itaque.', '2024-02-21 23:03:47', '2024-03-13 10:29:17'),
 (4, 'sit', 'Occaecati esse voluptatem earum explicabo.', '2024-02-26 16:08:08', '2024-03-13 10:29:17'),
-(5, 'consequuntur', 'Soluta dolore ut minima sunt corrupti.', '2024-02-14 21:44:22', '2024-03-13 10:29:17');
+(5, 'consequuntur', 'Soluta dolore ut minima sunt corrupti.', '2024-02-14 21:44:22', '2024-03-13 10:29:17'),
+(6, 'Máy tính để bàn', 'Nó là cái máy tính, hết\r\n', '2024-03-13 18:32:45', '2024-03-13 11:32:56');
 
 -- --------------------------------------------------------
 
@@ -232,13 +233,8 @@ INSERT INTO `product` (`id`, `name`, `description`, `category_id`, `created_at`,
 (12, 'et aperiam ut', 'Debitis officiis similique eos sint est unde incidunt. Non vel consequatur tempore deleniti aut velit illum est. Vel ipsam ad eius.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
 (13, 'iusto ab odio', 'Aperiam tempora minima et excepturi id. Autem debitis est aliquid. Necessitatibus nihil ut nobis soluta odio.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
 (14, 'pariatur velit ipsa', 'Itaque est voluptatem nam. Ducimus dolorem eaque non amet quia. Ipsum neque architecto sunt pariatur explicabo quis.', 4, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(15, 'facere nam eos', 'Quisquam laborum est error fugit. In mollitia error maxime voluptate. Esse sapiente atque aperiam at soluta.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(16, 'dolores illum culpa', 'Veniam occaecati deleniti quod voluptates corrupti ut officia. Magni sapiente doloribus dicta voluptates ratione eos. Id nulla iste iste qui minus possimus quo. Occaecati in aut et et aperiam necessitatibus. Rerum totam ea tenetur excepturi voluptatem.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(17, 'et fugit sed', 'Quibusdam sint quis nostrum rerum. Perferendis ut ut qui minima dignissimos ad ea.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(18, 'harum eveniet dignissimos', 'Facere et sed voluptatem modi dolor facilis sit. Temporibus consequatur quos similique ut in. Ab at et labore ut neque. Aut ducimus ut autem unde necessitatibus ab deserunt nobis.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(19, 'magni minus non', 'Nostrum nostrum inventore placeat aut et sint ut. Sapiente maxime incidunt id rerum. Praesentium aut vitae blanditiis modi aut iste animi.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(20, 'rerum quae soluta', 'Blanditiis harum atque qui autem. Dolores accusamus nisi quae quos est nesciunt. Sit tempore quae qui fuga. Magni id quis odit dolorem amet.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
-(21, 'doloremque incidunt quas', 'Quam qui aliquid laboriosam ad. Ad officia est rerum sed aut velit eum. Modi consequuntur ut voluptatem autem odio. Aut nam accusantium consequatur dolore temporibus quae quis.', 4, '2024-03-13 10:29:17', '2024-03-13 10:29:17');
+(22, 'Máy tính hỏng', '<p>Nó hỏng nhưng vẫn dùng được thì nó vẫn là dùng được chứ clgt gì</p>', 6, '2024-03-13 11:33:41', '2024-03-13 11:33:41'),
+(23, 'Máy tính', '<p>Nó là cái máy tính</p>', 6, '2024-03-13 12:15:04', '2024-03-13 12:15:04');
 
 -- --------------------------------------------------------
 
@@ -263,7 +259,10 @@ CREATE TABLE `product_variant` (
 
 INSERT INTO `product_variant` (`id`, `product_id`, `quantity`, `variant_type`, `variant_value`, `price`, `image`, `status`) VALUES
 (1, 6, 53, 'color', 'reiciendis', 482, 'https://via.placeholder.com/640x480.png/008888?text=iure', 1),
-(2, 4, 30, 'color', 'qui', 165, 'https://via.placeholder.com/640x480.png/001144?text=vel', 0);
+(2, 4, 30, 'color', 'qui', 165, 'https://via.placeholder.com/640x480.png/001144?text=vel', 0),
+(4, 22, 1, 'Màu sắc', 'Màu clgt ?', 100000, 'uploads/65f18f15a2b23_339811502_617808676451128_5645324132944411378_n.jpg', NULL),
+(5, 23, 50, 'Màu', 'Đen', 5000, 'uploads/65f198c813fe4_320738461_535869885124193_7511563345536161237_n.jpg', NULL),
+(6, 23, 100, 'Màu', 'Xanh', 10000, 'uploads/65f198c81485d_320738461_535869885124193_7511563345536161237_n.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -386,7 +385,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `discount_code`
@@ -410,13 +409,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `product_variant`
 --
 ALTER TABLE `product_variant`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
