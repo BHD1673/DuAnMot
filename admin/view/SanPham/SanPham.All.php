@@ -1,12 +1,16 @@
 <?php
-$products = [
-    ['id' => 1, 'name' => 'Product 1', 'price' => 50, 'quantity' => 10, 'description' => 'Description 1', 'category' => '1', 'brand' => 'Brand 1', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Red', 'year' => 2022, 'created_at' => '2023-01-01', 'updated_at' => '2023-01-05'],
-    ['id' => 2, 'name' => 'Product 2', 'price' => 100, 'quantity' => 8, 'description' => 'Description 2', 'category' => '2', 'brand' => 'Brand 2', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Blue', 'year' => 2021, 'created_at' => '2023-01-02', 'updated_at' => '2023-01-04'],
-    // Data ảo
-    // Phần show sản phẩm thì chỉ cần show ý chính, vào chi tiết thì mới hiện là sản phẩm có những cái gì
-];
+// $products = [
+//     ['id' => 1, 'name' => 'Product 1', 'price' => 50, 'quantity' => 10, 'description' => 'Description 1', 'category' => '1', 'brand' => 'Brand 1', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Red', 'year' => 2022, 'created_at' => '2023-01-01', 'updated_at' => '2023-01-05'],
+//     ['id' => 2, 'name' => 'Product 2', 'price' => 100, 'quantity' => 8, 'description' => 'Description 2', 'category' => '2', 'brand' => 'Brand 2', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Blue', 'year' => 2021, 'created_at' => '2023-01-02', 'updated_at' => '2023-01-04'],
+//     // Data ảo
+//     // Phần show sản phẩm thì chỉ cần show ý chính, vào chi tiết thì mới hiện là sản phẩm có những cái gì
+// ];
 
-// $products = getAllProducts();
+$products = get_product();
+
+// echo "<pre>";
+// var_dump($products);
+// echo "</pre>";
 
 ?>
 <div class="container-fluid">
@@ -55,14 +59,14 @@ $products = [
     <tr>
         <td>
             <div class="custom-control custom-checkbox small">
-                <input type="checkbox" class="custom-control-input" id="customCheckProduct<?php echo $product['id']; ?>">
-                <label class="custom-control-label" for="customCheckProduct<?php echo $product['id']; ?>"></label>
+                <input type="checkbox" class="custom-control-input" id="customCheckProduct<?php echo $product[0]; ?>">
+                <label class="custom-control-label" for="customCheckProduct<?php echo $product[0]; ?>"></label>
             </div>
         </td>
-        <td><?php echo $product['id']; ?></td>
-        <td><?php echo $product['name']; ?></td>
-        <td><?php echo $product['price']; ?> VNĐ</td>
-        <td><?php echo $product['quantity']; ?></td>
+        <td><?php echo $product[0]; ?></td>
+        <td><?php echo $product[1]; ?></td>
+        <td><?php echo $product[3]; ?> VNĐ</td>
+        <td><?php echo $product[4]; ?></td>
         <td><img class="img-thumbnail" src="<?php echo $product['image']; ?>" alt="<?php echo $product['image']; ?> "></td>
         <td><a href="admin.php?act=chitietdanhmuc&id=<?php echo $product['category']; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category']; ?></a></td>
         <td><?php echo $product['created_at']; ?></td>

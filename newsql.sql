@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 11, 2024 at 06:07 AM
+-- Generation Time: Mar 13, 2024 at 11:29 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,25 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `color_variant_id` int DEFAULT NULL,
-  `ram_variant_id` int DEFAULT NULL,
-  `storage_variant_id` int DEFAULT NULL,
-  `quantity` int NOT NULL,
-  `discount_code_id` int DEFAULT NULL
+  `user_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `product_variant_id` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `status` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `user_id`, `product_id`, `color_variant_id`, `ram_variant_id`, `storage_variant_id`, `quantity`, `discount_code_id`) VALUES
-(1, 8, 1, 2, 1, 1, 6, 4),
-(2, 1, 5, 3, 4, 5, 6, 3),
-(3, 4, 1, 1, 2, 2, 8, 3),
-(4, 4, 2, 3, 5, 5, 6, 2),
-(5, 6, 5, 5, 4, 5, 8, 4);
 
 -- --------------------------------------------------------
 
@@ -59,44 +46,20 @@ CREATE TABLE `category` (
   `id` int NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` varchar(50) DEFAULT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `name`, `description`, `created_at`) VALUES
-(1, 'nobis', 'ádada', '2024-03-11 13:03:26'),
-(2, 'rerum', NULL, '2024-03-11 13:03:26'),
-(3, 'eveniet', NULL, '2024-03-11 13:03:26'),
-(4, 'quo', NULL, '2024-03-11 13:03:26'),
-(5, 'saepe', NULL, '2024-03-11 13:03:26');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `color_variant`
---
-
-CREATE TABLE `color_variant` (
-  `id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `color` varchar(50) DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `color_variant`
---
-
-INSERT INTO `color_variant` (`id`, `product_id`, `color`, `price`, `image`) VALUES
-(1, 2, 'aqua', 12, 'https://via.placeholder.com/640x480.png/002233?text=iusto'),
-(2, 3, 'white', 53, 'https://via.placeholder.com/640x480.png/0011bb?text=aut'),
-(3, 2, 'green', 92, 'https://via.placeholder.com/640x480.png/009922?text=et'),
-(4, 2, 'aqua', 64, 'https://via.placeholder.com/640x480.png/00ddff?text=ea'),
-(5, 3, 'olive', 28, 'https://via.placeholder.com/640x480.png/00aacc?text=distinctio');
+INSERT INTO `category` (`id`, `name`, `description`, `created_at`, `update_at`) VALUES
+(1, 'magni', 'Nihil ex et quo molestias.', '2024-03-07 15:54:27', '2024-03-13 10:29:17'),
+(2, 'eum', 'Minima a ab dolor omnis deserunt dolorem.', '2024-03-04 02:13:54', '2024-03-13 10:29:17'),
+(3, 'non', 'Aspernatur deserunt a suscipit omnis itaque.', '2024-02-21 23:03:47', '2024-03-13 10:29:17'),
+(4, 'sit', 'Occaecati esse voluptatem earum explicabo.', '2024-02-26 16:08:08', '2024-03-13 10:29:17'),
+(5, 'consequuntur', 'Soluta dolore ut minima sunt corrupti.', '2024-02-14 21:44:22', '2024-03-13 10:29:17');
 
 -- --------------------------------------------------------
 
@@ -106,21 +69,31 @@ INSERT INTO `color_variant` (`id`, `product_id`, `color`, `price`, `image`) VALU
 
 CREATE TABLE `discount_code` (
   `id` int NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `discount_amount` int NOT NULL,
-  `is_used` tinyint(1) NOT NULL DEFAULT '0'
+  `code` varchar(50) DEFAULT NULL,
+  `discount_amount` int DEFAULT NULL,
+  `is_used` tinyint(1) DEFAULT '0',
+  `create_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `discount_code`
 --
 
-INSERT INTO `discount_code` (`id`, `code`, `discount_amount`, `is_used`) VALUES
-(1, 'qa49kj', 32, 0),
-(2, 'dc43ho', 43, 0),
-(3, 'zm58kj', 39, 0),
-(4, 'ws02jt', 33, 0),
-(5, 'di23zt', 7, 0);
+INSERT INTO `discount_code` (`id`, `code`, `discount_amount`, `is_used`, `create_at`, `update_at`) VALUES
+(1, 'VEN51', 48, 1, '2024-03-13 17:29:55', '2024-03-13 17:29:55'),
+(2, 'KTI52', 22, 1, '2024-03-13 17:29:55', '2024-03-13 17:29:55'),
+(3, 'VUM04', 14, 1, '2024-03-13 17:29:55', '2024-03-13 17:29:55'),
+(4, 'XBT46', 41, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(5, 'INO62', 5, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(6, 'AQF06', 8, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(7, 'RZN03', 17, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(8, 'BAK09', 12, 2, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(9, 'JRJ55', 38, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(10, 'WEZ34', 42, 2, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(11, 'YIF56', 40, 1, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(12, 'GRQ92', 30, 2, '2024-03-13 17:31:32', '2024-03-13 17:31:32'),
+(13, 'ZPZ22', 5, 2, '2024-03-13 17:31:32', '2024-03-13 17:31:32');
 
 -- --------------------------------------------------------
 
@@ -130,47 +103,101 @@ INSERT INTO `discount_code` (`id`, `code`, `discount_amount`, `is_used`) VALUES
 
 CREATE TABLE `location` (
   `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `country` varchar(100) NOT NULL
+  `user_id` int DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `location`
 --
 
-INSERT INTO `location` (`id`, `user_id`, `address`, `city`, `country`) VALUES
-(1, 4, '91501 Nyah Junctions Apt. 019\nOrenbury, GA 14405', 'North Erwin', 'Ecuador'),
-(2, 7, '71990 Murray Shoal Suite 511\nFeiltown, AK 30909', 'Carrollville', 'Sudan'),
-(3, 8, '96658 Lenna Parkways\nSouth Aftonbury, UT 01678-0931', 'Lake Providenci', 'Lesotho'),
-(4, 7, '1329 Bernier Center Apt. 732\nPort Esther, NV 96488-5893', 'East Javon', 'Guam'),
-(5, 7, '229 Sven Prairie\nLake Bettyeland, RI 22757', 'Lueilwitzfurt', 'Lesotho');
+INSERT INTO `location` (`id`, `user_id`, `address`, `city`) VALUES
+(1, 6, '256 Nathanael Spring', 'Maceyview'),
+(2, 6, '47686 Dach Point Suite 092', 'New Wilbert'),
+(3, 7, '745 Florine Bypass', 'New June'),
+(4, 4, '40355 Corkery Estate', 'Lake Eloise'),
+(5, 7, '468 Ullrich Rest', 'South Delphine'),
+(6, 6, '8654 Amely Dale Apt. 349', 'Feilberg'),
+(7, 2, '562 Joyce Well', 'South Leonardo'),
+(8, 2, '1983 Stark Port', 'Yosthaven'),
+(9, 7, '76684 Monty Village', 'East Jenaberg'),
+(10, 8, '2151 Roberts Club', 'Lebsackville'),
+(11, 3, '18974 Louie Stream', 'New Guillermo'),
+(12, 10, '8222 Ebert Mills', 'Dibberttown'),
+(13, 3, '470 Horacio Plains', 'Lake Roselynfurt'),
+(14, 3, '783 Stokes Track Suite 247', 'North Brooke'),
+(15, 4, '54733 Eda Neck Suite 756', 'Langoshland'),
+(16, 6, '559 O\'Kon Coves', 'Kozeyside'),
+(17, 7, '7749 Muller Land', 'Donnellborough'),
+(18, 5, '6852 Berge Centers Suite 854', 'West Berenicestad'),
+(19, 9, '26071 Diana Roads Suite 401', 'New Sam'),
+(20, 2, '1300 Anderson Wall Suite 595', 'East Anastaciostad');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Table structure for table `orders`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
   `total_price` int NOT NULL,
   `location_id` int NOT NULL,
-  `order_status` varchar(50) NOT NULL
+  `order_status` int DEFAULT '0',
+  `discount_code_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `orders`
 --
 
-INSERT INTO `order` (`id`, `user_id`, `total_price`, `location_id`, `order_status`) VALUES
-(1, 9, 395, 5, 'pending'),
-(2, 1, 258, 4, 'pending'),
-(3, 10, 293, 2, 'pending'),
-(4, 1, 412, 2, 'shipped'),
-(5, 4, 226, 2, 'shipped');
+INSERT INTO `orders` (`id`, `user_id`, `total_price`, `location_id`, `order_status`, `discount_code_id`, `created_at`, `update_at`) VALUES
+(1, 8, 398, 2, 1, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(2, 2, 115, 9, 2, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(3, 8, 367, 6, 5, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(4, 4, 303, 7, 1, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(5, 6, 291, 10, 1, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(6, 4, 270, 2, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(7, 4, 223, 1, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(8, 9, 218, 5, 4, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(9, 6, 429, 3, 1, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(10, 1, 499, 4, 2, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(11, 1, 244, 5, 2, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(12, 10, 75, 1, 4, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(13, 9, 330, 9, 2, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(14, 10, 397, 9, 5, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(15, 8, 290, 2, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(16, 7, 175, 4, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(17, 8, 128, 8, 1, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(18, 7, 295, 1, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(19, 2, 424, 8, 5, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55'),
+(20, 1, 127, 8, 3, NULL, '2024-03-13 10:32:55', '2024-03-13 10:32:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_item`
+--
+
+CREATE TABLE `order_item` (
+  `id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `product_variant_id` int DEFAULT NULL,
+  `quantity` int NOT NULL,
+  `price` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `order_item`
+--
+
+INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `product_variant_id`, `quantity`, `price`) VALUES
+(1, 1, 2, 1, 1, 398);
 
 -- --------------------------------------------------------
 
@@ -182,69 +209,61 @@ CREATE TABLE `product` (
   `id` int NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `description` text,
-  `category_id` int DEFAULT NULL
+  `category_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `category_id`) VALUES
-(1, 'blanditiis', 'Eveniet aut sed id non.', 1),
-(2, 'fugiat', 'Iste fugit illo dolor eligendi.', 1),
-(3, 'nesciunt', 'In commodi consequatur magnam illum.', 2),
-(4, 'iste', 'Nihil assumenda quisquam at consequuntur nihil cum quos.', 2),
-(5, 'cupiditate', 'Repellat praesentium omnis officia voluptas.', 3);
+INSERT INTO `product` (`id`, `name`, `description`, `category_id`, `created_at`, `update_at`) VALUES
+(2, 'omnis est asperiores', 'Omnis cum quia neque quisquam. Voluptate esse porro ut neque earum eos et. Voluptatem quis temporibus omnis sint rerum. Voluptate in nihil delectus atque qui officiis similique.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(3, 'magni harum error', 'Occaecati laudantium dolor eveniet numquam aut ut doloremque. Perspiciatis nostrum consequatur occaecati eum neque cum occaecati provident. Quibusdam atque excepturi neque esse dolorem ut expedita. Fuga non consectetur possimus.', 5, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(4, 'repudiandae voluptate est', 'Nobis eius praesentium ipsa quasi dolor quidem. Rerum et et facilis quia ea corporis doloribus. Aut necessitatibus culpa qui vel repudiandae harum earum.', 4, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(5, 'maiores ut explicabo', 'Sed quia quis rem delectus beatae non et. Quod nisi ducimus amet dolor. Ipsa exercitationem et qui.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(6, 'eos sint quae', 'Voluptatem laboriosam quia at sit. Facere itaque iste autem pariatur facilis. Provident deserunt in illo doloribus quis soluta.', 5, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(7, 'aliquam aut consequatur', 'Distinctio ducimus pariatur sunt ipsa. Ut nihil rerum minima tenetur inventore commodi. Omnis provident est eius ipsum quasi. Quia sed id accusantium eos.', 5, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(8, 'voluptatibus modi et', 'Consequatur ducimus voluptas ea. Soluta inventore rerum rerum repellat recusandae.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(9, 'nisi autem facere', 'Deserunt iste sit quos tempore officiis. Nobis necessitatibus omnis vero hic. Corrupti quaerat minima necessitatibus amet quae. Molestias doloribus dolorem non voluptas.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(10, 'sunt distinctio laborum', 'Labore dolor ipsum quasi ut animi sit exercitationem. Aut vitae numquam sed mollitia id aliquam. Velit et ea et quisquam nihil non.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(11, 'ratione quis iure', 'Cum dolor labore dolorum odio veniam in fuga nam. Perspiciatis tenetur vel est rerum cum ex. Earum voluptatem omnis tenetur tempore. Repudiandae distinctio et assumenda dolores.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(12, 'et aperiam ut', 'Debitis officiis similique eos sint est unde incidunt. Non vel consequatur tempore deleniti aut velit illum est. Vel ipsam ad eius.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(13, 'iusto ab odio', 'Aperiam tempora minima et excepturi id. Autem debitis est aliquid. Necessitatibus nihil ut nobis soluta odio.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(14, 'pariatur velit ipsa', 'Itaque est voluptatem nam. Ducimus dolorem eaque non amet quia. Ipsum neque architecto sunt pariatur explicabo quis.', 4, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(15, 'facere nam eos', 'Quisquam laborum est error fugit. In mollitia error maxime voluptate. Esse sapiente atque aperiam at soluta.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(16, 'dolores illum culpa', 'Veniam occaecati deleniti quod voluptates corrupti ut officia. Magni sapiente doloribus dicta voluptates ratione eos. Id nulla iste iste qui minus possimus quo. Occaecati in aut et et aperiam necessitatibus. Rerum totam ea tenetur excepturi voluptatem.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(17, 'et fugit sed', 'Quibusdam sint quis nostrum rerum. Perferendis ut ut qui minima dignissimos ad ea.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(18, 'harum eveniet dignissimos', 'Facere et sed voluptatem modi dolor facilis sit. Temporibus consequatur quos similique ut in. Ab at et labore ut neque. Aut ducimus ut autem unde necessitatibus ab deserunt nobis.', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(19, 'magni minus non', 'Nostrum nostrum inventore placeat aut et sint ut. Sapiente maxime incidunt id rerum. Praesentium aut vitae blanditiis modi aut iste animi.', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(20, 'rerum quae soluta', 'Blanditiis harum atque qui autem. Dolores accusamus nisi quae quos est nesciunt. Sit tempore quae qui fuga. Magni id quis odit dolorem amet.', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(21, 'doloremque incidunt quas', 'Quam qui aliquid laboriosam ad. Ad officia est rerum sed aut velit eum. Modi consequuntur ut voluptatem autem odio. Aut nam accusantium consequatur dolore temporibus quae quis.', 4, '2024-03-13 10:29:17', '2024-03-13 10:29:17');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ram_variant`
+-- Table structure for table `product_variant`
 --
 
-CREATE TABLE `ram_variant` (
+CREATE TABLE `product_variant` (
   `id` int NOT NULL,
   `product_id` int NOT NULL,
-  `ram` varchar(50) DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `variant_type` varchar(255) DEFAULT NULL,
+  `variant_value` varchar(50) NOT NULL,
   `price` int DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL
+  `image` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `ram_variant`
+-- Dumping data for table `product_variant`
 --
 
-INSERT INTO `ram_variant` (`id`, `product_id`, `ram`, `price`, `image`) VALUES
-(1, 3, '8GB', 192, 'https://via.placeholder.com/640x480.png/00dddd?text=enim'),
-(2, 3, '4GB', 192, 'https://via.placeholder.com/640x480.png/007766?text=voluptates'),
-(3, 1, '16GB', 123, 'https://via.placeholder.com/640x480.png/008811?text=provident'),
-(4, 1, '4GB', 101, 'https://via.placeholder.com/640x480.png/002244?text=velit'),
-(5, 2, '4GB', 145, 'https://via.placeholder.com/640x480.png/00dd00?text=numquam');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `storage_variant`
---
-
-CREATE TABLE `storage_variant` (
-  `id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `storage` varchar(50) DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `storage_variant`
---
-
-INSERT INTO `storage_variant` (`id`, `product_id`, `storage`, `price`, `image`) VALUES
-(1, 5, '128GB', 118, 'https://via.placeholder.com/640x480.png/004411?text=corporis'),
-(2, 5, '512GB', 66, 'https://via.placeholder.com/640x480.png/008855?text=et'),
-(3, 4, '512GB', 57, 'https://via.placeholder.com/640x480.png/009988?text=ad'),
-(4, 2, '128GB', 60, 'https://via.placeholder.com/640x480.png/00ffbb?text=non'),
-(5, 5, '512GB', 67, 'https://via.placeholder.com/640x480.png/00bbbb?text=eos');
+INSERT INTO `product_variant` (`id`, `product_id`, `quantity`, `variant_type`, `variant_value`, `price`, `image`, `status`) VALUES
+(1, 6, 53, 'color', 'reiciendis', 482, 'https://via.placeholder.com/640x480.png/008888?text=iure', 1),
+(2, 4, 30, 'color', 'qui', 165, 'https://via.placeholder.com/640x480.png/001144?text=vel', 0);
 
 -- --------------------------------------------------------
 
@@ -257,24 +276,28 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `imgurl` text,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` int DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `imgurl`, `password`) VALUES
-(1, 'diamond41', 'jeffery.rogahn@sporer.com', NULL, '$2y$10$o0572znjcbYOQaz0BsJCceUZKeDijUcQotCwGK6zv2wM97tdLRTzW'),
-(2, 'tristin.renner', 'meta99@gmail.com', NULL, '$2y$10$wv7d5NaIFSleWizld165rOqA6lTfni6f.UlbLOvUjh8GG/2Xy0ndi'),
-(3, 'hamill.icie', 'spinka.oleta@barton.com', NULL, '$2y$10$GbFQZORMgdHvTfvRSxuAee8lNejoaaM5PtWnml4Nr4CsCVMOcLGyS'),
-(4, 'queen.herzog', 'moen.virginia@yahoo.com', NULL, '$2y$10$Em7agvtmRv/77hHjK.1lt.krxYSi9pmVzuHwUEPMUuLFmify5i/rO'),
-(5, 'abdul.homenick', 'abigail.cole@yahoo.com', NULL, '$2y$10$yo8xVWHSDSwW53I7WIjrHOOOJxJK4V/ESCUTxF35C4Px4Oa14S32.'),
-(6, 'slarson', 'berniece.dach@yahoo.com', NULL, '$2y$10$1zH.lHLVx.pvQ83vFee6DeNZrcfLcojRIaazDSZ1879Bdqt9w2gtq'),
-(7, 'deckow.walton', 'antonetta.durgan@murazik.org', NULL, '$2y$10$UQzFLgS4inOyImQn9BZW4O7EuAe067oa8eqyngJT5OPI4HZJSAFtG'),
-(8, 'paucek.raoul', 'wolf.kaden@dietrich.com', NULL, '$2y$10$WpAJjrzNhfINeiptc4kEuO.0tRfpFFoNdOGHis4ZXYmAjjRFFJWA6'),
-(9, 'lubowitz.lesly', 'ljast@mccullough.org', NULL, '$2y$10$KIUi3ZTKxyn5Mwbr7L7I2e505XUwqZpYObYtbvuuGIOKLxPRz0Zbq'),
-(10, 'douglas.anahi', 'bmcclure@fisher.info', NULL, '$2y$10$.9wK60wKz7ezkpIcnwNOgu6rruHCPX/TqaLnxnvIL73wHWLv/Ncfi');
+INSERT INTO `user` (`id`, `username`, `email`, `imgurl`, `password`, `role`, `created_at`, `update_at`) VALUES
+(1, 'dsipes', 'oren.schmeler@yahoo.com', 'https://via.placeholder.com/640x480.png/000055?text=nihil', '$2y$10$I4SuX2ryrw2zcS7Y6WkSQ.9u6NZjpzcIDNt3wTfsSARN2318izFOy', 0, '2024-03-13 10:20:22', '2024-03-13 10:20:22'),
+(2, 'bernita62', 'clarabelle.mckenzie@hotmail.com', 'https://via.placeholder.com/640x480.png/00ee33?text=sint', '$2y$10$amkDaJbSACy1O0RHcaJLMeeiNwRZ7AHbhgea25w1mV.17nHwOP3VC', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(3, 'fcasper', 'modesta48@lind.com', 'https://via.placeholder.com/640x480.png/000000?text=et', '$2y$10$RVg9rQYSmqGPH6j9NrhR8uHpV/oVAG/U7Ycx8l2zuBWXcxkbkn6Xa', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(4, 'orlando12', 'romaguera.catherine@gmail.com', 'https://via.placeholder.com/640x480.png/0099dd?text=eos', '$2y$10$FZjOc..XrzYZwv54l.l01.eUK.tSFiB25f7w6.2MVgiA75urDx3g6', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(5, 'rae17', 'dangelo94@yahoo.com', 'https://via.placeholder.com/640x480.png/000099?text=iste', '$2y$10$mO8TiyZENITasQTG3Ds5k.X56Nm2DEEjm1HdL7FJayKgnZ0A2XhaO', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(6, 'hmckenzie', 'aurelia.rau@goldner.com', 'https://via.placeholder.com/640x480.png/00ee66?text=quia', '$2y$10$OAtt7cD3j319iHHhlKSGHOec1stkANQHRKmlDa4Qy.yT4gKIO3.Yy', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(7, 'ischoen', 'sshields@hotmail.com', 'https://via.placeholder.com/640x480.png/000077?text=debitis', '$2y$10$q1001AM7VeXn5OIds8Sw2.Cmuvwt.JZbqBlbZOw579qaEapxt.0aG', 1, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(8, 'gretchen32', 'raynor.meagan@gleason.com', 'https://via.placeholder.com/640x480.png/007755?text=id', '$2y$10$SWKQvIqDiZXAi0nq/1U30el8KMSsglJ0PWm5srDLu/q6qgYRd.QAG', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(9, 'tbashirian', 'schiller.kacie@hotmail.com', 'https://via.placeholder.com/640x480.png/0044ee?text=ut', '$2y$10$fWWNkcwXaa3XjRrqmuKBHurhch.l1gt5xKnPciPYehV7M0fzKldiW', 3, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(10, 'kilback.mona', 'kuhic.reta@hotmail.com', 'https://via.placeholder.com/640x480.png/0000bb?text=atque', '$2y$10$LzePPiC2OQ.lbGO3mAmwieAuQXqDB6F9u3v1wUSofSBRcPJF6cO3K', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17'),
+(11, 'randal.lowe', 'morar.price@yahoo.com', 'https://via.placeholder.com/640x480.png/009988?text=tenetur', '$2y$10$P3bv6GYuqdHKmPAcR2bO4Of8SeXvIGtfpVUTss0qrYTtC8hJUYS7m', 2, '2024-03-13 10:29:17', '2024-03-13 10:29:17');
 
 --
 -- Indexes for dumped tables
@@ -287,23 +310,13 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `color_variant_id` (`color_variant_id`),
-  ADD KEY `ram_variant_id` (`ram_variant_id`),
-  ADD KEY `storage_variant_id` (`storage_variant_id`),
-  ADD KEY `cart_ibfk_6` (`discount_code_id`);
+  ADD KEY `cart_product_variant_fk` (`product_variant_id`);
 
 --
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `color_variant`
---
-ALTER TABLE `color_variant`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `discount_code`
@@ -320,12 +333,22 @@ ALTER TABLE `location`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `order`
+-- Indexes for table `orders`
 --
-ALTER TABLE `order`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `location_id` (`location_id`);
+  ADD KEY `location_id` (`location_id`),
+  ADD KEY `discount_code_id` (`discount_code_id`);
+
+--
+-- Indexes for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `product_variant_id` (`product_variant_id`);
 
 --
 -- Indexes for table `product`
@@ -335,16 +358,9 @@ ALTER TABLE `product`
   ADD KEY `category_id` (`category_id`);
 
 --
--- Indexes for table `ram_variant`
+-- Indexes for table `product_variant`
 --
-ALTER TABLE `ram_variant`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `storage_variant`
---
-ALTER TABLE `storage_variant`
+ALTER TABLE `product_variant`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
 
@@ -364,7 +380,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -373,52 +389,40 @@ ALTER TABLE `category`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `color_variant`
---
-ALTER TABLE `color_variant`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `discount_code`
 --
 ALTER TABLE `discount_code`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `order`
+-- AUTO_INCREMENT for table `orders`
 --
-ALTER TABLE `order`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `ram_variant`
+-- AUTO_INCREMENT for table `product_variant`
 --
-ALTER TABLE `ram_variant`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `storage_variant`
---
-ALTER TABLE `storage_variant`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `product_variant`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -430,16 +434,7 @@ ALTER TABLE `user`
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`color_variant_id`) REFERENCES `color_variant` (`id`),
-  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`ram_variant_id`) REFERENCES `ram_variant` (`id`),
-  ADD CONSTRAINT `cart_ibfk_5` FOREIGN KEY (`storage_variant_id`) REFERENCES `storage_variant` (`id`),
-  ADD CONSTRAINT `cart_ibfk_6` FOREIGN KEY (`discount_code_id`) REFERENCES `discount_code` (`id`);
-
---
--- Constraints for table `color_variant`
---
-ALTER TABLE `color_variant`
-  ADD CONSTRAINT `color_variant_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `cart_product_variant_fk` FOREIGN KEY (`product_variant_id`) REFERENCES `product_variant` (`id`);
 
 --
 -- Constraints for table `location`
@@ -448,11 +443,20 @@ ALTER TABLE `location`
   ADD CONSTRAINT `location_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `order`
+-- Constraints for table `orders`
 --
-ALTER TABLE `order`
+ALTER TABLE `orders`
   ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`),
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`discount_code_id`) REFERENCES `discount_code` (`id`);
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `order_item_ibfk_3` FOREIGN KEY (`product_variant_id`) REFERENCES `product_variant` (`id`);
 
 --
 -- Constraints for table `product`
@@ -461,16 +465,10 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Constraints for table `ram_variant`
+-- Constraints for table `product_variant`
 --
-ALTER TABLE `ram_variant`
-  ADD CONSTRAINT `ram_variant_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
-
---
--- Constraints for table `storage_variant`
---
-ALTER TABLE `storage_variant`
-  ADD CONSTRAINT `storage_variant_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+ALTER TABLE `product_variant`
+  ADD CONSTRAINT `product_variant_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
