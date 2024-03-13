@@ -6,11 +6,9 @@
 //     // Phần show sản phẩm thì chỉ cần show ý chính, vào chi tiết thì mới hiện là sản phẩm có những cái gì
 // ];
 
-$products = get_product();
+$products = get_product_by_index();
 
-// echo "<pre>";
-// var_dump($products);
-// echo "</pre>";
+
 
 ?>
 <div class="container-fluid">
@@ -45,7 +43,6 @@ $products = get_product();
         </th>
         <th>ID sản phẩm</th>
         <th>Tên sản phẩm</th>
-        <th>Giá thành</th>
         <th>Số lượng sản phẩm</th>
         <th>Ảnh xem qua</th>
         <th>Danh mục sản phẩm</th>
@@ -64,17 +61,16 @@ $products = get_product();
             </div>
         </td>
         <td><?php echo $product[0]; ?></td>
-        <td><?php echo $product[1]; ?></td>
-        <td><?php echo $product[3]; ?> VNĐ</td>
-        <td><?php echo $product[4]; ?></td>
-        <td><img class="img-thumbnail" src="<?php echo $product['image']; ?>" alt="<?php echo $product['image']; ?> "></td>
-        <td><a href="admin.php?act=chitietdanhmuc&id=<?php echo $product['category']; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category']; ?></a></td>
-        <td><?php echo $product['created_at']; ?></td>
-        <td><?php echo $product['updated_at']; ?></td>
+        <td><?php echo $product['product_name']; ?></td>
+        <td><?php echo $product['total_variant_quantity']; ?></td>
+        <td><img class="img-thumbnail" src="<?php echo $product['product_image']; ?>" alt="<?php echo $product['product_image']; ?> "></td>
+        <td><a href="admin.php?act=editloaisp&id=<?php echo $product['category_id'] ?? ""; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category_id']; ?></a></td>
+        <td><?php echo $product['product_created_at']; ?></td>
+        <td><?php echo $product['product_update_at']; ?></td>
         <td>
             <!-- Phần chi tiếts sản phẩm ở đây -->
-            <a href="admin.php?act=chitietsanpham&id=<?php echo $product['id']; ?>" class="btn btn-warning">Sửa</a>
-            <a href="admin.php?act=xoasanpham&id=<?php echo $product['id']; ?>" class="btn btn-danger">Xoá</a>
+            <a href="admin.php?act=chitietsanpham&id=<?php echo $product[0]; ?>" class="btn btn-warning">Sửa</a>
+            <a href="admin.php?act=xoasanpham&id=<?php echo $product[0]; ?>" class="btn btn-danger">Xoá</a>
         </td>
     </tr>
 <?php endforeach; ?>
