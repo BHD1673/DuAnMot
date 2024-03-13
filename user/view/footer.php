@@ -1,4 +1,5 @@
-<footer id="footer">
+		<!-- FOOTER -->
+		<footer id="footer" style="margin-top: 50px">
 			<!-- top footer -->
 			<div class="section">
 				<!-- container -->
@@ -7,11 +8,11 @@
 					<div class="row">
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Về chúng tôi</h3>
+								<h3 class="footer-title">About Us</h3>
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
 								<ul class="footer-links">
-									<li><a href="#"><i class="fa fa-map-marker"></i>Thanh Hóa</a></li>
-									<li><a href="#"><i class="fa fa-phone"></i>666</a></li>
+									<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+									<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
 									<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
 								</ul>
 							</div>
@@ -19,11 +20,13 @@
 
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Danh mục sản phẩm</h3>
+								<h3 class="footer-title">Categories</h3>
 								<ul class="footer-links">
-									<li><a href="#">Sản phẩm hot</a></li>
+									<li><a href="#">Hot deals</a></li>
 									<li><a href="#">Laptops</a></li>
-									<!-- có thể sẽ phải đặt một cái foreach ở đây, select 4 cái category -->
+									<li><a href="#">Smartphones</a></li>
+									<li><a href="#">Cameras</a></li>
+									<li><a href="#">Accessories</a></li>
 								</ul>
 							</div>
 						</div>
@@ -32,24 +35,26 @@
 
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Thông tin trang</h3>
+								<h3 class="footer-title">Information</h3>
 								<ul class="footer-links">
-									<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
-									<li><a href="index.php?act=contatct">Liên hệ chúng tôi</a></li>
-									<li><a href="index.php?act=policy">Chính sách chung</a></li>
-									<li><a href="index.php?act=returnItem">Chính sách hoàn trả</a></li>
+									<li><a href="#">About Us</a></li>
+									<li><a href="#">Contact Us</a></li>
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Orders and Returns</a></li>
+									<li><a href="#">Terms & Conditions</a></li>
 								</ul>
 							</div>
 						</div>
 
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Dịch vụ</h3>
+								<h3 class="footer-title">Service</h3>
 								<ul class="footer-links">
-									<li><a href="index.php?act=myaccount">Tài khoản của tôi</a></li>
-									<li><a href="index.php?act=cart">Xem giỏ hàng của tôi</a></li>
-									<li><a href="index.php?act=wishlist">Wishlist</a></li>
-									<li><a href="index.php?act=help">Hỗ trợ</a></li>
+									<li><a href="#">My Account</a></li>
+									<li><a href="#">View Cart</a></li>
+									<li><a href="#">Wishlist</a></li>
+									<li><a href="#">Track My Order</a></li>
+									<li><a href="#">Help</a></li>
 								</ul>
 							</div>
 						</div>
@@ -60,25 +65,14 @@
 			</div>
 			<!-- /top footer -->
 
-			<!-- bottom footer -->
-			<div id="bottom-footer" class="section">
-				<div class="container">
-					<!-- row -->
-					<div class="row">
-						<div class="col-md-12 text-center">
-							<ul class="footer-payments">
-								<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-								<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-							</ul>
-						</div>
-					</div>
-						<!-- /row -->
-				</div>
-				<!-- /container -->
-			</div>
-			<!-- /bottom footer -->
-		</footer>
+		<!-- jQuery Plugins -->
+		<script src="assets/user/js/jquery.min.js"></script>
+		<script src="assets/user/js/bootstrap.min.js"></script>
+		<script src="assets/user/js/slick.min.js"></script>
+		<script src="assets/user/js/nouislider.min.js"></script>
+		<script src="assets/user/js/jquery.zoom.min.js"></script>
+		<script src="assets/user/js/main.js"></script>
+
+	</body>
+	
+</html>

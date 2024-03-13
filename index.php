@@ -1,207 +1,75 @@
 <?php
 session_start();
-ob_start();
-include "DAO/DAO.php";
-include "DAO/PDO.php";
-include "user/view/head.php";
-?>
+require_once 'DAO/PDO.php';
+require_once "DAO/DAO.php";
 
-<?php 
-// Hàm để xử lý điều hướng hành động
+
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
-        case 'danhsachsanpham':
-            hienThiDanhSachSanPham();
+        case 'product':
+            hienthisanpham();
             break;
-        case 'chitietsanpham':
-            hienThiChiTietSanPham();
+        case 'detailProduct':
+            chitietsanpham();
             break;
-        case 'dangxuat':
-            dangXuatNguoiDung();
+        case 'checkout':
+            hoadonSp();
             break;
-        case 'dangnhap':
-            dangNhapNguoiDung();
+        case 'cart':
+            gioHang();
             break;
-        case 'dangky':
-            dangKyNguoiDung();
+        case 'login':
+            dangNhap();
             break;
-        case 'quenmatkhau':
-            quenMatKhau();
+        case 'singup':
+            dangKy();
             break;
-        case 'chitiettaikhoan':
-            chitiettaikhoan();
+        case 'forgot':
+            quenMatkhau();
             break;
-        case 'capnhatthongtin':
-            capNhatThongTinCaNhan();
-            break;
-        case 'hoadon':
-            hienThiHoaDon();
-            break;
-        case 'gioithieu':
-            gioiThieu();
-            break;
-        case 'baiviet':
-            baiViet();
-            break;
-        default:
-            hienThiTrangChu();
-            break;
-    }
-}
-function hienThiTrangChu() {
-    require_once "user/view/section1.php";
-    require_once "user/view/section2.php";
-    require_once "user/view/section3.php";
-    require_once "user/view/section4.php";
-    require_once "user/view/section5.php";
-    require_once "user/view/section6.php";
-    require_once "user/view/newletter.php";
-}
-
-
-function dangNhapNguoiDung() {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      // Receive values from the form
-      $username = $_POST["username"];
-      $password = $_POST["password"];
-    
-      // Initialize variables to store error messages
-      $usernameError = '';
-      $passwordError = '';
-    
-      // Perform validation
-      if (empty($username) || empty($password)) {
-        $usernameError = $passwordError = "Vui lòng nhập đầy đủ tên tài khoản và mật khẩu.";
-      } elseif (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-        $usernameError = "Vui lòng nhập đúng định dạng email";
-      } else {
-        // Data test tạm thời chưa lấy từ database về
-        $validUsername = "bhd@gmail.com";
-        $validPassword = "11111111111";
-    
-        // More secure password handling
-        if ($username !== $validUsername || !password_verify($password, $validPassword)) {
-          $usernameError = $passwordError = "Tên tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.";
         }
-      }
     }
-    require_once "user/view/sign_in.php";
+
+
+function hienthisanpham(){
+    require "user/view/allsp.php";
 }
-
-
-function chiTietTaiKhoan() {
-    // if (isset($_POST['capnhat'])) {
-    //     $user = trim($_POST['user']);
-    //     $email = trim($_POST['email']);
-    //     $address = trim($_POST['address']);
-    //     $tel = $_POST['tel'];
-    //     $date = $_POST['ngaysinh'];
-    //     $id = $_POST['id'];
-
-        // update_taikhoan($user, $email, $address, $id, $tel, $date);
-        // $_SESSION['user'] = getUserByUsernameAndEmail($user, $email);
-    //     header('Location:index.php?act=thongtintk');
-    // }
+function chitietsanpham(){
+    require "user/view/detailproduct.php";
 }
-
-
-
-
-//Cái này chắc không cần giải thích :v 
-function hienThiChiTietSanPham() {
-    include "user/view/product.php";
+function hoadonSp(){
+    require "user/view/checkout.php";
 }
-
-//unset thế này toác hết cả site đấy :v
-//Hiệp xem sửa lại chỗ này
-function dangXuatNguoiDung() {
-    // session_unset['log-in'];
-    // header('Location: index.php');
+function dangNhap(){
+    if(isset($_POST['submit'])){
+        $user = $_POST['user'];
+        $email = $_POST['email'];
+        $phone = $_POST['phonenumber'];
+        $pass = $_POST['pass'];
+        insert_taikhoan($email,$user,$pass,$phone);
+    }
+    require "user/view/user/login.php";
 }
-
-
-function hienThiDanhSachSanPham() {
+function gioHang(){
+    require "user/view/cart.php";
+}
+function dangKy(){
     
-    include "user/view/allsp.php";
+    require "user/view/user/singin.php";
+}
+function quenMatkhau(){
+    require "user/view/user/forgotPassword.php";
 }
 
-function dangKyNguoiDung() {
-    // if (isset($_POST["submit"])) {
-    //     $register_email = $_POST["email"];
-    //     $register_password = $_POST['password'];
-    //     $register_dob = $_POST['dob'];
-    //     $register_sex = $_POST['sex'];
-    
-    //     // Handle image upload
-    //     $imagePath = "assests/upload/";
-    //     $upload_file = $imagePath . basename($_FILES['profile_image']['name']);
-    
-    //     if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_file)) {
-    //         // Image uploaded successfully, register the user
-    //         // register_user($register_email, $register_password, $register_dob, $register_sex, $upload_file);
-    //         echo "Registration successful!";
-    //     } else {
-    //         echo "Error uploading the image.";
-    //     }
-    // }
-    include "user/view/register.php";
-}
-
-function quenMatKhau() {
 
 
-}
-
-function capNhatThongTinCaNhan() {
-    // Triển khai logic cập nhật thông tin cá nhân
-}
-
-function xacNhanThongTin() {
-
-
-}
-
-function hienThiHoaDon() {}
-
-//Về chúng tôi
-function aboutUs() {
-    include "view/review.php";
-}
-
-//Thông tin chung về cửa hàng
-function infor() {}
-
-//Chính sách đổi trả
-function rule() {}
-
-function baiViet() {}
-
-function gioiThieu() {}
-
-function doNothing($userId, $productID, $imagePath, $name, $price, $quantity, $totalPrice, $idbBill) {
-    $sql = "INSERT INTO bill_detail (id, bill_id, product_id, image, name, price, quantity, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    return pdo_execute($sql, $idbBill, $userId, $productID, $imagePath, $name, $price, $quantity, $totalPrice);
-}
-$productID = pdo_get_connection()->lastInsertId();
-?>
-
-
-<body>
-<?php 
-
-// Header trang bao gồm thanh nav với vài thứ linh tinh
-include "user/view/header.php";
-
+require_once "user/view/header.php";
 // Phần điều hướng chính
 if (isset($_GET['act'])) {
-    $hanhDong = $_GET['act'];
-    xuLyHanhDong($hanhDong);
+        $hanhDong = $_GET['act'];
+        xuLyHanhDong($hanhDong);
 } else {
-    hienThiTrangChu();
+    include "user/view/home.php";
 }
+require "user/view/footer.php";
 
-// Bao gồm phần cuối trang
-include "user/view/footer.php";
-include "user/view/hidden.php";
-?>
-</body>

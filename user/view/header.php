@@ -1,17 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+		<!-- Google font -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="assets/user/css/bootstrap.min.css"/>
+
+		<!-- Slick -->
+		<link type="text/css" rel="stylesheet" href="assets/user/css/slick.css"/>
+		<link type="text/css" rel="stylesheet" href="assets/user/css/slick-theme.css"/>
+
+		<!-- nouislider -->
+		<link type="text/css" rel="stylesheet" href="assets/user/css/nouislider.min.css"/>
+
+		<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="assets/user/css/font-awesome.min.css">
+
+		<!-- Custom stlylesheet -->
+		<link type="text/css" rel="stylesheet" href="assets/user/css/style.css"/>
+		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="assets/user/css/cart.css">
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+	<body>
 		<!-- HEADER -->
 		<header>
 			<!-- TOP HEADER -->
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="admin.php"><i class="fa fa-phone"></i>0365486687</a></li>
-						<li><a href="admin.php"><i class="fa fa-envelope-o"></i>duongbhph41427@fpt.edu.vn</a></li>
-						<li><a href="admin.php"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
-						<li><a href="admin.php"><i class="fa fa-map-marker"></i>TDP Đoàn Kết Tây Yên Tử</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i>0936520709</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i>thiendvph42781@fpt.edu.vn</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i>Trường Cao Đăng FPT POLYTECHNIC</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="index.php?act=dangnhap"><i class="fa fa-user-o"></i>Đăng nhập</a></li>
-						<li><a href="index.php?act=dangky"><i class="fa fa-user-o"></i>Đăng ký tài khoản mới</a></li>
+						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+						<li><a href="#"><i class="fa fa-user-o"></i>Tài Khoản</a></li>
 					</ul>
 				</div>
 			</div>
@@ -40,9 +79,11 @@
 									<select class="input-select">
 										<option value="0">Tất cả</option>
 										<option value="1">LapTop</option>
+										<option value="1">Cammera</option>
+										<option value="1">HeadPhone</option>
 									</select>
-									<input class="input" placeholder="Tìm ở đây">
-									<button class="search-btn">Tìm kiếm</button>
+									<input class="input" placeholder="Search here">
+									<button class="search-btn">Search</button>
 								</form>
 							</div>
 						</div>
@@ -87,18 +128,18 @@
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span> VNĐ</h4>
+													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
 												</div>
 												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
 										</div>
 										<div class="cart-summary">
-											<small>3 sản phẩm đã chọn</small>
-											<h5>Tổng đơn hàng : 500.000 VNĐ</h5>
+											<small>3 Item(s) selected</small>
+											<h5>SUBTOTAL: $2940.00</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="index.php?act=cart">Xem giỏ hàng</a>
-											<a href="index.php?act=cart">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="index.php?act=cart">View Cart</a>
+											<a href="index.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -124,26 +165,3 @@
 		</header>
 		<!-- /HEADER -->
 
-		<!-- NAVIGATION -->
-		<nav id="navigation">
-			<!-- container -->
-			<div class="container">
-				<!-- responsive-nav -->
-				<div id="responsive-nav">
-					<!-- NAV -->
-					<ul class="main-nav nav navbar-nav">
-						<li><a href="index.php">Trang chủ</a></li>
-						<li><a href="index.php?act=danhsachsanpham">Tìm kiếm sản phẩm</a></li>
-						<li><a href="index.php?act=register">Đăng ký</a></li>
-						<li><a href="index.php?act=login">Đăng nhập</a></li>
-						<li><a href="index.php?act=support">Hỗ trợ</a></li>
-						<li><a href="index.php?act=news">Báo</a></li>
-						<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
-					</ul>
-					<!-- /NAV -->
-				</div>
-				<!-- /responsive-nav -->
-			</div>
-			<!-- /container -->
-		</nav>
-		<!-- /NAVIGATION -->

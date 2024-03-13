@@ -324,3 +324,21 @@ function get_comment_by_product($id) {
     $sql = "SELECT * FROM `comment` WHERE `product_id` = ?";
     return pdo_query_one($sql, $id);
 }
+
+// Từ cái phần copy của thiện
+
+function insert_taikhoan($email,$user,$pass,$phone){
+    $sql="INSERT INTO `nguoi_dung` ( `ho_ten`, `email`, `so_dien_thoai`,`mat_khau`) VALUES ( '$user', '$email','$phone','$pass'); ";
+    pdo_execute($sql);
+}
+function login($user,$pass) {
+    $sql="SELECT * FROM `nguoi_dung` WHERE ho_ten='$user' and mat_khau='$pass'";
+    $taikhoan = pdo_query_one($sql);
+
+    if ($taikhoan != false) {
+        $_SESSION['user'] = $user;
+    } else {
+        return "Thông tin tài khoản sai";
+    }
+
+}
