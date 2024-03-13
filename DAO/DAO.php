@@ -363,3 +363,9 @@ function fetch_product_variants() {
         throw $e;
     }
 }
+
+function get_variant($id) {
+    $sql = "SELECT * FROM `product_variant` WHERE `product_id` = $id;
+    ";
+    return pdo_query($sql);
+}

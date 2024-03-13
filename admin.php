@@ -7,6 +7,12 @@ include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
+        case 'bienthesanpham':
+            hienThiBienThe();
+            break;
+        case 'xoabienthe':
+            xoaBienThe();
+            break;
         case 'taosanpham':
             taoSanPham();
             break;
@@ -76,6 +82,18 @@ function hienThiChiTietDanhMucBaiViet() {
 
 function hienThiDanhMucBaiViet() {
     include "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý biến thể
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function hienThiBienThe() {
+    require_once "admin/view/BienThe/BienThe.All.php";
+}
+
+function xoaBienThe() {
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
