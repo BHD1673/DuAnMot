@@ -3,7 +3,7 @@ session_start();
 require_once 'DAO/PDO.php';
 require_once "DAO/DAO.php";
 
-
+// Chi them ten mien voi ham tuong ung o day, khong them gi khac
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
         case 'product':
@@ -32,13 +32,13 @@ function xuLyHanhDong($hanhDong) {
 
 
 function hienthisanpham(){
-    require "user/view/allsp.php";
+    require_once "user/view/allsp.php";
 }
 function chitietsanpham(){
-    require "user/view/detailproduct.php";
+    require_once "user/view/detailproduct.php";
 }
 function hoadonSp(){
-    require "user/view/checkout.php";
+    require_once "user/view/checkout.php";
 }
 function dangNhap(){
     if(isset($_POST['submit'])){
@@ -48,17 +48,17 @@ function dangNhap(){
         $pass = $_POST['pass'];
         insert_taikhoan($email,$user,$pass,$phone);
     }
-    require "user/view/user/login.php";
+    require_once "user/view/user/login.php";
 }
 function gioHang(){
-    require "user/view/cart.php";
+    require_once "user/view/cart.php";
 }
 function dangKy(){
     
-    require "user/view/user/singin.php";
+    require_once "user/view/user/singin.php";
 }
 function quenMatkhau(){
-    require "user/view/user/forgotPassword.php";
+    require_once "user/view/user/forgotPassword.php";
 }
 
 
@@ -71,5 +71,5 @@ if (isset($_GET['act'])) {
 } else {
     include "user/view/home.php";
 }
-require "user/view/footer.php";
+require_once "user/view/footer.php";
 
