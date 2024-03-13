@@ -44,9 +44,9 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i>0936520709</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i>thiendvph42781@fpt.edu.vn</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i>Trường Cao Đăng FPT POLYTECHNIC</a></li>
+						<li><a href="admin.php"><i class="fa fa-phone"></i>0365486687</a></li>
+						<li><a href="admin.php"><i class="fa fa-envelope-o"></i>duongbhph414127@fpt.edu.vn</a></li>
+						<li><a href="admin.php"><i class="fa fa-map-marker"></i>Made by Bàn Hải Dương đẹp trai vkl</a></li>
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
