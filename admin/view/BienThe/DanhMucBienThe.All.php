@@ -24,7 +24,7 @@ $array = get_variant_category($_GET['id']);
                 <td>
                     <div class="btn-group" role="group">
                         <a href="admin.php?act=xoadanhmucbienthe&id=<?php echo $item['id']; ?>" class="btn btn-danger">Xoá</a>
-                        <a href="admin.php?act=xemdanhmucbienthe&id=<?php echo $item['id']; ?>" class="btn btn-success">Xem chi tiết</a>
+                        <a href="admin.php?act=bienthe&productid=<?php echo $_GET['id'] ?>&productvariantcategoryid=<?php echo $item['id']; ?>" class="btn btn-success">Xem chi tiết</a>
                     </div>
                 </td>
             </tr>
