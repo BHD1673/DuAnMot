@@ -125,3 +125,17 @@ function validateBrandValue($inputValue) {
     return $errors;
     
 }
+
+function validateForm($variant_type, $desc) {
+    $errors = array();
+
+    if (empty($variant_type)) {
+        $errors['variant_type'] = "Vui lòng đưa ra một cái tên chính xác hơn";
+    }
+
+    if (empty($desc)) {
+        $errors['desc'] = "Vui lòng thêm mô tả";
+    }
+
+    return $errors;
+}

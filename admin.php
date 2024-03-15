@@ -7,8 +7,26 @@ include "DAO/PDO.php";
 //Hàm xử lý hành động cho admin
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
-        case 'bienthesanpham':
+        case 'themdanhmucbienthe': 
+            taoDanhMucBienThe();
+            break;
+        case 'chitietdanhmucbienthe':
+            hienThiChiTietDanhMucBienThe();
+            break;
+        case 'danhmucbienthe':
+            hienThiDanhMucBienThe();
+            break;
+        case 'xoadanhmucbienthe':
+            xoaDanhMucBienThe();
+            break;
+        case 'bienthe':
             hienThiBienThe();
+            break;
+        case 'thembienthe':
+            taoBienThe();
+            break;
+        case 'chitietbienthe':
+            hienThiChiTietBienThe();
             break;
         case 'xoabienthe':
             xoaBienThe();
@@ -48,7 +66,6 @@ function xuLyHanhDong($hanhDong) {
         case 'oof':
             echo "WHAT ?";
             break;
-
         default:
             hienThiTrangChuAdmin();
             break;
@@ -88,8 +105,36 @@ function hienThiDanhMucBaiViet() {
 // Phần xử lý biến thể
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function taoDanhMucBienThe() {
+    require_once "admin/view/BienThe/DanhMucBienThe.Add.php";
+}
+
+function hienThiDanhMucBienThe() {
+    require_once "admin/view/BienThe/DanhMucBienThe.All.php";
+}
+
+function hienThiChiTietDanhMucBienThe() {
+    require_once "admin/view/BienThe/DanhMucBienThe.Edit.php";
+}
+
+function xoaDanhMucBienThe() {
+    
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý biến thể
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function hienThiBienThe() {
     require_once "admin/view/BienThe/BienThe.All.php";
+}
+
+function hienThiChiTietBienThe() {
+    require_once "admin/view/BienThe/BienThe.Edit.php";
+}
+
+function taoBienThe() {
+    require_once "admin/view/BienThe/BienThe.Add.php";
 }
 
 function xoaBienThe() {
@@ -181,74 +226,7 @@ function xoaLoaiSanPham() {
 // Phần xử lý sản phẩm
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function taoSanPham() {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST['name'], $_POST['category_id'], $_POST['description'], $_POST['attributeName'], $_POST['attributeValue'], $_POST['price'], $_POST['quantity'], $_FILES['image']['tmp_name'])) {
     
-            // Retrieve form data
-            $name = $_POST['name'];
-            $category_id = $_POST['category_id'];
-            $description = $_POST['description'];
-            $attributeNames = $_POST['attributeName'];
-            $attributeValues = $_POST['attributeValue'];
-            $prices = $_POST['price'];
-            $quantities = $_POST['quantity'];
-            $images_tmp = $_FILES['image']['tmp_name'];
-    
-            // Insert product into the product table
-            $conn = pdo_get_connection();
-            $conn->beginTransaction();
-    
-            try {
-                // Insert product details
-                $stmt = $conn->prepare("INSERT INTO product (name, description, category_id) VALUES (:name, :description, :category_id)");
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':category_id', $category_id);
-                $stmt->execute();
-    
-                // Retrieve the product_id of the newly inserted product
-                $product_id = $conn->lastInsertId();
-    
-                // Insert product variants
-                $stmt = $conn->prepare("INSERT INTO product_variant (product_id, quantity, variant_type, variant_value, price, image) VALUES (:product_id, :quantity, :variant_type, :variant_value, :price, :image)");
-    
-                // Insert each variant
-                for ($i = 0; $i < count($attributeNames); $i++) {
-                    $stmt->bindParam(':product_id', $product_id);
-                    $stmt->bindParam(':quantity', $quantities[$i]);
-                    $stmt->bindParam(':variant_type', $attributeNames[$i]);
-                    $stmt->bindParam(':variant_value', $attributeValues[$i]);
-                    $stmt->bindParam(':price', $prices[$i]);
-                    
-                    // Upload image and get the path
-                    $uploadDir = 'uploads/';
-                    $fileName = uniqid() . '_' . basename($_FILES['image']['name'][$i]);
-                    $file_path = $uploadDir . $fileName;
-    
-                    if (move_uploaded_file($images_tmp[$i], $file_path)) {
-                        // Image uploaded successfully, bind its path to the statement
-                        $stmt->bindParam(':image', $file_path);
-                    } else {
-                        throw new Exception("Failed to upload image: " . $_FILES['image']['name'][$i]);
-                    }
-    
-                    // Execute the statement
-                    $stmt->execute();
-                }
-    
-                // Commit the transaction
-                $conn->commit();
-                
-                echo "Product added successfully!";
-            } catch (Exception $e) {
-                // Rollback the transaction in case of an error
-                $conn->rollback();
-                echo "Error: " . $e->getMessage();
-            }
-        } else {
-            echo "Please fill all the required fields.";
-        }
-    }
     require_once "admin/view/SanPham/SanPham.Add.php";
 }
 
