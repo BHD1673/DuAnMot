@@ -345,8 +345,26 @@ function login($user,$pass) {
 
 
 function get_product_by_index() {
-    // $sql = "SELECT p.id AS product_id, p.name AS product_name, p.description AS product_description, p.category_id, MAX(pv.image) AS product_image, AVG(pv.price) AS average_price, SUM(pv.quantity) AS total_variant_quantity, c.id AS category_id, c.name AS category_name, p.created_at AS product_created_at, p.update_at AS product_update_at FROM product p LEFT JOIN product_variant pv ON p.id = pv.product_id LEFT JOIN category c ON p.category_id = c.id GROUP BY p.id, p.name, p.description, p.category_id, c.id, c.name, p.created_at, p.update_at;";
-    $sql = "SELECT * FROM product";
+    $sql = "SELECT
+    p.id AS product_id,
+    p.name AS product_name,
+    p.category_id as category_id,
+    COALESCE(SUM(pv.quantity),0) AS total_variant_quantity,
+    MAX(pv.imageurl) AS product_image,
+    p.created_at AS product_created_at,
+    p.update_at AS product_update_at
+FROM
+    product p
+LEFT JOIN product_variant_category pvc ON
+    p.id = pvc.product_id
+LEFT JOIN product_variant pv ON
+    pvc.id = pv.variant_category_id
+GROUP BY
+    p.id
+ORDER BY
+    p.id;
+    ";
+    //$sql = "SELECT * FROM product";
     return pdo_query($sql);
 }
 
@@ -370,4 +388,8 @@ function get_variant_category($id) {
 function add_product_variant_category($product_id, $variant_type, $description) {
     $sql = "INSERT INTO `product_variant_category` (`product_id`, `variant_type`, `desc`) VALUES (?, ?, ?);";
     return pdo_execute($sql, $product_id, $variant_type, $description);
+}
+
+function get_variant($id) {
+    $sql = "SELECT * FROM `product_variant` WHERE id = $id;";
 }
