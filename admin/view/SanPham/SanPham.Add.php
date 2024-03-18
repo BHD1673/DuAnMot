@@ -1,95 +1,47 @@
 <?php
 
 $categories = get_category();
-// Check if the form is submitted
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     // Check if all required fields are filled
-//     if (isset($_POST['name']) && isset($_POST['category_id']) && isset($_POST['description'])) {
-//         // Retrieve form data
-//         $name = $_POST['name'];
-//         $category_id = $_POST['category_id'];
-//         $description = $_POST['description'];
-        
-//         // Process other form fields like attributes, prices, quantities, and images
-//         $attributes = array(); // Array to store attributes
-        
-//         // Loop through attribute fields
-//         if (isset($_POST['attributeName']) && isset($_POST['attributeValue'])) {
-//             $attributeNames = $_POST['attributeName'];
-//             $attributeValues = $_POST['attributeValue'];
-//             $prices = $_POST['price']; // Retrieve prices
-//             $quantities = $_POST['quantity']; // Retrieve quantities
-//             $numAttributes = count($attributeNames);
-            
-//             // Iterate through all attributes
-//             for ($i = 0; $i < $numAttributes; $i++) {
-//                 $attributeName = $attributeNames[$i];
-//                 $attributeValue = $attributeValues[$i];
-//                 $price = $prices[$i]; // Get corresponding price
-//                 $quantity = $quantities[$i]; // Get corresponding quantity
-                
-//                 // Store attribute in the attributes array
-//                 $attributes[] = array(
-//                     'name' => $attributeName,
-//                     'value' => $attributeValue,
-//                     'price' => $price,
-//                     'quantity' => $quantity
-//                 );
-//             }
-//         }
-        
-//         // Handle file upload for images
-//         $uploadedFiles = array(); // Array to store uploaded file paths
-//         $uploadDir = 'uploads/'; // Directory to store uploaded files
+$errors = [];
 
-//         foreach ($_FILES['image']['tmp_name'] as $key => $tmp_name) {
-//             $file_name = $_FILES['image']['name'][$key];
-//             $file_tmp = $_FILES['image']['tmp_name'][$key];
-//             $file_type = $_FILES['image']['type'][$key];
-            
-//             // Check if file type is valid (optional)
-//             // You can add more validation here
-            
-//             $file_path = $uploadDir . $file_name;
-            
-//             // Move uploaded file to the desired directory
-//             if (move_uploaded_file($file_tmp, $file_path)) {
-//                 $uploadedFiles[] = $file_path;
-//             } else {
-//                 // Handle file upload error
-//                 echo "Failed to upload file: $file_name";
-//             }
-//         }
-        
-//         // Now $uploadedFiles array contains the paths of uploaded files
-        
-//         // Insert the product into the database or perform other operations
-        
-//         // Echo out the values
-//         echo "Product Name: $name<br>";
-//         echo "Category ID: $category_id<br>";
-//         echo "Description: .". htmlentities($description) ."<br>";
-//         echo "Attributes:<br>";
-//         foreach ($attributes as $attribute) {
-//             echo "Attribute Name: " . $attribute['name'] . "<br>";
-//             echo "Attribute Value: " . $attribute['value'] . "<br>";
-//             echo "Price: " . $attribute['price'] . "<br>";
-//             echo "Quantity: " . $attribute['quantity'] . "<br>";
-//         }
-//         echo "Image URLs:<br>";
-//         foreach ($uploadedFiles as $file_path) {
-//             echo "$file_path<br>";
-//         }
-        
-//         // Redirect to a success page or display a success message
-//         // echo "Product added successfully!";
-//     } else {
-//         // Handle missing required fields
-//         echo "Please fill all the required fields.";
-//     }
-// }.
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['name']) && isset($_POST['category_id']) && isset($_POST['description'])) {
+        $name = htmlspecialchars($_POST['name']);
+        $category_id = intval($_POST['category_id']);
+        $description = htmlspecialchars($_POST['description']);
 
+        if (empty($name)) {
+            $errors[] = "Name is required.";
+        }
+        if ($category_id <= 0) {
+            $errors[] = "Please select a valid category.";
+        }
+        if (empty($description)) {
+            $errors[] = "Description is required.";
+        }
+
+        if (empty($errors)) {
+            $sql = "INSERT INTO product (name, category_id, description) VALUES (?, ?, ?)";
+            pdo_execute($sql, $name, $category_id, $description);
+            $_SESSION['msg']['taosanphammoi'] = "Thêm sản phẩm mới thành công";
+            header('LOCATION: admin.php?act=sanpham');
+            exit();
+        }
+    } else {
+        $errors[] = "All fields are required.";
+    }
+}
 ?>
+
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <div class="container">
     <h1><i class="fas fa-plus"></i> Thêm sản phẩm mới</h1>
     <form method="POST" enctype="multipart/form-data">
@@ -109,73 +61,18 @@ $categories = get_category();
         <div class="form-group">
             <label for="description"><i class="fas fa-align-left"></i> Mô tả:</label>
             <div id="editor" style="height: 300px;"></div>
-            <textarea id="description" name="description" style="display: none;"></textarea> <!-- Hidden textarea for form submission -->
+            <textarea id="description" name="description" style="display: none;"></textarea>
         </div>
         <hr>
-        <h2><i class="fas fa-plus"></i> Thuộc tinh</h2>
-        <div id="attributesContainer">
-        </div>
-        <button type="button" class="btn btn-primary" id="addAttributeBtn"><i class="fas fa-plus"></i> Thêm thuộc tính </button>        <hr>
         <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Tạo sản phẩm mới</button>
     </form>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
-<script>
-$(document).ready(function() {
-    var attributeCount = 0;
-
-    // Add attribute input fields dynamically
-    $('#addAttributeBtn').click(function() {
-        attributeCount++;
-        var attributeField =
-            `
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="price"><i class="fas fa-dollar-sign"></i> Giá biến thể :</label>
-                    <input type="number" class="form-control" id="price${attributeCount}" name="price[]" step="1000">
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="quantity"><i class="fas fa-sort-numeric-up"></i> Số lượng hiện có:</label>
-                    <input type="number" class="form-control" id="quantity${attributeCount}" name="quantity[]" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="image${attributeCount}"><i class="fas fa-image"></i> Ảnh:</label>
-                    <input type="file" class="form-control" id="image${attributeCount}" name="image[]" multiple>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="attributeName${attributeCount}"><i class="fas fa-tag"></i> Tên biến thể</label>
-                    <input type="text" class="form-control" id="attributeName${attributeCount}" name="attributeName[]" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="attributeValue${attributeCount}"><i class="fas fa-tag"></i> Giá trị biến thể</label>
-                    <input type="text" class="form-control" id="attributeValue${attributeCount}" name="attributeValue[]" required>
-                </div>
-            </div>
-        </div>
-        <hr>
-        `;
-        $('#attributesContainer').append(attributeField);
-    });
-});
-
-</script>
 
 
 

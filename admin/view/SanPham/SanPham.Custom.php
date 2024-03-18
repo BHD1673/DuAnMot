@@ -10,8 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 ?>
 <div class="container">
+<form method="POST" enctype="multipart/form-data">
     <h1><i class="fas fa-edit"></i> Cập nhật sản phẩm</h1>
-    <form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col">
+            <a href="admin.php?act=danhmucbienthe&id=<?= $_GET['id'] ?>" class="btn btn-primary">Xem biến thể của sản phẩm</a>
+            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Cập nhật</button>
+            <a href="admin.php?act=sanpham" class="btn btn-secondary"><i class="fas fa-times"></i> Quay về trang danh sách</a>
+        </div>
+    </div>
+
         <div class="form-group">
             <label for="name"><i class="fas fa-tag"></i> Tên sản phẩm:</label>
             <input type="text" class="form-control" id="name" name="name" value="<?= $productValue['name'] ?>">
@@ -32,13 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <textarea id="description" name="description" style="display: none;"></textarea>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <a href="admin.php?act=bienthesanpham&id=<?= $_GET['id'] ?>" class="btn btn-primary">Xem biến thể của sản phẩm</a>
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Cập nhật</button>
-                <a href="admin.php?act=sanpham" class="btn btn-secondary"><i class="fas fa-times"></i> Quay về trang danh sách</a>
-            </div>
-        </div>
+
 
     </form>
 </div>
