@@ -1,16 +1,6 @@
 <?php
-// $products = [
-//     ['id' => 1, 'name' => 'Product 1', 'price' => 50, 'quantity' => 10, 'description' => 'Description 1', 'category' => '1', 'brand' => 'Brand 1', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Red', 'year' => 2022, 'created_at' => '2023-01-01', 'updated_at' => '2023-01-05'],
-//     ['id' => 2, 'name' => 'Product 2', 'price' => 100, 'quantity' => 8, 'description' => 'Description 2', 'category' => '2', 'brand' => 'Brand 2', 'image' => 'https://media.discordapp.net/attachments/883455950273544252/997219470701510706/2b2t.gif?ex=65fc8701&is=65ea1201&hm=8ad856816386ab8a917c7df4fbadefc4c813a9f6e79038ba25b7375f690dc1b0&', 'color' => 'Blue', 'year' => 2021, 'created_at' => '2023-01-02', 'updated_at' => '2023-01-04'],
-//     // Data ảo
-//     // Phần show sản phẩm thì chỉ cần show ý chính, vào chi tiết thì mới hiện là sản phẩm có những cái gì
-// ];
 
 $products = get_product_by_index();
-
-
-
-// var_dump($_SESSION['msg']['xoadanhmuc'] ?? "");
 
 echo $_SESSION['msg']['xoadanhmuc'] ?? "";
 unset($_SESSION['msg']);
@@ -78,6 +68,7 @@ unset($_SESSION['msg']);
         <td><?php echo $product['product_update_at']; ?></td>
         <td>
             <!-- Phần chi tiếts sản phẩm ở đây -->
+            <a href="admin.php?act=danhmucbienthe&id=<?php echo $product[0]; ?>" class="btn btn-success">Xem danh sách biến thể của sản phẩm</a>
             <a href="admin.php?act=chitietsanpham&id=<?php echo $product[0]; ?>" class="btn btn-warning">Sửa</a>
             <a href="admin.php?act=xoasanpham&id=<?php echo $product[0]; ?>" class="btn btn-danger">Xoá</a>
         </td>

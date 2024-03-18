@@ -21,7 +21,7 @@ function xuLyHanhDong($hanhDong) {
         case 'login':
             dangNhap();
             break;
-        case 'singup':
+        case 'register':
             dangKy();
             break;
         case 'forgot':

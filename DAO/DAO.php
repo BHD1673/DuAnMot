@@ -196,118 +196,6 @@ function get_customer($id = null) {
     }
 }
 
-function create_customer(
-    $name,
-    $email,
-    $phone_number,
-    $password,
-    $role = 1,
-) {
-    $sql = "INSERT INTO `customer` (`name`, `email`, `phone_number`, `password`, `role`) VALUES (?, ?, ?, ?, ?)";
-    pdo_execute($sql, $name, $email, $phone_number, $password, $role);
-}
-
-function update_customer(
-    $customer_id,
-    $name,
-    $phone_number,
-    $password,
-    $role = 1,
-) {
-    $sql = "UPDATE `customer` SET `name` = ?, `phone_number` = ?, `password` = ?, `role` = ? WHERE `id` = ?";
-    pdo_execute($sql, $name, $phone_number, $password, $role, $customer_id);
-}
-
-function delete_customer($customer_id) {
-    $sql = "DELETE FROM `customer` WHERE `id` = ?";
-    pdo_execute($sql, $customer_id);
-}
-
-// Product section
-function get_product($id = null) {
-    if ($id === null) {
-        $sql = "SELECT * FROM `product`";
-        return pdo_query($sql);
-    } else {
-        $sql = "SELECT * FROM `product` WHERE `id` = ?";
-        return pdo_query_one($sql, $id);
-    }
-}
-
-function create_product(    
-)
-{
-    $sql = "INSERT INTO `product` 
-    (
-        `name`, 
-        `retail_price`, 
-        `wholesale_price`, 
-        `purchase_price`, 
-        `quantity`, 
-        `description`, 
-        `category_id`, 
-        `brand_id`, 
-        `image`) 
-    VALUES (
-        'New Product', 
-        '49.99', 
-        '29.99', 
-        '19.99', 
-        10, 
-        'Description of the new product', 
-        1, 
-        1, 
-        'new_product.jpg');
-    ";
-    pdo_execute($sql);
-}
-
-function update_product() {
-    $sql = "UPDATE `product` SET `name` = 'Updated Product Name', `retail_price` = '69.99' WHERE `id` = 1;
-    ";
-    pdo_execute($sql);
-}
-
-function delete_product($id) {
-    $sql = "DELETE FROM `product` WHERE `id` = ?";
-    pdo_execute($sql, $id);
-}
-
-// Attribute section
-
-function get_attribute_detail($id = null) {
-    if ($id === null) {
-        $sql = "SELECT * FROM `product_attribute_detail`";
-        return pdo_query($sql);
-    } else {
-        $sql = "SELECT * FROM `product_attribute_detail` WHERE `id` = ?";
-        return pdo_query_one($sql, $id);
-    }
-}
-
-function create_attribute_detail(
-    $product_id,
-    $attribute_id,
-    $value
-) {
-    $sql = "INSERT INTO `product_attribute_detail` (`product_id`, `attribute_id`, `value`) VALUES (?, ?, ?)";
-    return pdo_execute($sql, $product_id, $attribute_id, $value);
-}
-
-function update_attribute_detail(
-    $id,
-    $product_id,
-    $attribute_id,
-    $value
-) {
-    $sql = "UPDATE `product_attribute_detail` SET `product_id` = ?, `attribute_id` = ?, `value` = ? WHERE `id` = ?";
-    return pdo_execute($sql, $product_id, $attribute_id, $value, $id);
-}
-
-function delete_attribute_detail($id) {
-    $sql = "DELETE FROM `product_attribute_detail` WHERE `id` = ?";
-    return pdo_execute($sql, $id);
-}
 
 //TODO: Write based function for the address table and maybe user bank information
 //TODO: Also write about the article page and some more idk.
@@ -349,6 +237,7 @@ function get_product_by_index() {
     p.id AS product_id,
     p.name AS product_name,
     p.category_id as category_id,
+
     COALESCE(SUM(pv.quantity),0) AS total_variant_quantity,
     MAX(pv.imageurl) AS product_image,
     p.created_at AS product_created_at,
