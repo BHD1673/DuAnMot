@@ -8,6 +8,21 @@ $rows = get_danh_muc();
 // var_dump($row);
 // echo "</pre>";
 
+if (isset($_SESSION['msg'])) {
+    if(isset($_SESSION['msg']['danhmuc']) && $_SESSION['msg']['danhmuc'] !== '') {
+        echo "<p style='color: red;'>" . $_SESSION['msg']['danhmuc'] . "</p>";
+    } else {
+        foreach ($_SESSION['msg'] as $key => $value) {
+            if($key !== 'danhmuc') {
+                echo "<p style='color: red;'>" . $value . "</p>";
+            }
+        }
+    }
+    unset($_SESSION['msg']);
+}
+
+
+
 ?>
 <div class="container mt-5">
     <h2>Danh sách loại sản phẩm</h2>

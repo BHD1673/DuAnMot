@@ -17,8 +17,12 @@ include "view/header.php";
         }
         function xuLyHanhDong($hanhDong) {
             switch ($hanhDong) {
-                case 'unset':
+                case 'unsetLoginValue':
                     //doing something
+                    echo "<pre>";
+                    var_dump($_SESSION);
+                    echo "</pre>";
+                    unset($_SESSION['user']);
                     break;
                 case 'product':
                     hienthisanpham();
@@ -49,13 +53,13 @@ include "view/header.php";
 
     function hienthisanpham(){
         $product = show_product();
-        require "view/allsp.php";
+        require_once "view/allsp.php";
     }
     function chitietsanpham(){
-        require "view/detailproduct.php";
+        require_once "view/detailproduct.php";
     }
     function hoadonSp(){
-        require "view/checkout.php";
+        require_once "view/checkout.php";
     }
     function dangNhap(){
         if(isset($_POST['submit'])){
@@ -73,11 +77,11 @@ include "view/header.php";
                 </script>';
                 }
         }else{
-        require "view/user/login.php";
+        require_once "view/user/login.php";
         }
         }
     function gioHang(){
-        require "view/cart.php";
+        require_once "view/cart.php";
     }
     function dangKy(){
         if(isset($_POST['submit'])){
@@ -91,28 +95,31 @@ include "view/header.php";
             alert("Tài khoản đã tồn tại");
             window.location= " http://localhost:81/duan4/index.php?act=singup ";
             </script>';
+            
             }else{
             insert_taikhoan($email,$user,$pass,$phone);
+            // Nhìn nó có dở hơi không ?
+            // Mà đã thế nó còn là link localhost mới hay 
             echo '<script>
             alert("Tài khoản đã tạo thành công");
             window.location= " http://localhost:81/duan4/index.php?act=login ";
             </script>';
             }
             
-            require "view/user/login.php";
+            require_once "view/user/login.php";
         }
-        require "view/user/singin.php";
+        require_once "view/user/singin.php";
         
     }
     function quenMatkhau(){
-        require "view/user/forgotPassword.php";
+        require_once "view/user/forgotPassword.php";
     }
 
     function timkiem(){
         $category_id = $_GET['category_id'] ?? "";
         $search_result = get_item_by_category($category_id);
 
-        require "view/store.php";
+        require_once "view/store.php";
     }
 
 

@@ -81,34 +81,29 @@ function xuLyHanhDong($hanhDong) {
 // Phần xử lý bài viết 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function taoBaiViet() {
-    include "admin/view/BaiViet/BaiViet.Create.php";
+    require_once "admin/view/BaiViet/BaiViet.Create.php";
 }
 
 function hienThiBaiViet() {
-    include "admin/view/BaiViet/BaiViet.All.php";
+    require_once "admin/view/BaiViet/BaiViet.All.php";
 }
 
 function hienThiBaiVietChiTiet() {
-    include "admin/view/BaiViet/BaiViet.Custom.php";
-
-    // cmm chia file vãi cả l
-    // đéo hiểu có đọc được cái đường dẫn hay không nữa, vãi cả lồn
-    // git đéo biết dùng array đéo chia được
-    // thật là vãi lồn 
+    require_once "admin/view/BaiViet/BaiViet.Custom.php";
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý danh mục bài viết
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function taoLoaiBaiViet() {
-    include "admin/view/LoaiBaiViet/LoaiBaiViet.Create.php";
+    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.Create.php";
 }
 
 function hienThiChiTietDanhMucBaiViet() {
-    include "admin/view/LoaiBaiViet/LoaiBaiViet.Custom.php";
+    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.Custom.php";
 }
 
 function hienThiDanhMucBaiViet() {
-    include "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
+    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,6 +153,7 @@ function hienThiLoaiSanPham() {
             // Nếu mảng dữ liệu trống thì sẽ gửi
             if (empty($validationErrors)) {
                 create_danh_muc($ten_loai_san_pham, $mo_ta);
+                $_SESSION['msg']['danhmuc'] = "Tạo thêm danh mục thành công";
                 header("Location: admin.php?act=loaisp");
             } else {
                 // Validate có dữ liệu không đạt yêu cầu, trả lại kết quả.
@@ -278,11 +274,11 @@ function taoTaiKhoan() {
 //TODO: Xử lý qua js cho cái trang này có nút có thể chuyển từ form hiện thông tin thành điền được thông tin
 //với cái điều kiện là nó phải nhất nút sửa tài khoản, còn không thì chỉ xem qua
 function hienThiChiTietTaiKhoan() {
-    include "admin/view/TaiKhoan/TaiKhoan.Custom.php";
+    require_once "admin/view/TaiKhoan/TaiKhoan.Custom.php";
 }
 
 function hienThiTaiKhoan() {
-    include "admin/view/TaiKhoan/TaiKhoan.All.php";
+    require_once "admin/view/TaiKhoan/TaiKhoan.All.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -293,33 +289,33 @@ function hienThiTaiKhoan() {
 //Online = Đặt hàng cho khách làm online
 
 function taoDonHangOnLan() {
-    include "admin/view/DonHang/DonHang.Create.OnLan.php";
+    require_once "admin/view/DonHang/DonHang.Create.OnLan.php";
 }
 
 function taoDonHangOnline() {
-    include "admin/view/DonHang/DonHang.Add.php";
+    require_once "admin/view/DonHang/DonHang.Add.php";
 }
 
 function hienThiChiTietDonHang() {
-    include "admin/view/DonHang/DonHang.Custom.php";
+    require_once "admin/view/DonHang/DonHang.Custom.php";
 }
 
 function hienThiDonHang() {
-    include "admin/view/DonHang/DonHang.All.php";
+    require_once "admin/view/DonHang/DonHang.All.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Trang chủ
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function hienThiTrangChuAdmin() {
-    include "admin/view/TrangChu/index.php";
+    require_once "admin/view/TrangChu/index.php";
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TODO: Thống kê (Phần này chưa cần để ý lắm)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function thongKe() {
-    include "admin/view/ThongKe/ThongKe.php";
+    require_once "admin/view/ThongKe/ThongKe.php";
 }
 
 //Cái của nợ bên dưới nên cho hẳn một file khác
