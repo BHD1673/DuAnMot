@@ -19,7 +19,6 @@ require_once "view/header.php";
         function xuLyHanhDong($hanhDong) {
             switch ($hanhDong) {
                 case 'unsetLoginValue':
-                    //doing something
                     echo "<pre>";
                     var_dump($_SESSION);
                     echo "</pre>";
@@ -52,6 +51,7 @@ require_once "view/header.php";
                     timkiem();
                     break;
                 case 'dump':
+                    // Kiểm tra cái header xem nó có bị vướng với cái include nào không tránh trường hợp dính vào nhau rồi lôi nhau ra đánh
                     echo "ăklfjalwjfawl";
                     break;
                 }
