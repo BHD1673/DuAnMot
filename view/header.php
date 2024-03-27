@@ -32,6 +32,13 @@
 			.review-rating {
 				display: none;
 			}
+
+			.alert-popup {
+				position: fixed;
+				top: 10px;
+				right: 10px;
+				z-index: 1000;
+			}
 		</style>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -46,6 +53,11 @@
 	<body>
 		<!-- HEADER -->
 		<header>
+		<div class="alert-popup" id="alertPopup" style="display: none;">
+			<div class="alert" role="alert" id="popupContent">
+				<!-- Variable value will be displayed here -->
+			</div>
+		</div>
 			<!-- TOP HEADER -->
 			<div id="top-header">
 				<div class="container">
@@ -91,7 +103,7 @@
 									<?php foreach ($category as $value): ?>
 										<?php extract($value); ?>
 										<option value="<?= $id ?>"><?= $ten_danh_muc ?></option>
-									<?php endforeach ?>
+									<?php endforeach; ?>
 								</select>
 								<input id="searchInput" class="input" name="search" placeholder="Search here">
 								<button class="search-btn" type="button" onclick="redirectForm()">Search</button>
@@ -100,23 +112,22 @@
 						</div>
 						<!-- /SEARCH BAR -->
 						<script>
-    function redirectForm() {
-        var category_id = document.getElementById("categorySelect").value;
-        var search_query = document.getElementById("searchInput").value;
+							function redirectForm() {
+								var category_id = document.getElementById("categorySelect").value;
+								var search_query = document.getElementById("searchInput").value;
 
-        // Constructing the new URL
-        var newUrl = "index.php?act=search_category&category_id=" + encodeURIComponent(category_id);
+								// Constructing the new URL
+								var newUrl = "index.php?act=search_category&category_id=" + encodeURIComponent(category_id);
 
-        // If search query is not empty, append it to the URL
-        if (search_query.trim() !== "") {
-            newUrl += "&search=" + encodeURIComponent(search_query);
-        }
+								// If search query is not empty, append it to the URL
+								if (search_query.trim() !== "") {
+									newUrl += "&search=" + encodeURIComponent(search_query);
+								}
 
-        // Redirect to the new URL
-        window.location.href = newUrl;
-    }
-</script>
-
+								// Redirect to the new URL
+								window.location.href = newUrl;
+							}
+						</script>
 
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">

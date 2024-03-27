@@ -1,4 +1,7 @@
-		<!-- FOOTER -->
+<?php  
+$logoutMessage = isset($_SESSION['msg']['logout']) && !empty($_SESSION['msg']['logout']) ? $_SESSION['msg']['logout'] : ""; 
+unset($_SESSION['msg']['logout']);
+?>		<!-- FOOTER -->
 		<footer id="footer" style="margin-top: 50px">
 			<!-- top footer -->
 			<div class="section">
@@ -72,7 +75,34 @@
 		<script src="js/nouislider.min.js"></script>
 		<script src="js/jquery.zoom.min.js"></script>
 		<script src="js/main.js"></script>
+		<script>
+  // Function to display the pop-up with the given content and color
+  function displayPopup(content, color) {
+    var popup = document.getElementById('alertPopup');
+    var popupContent = document.getElementById('popupContent');
 
+    // Set content and color
+    popupContent.innerHTML = content;
+    popupContent.classList.add('alert-' + color);
+
+    // Show the popup
+    popup.style.display = 'block';
+
+    // Hide the popup after 5 seconds
+    setTimeout(function() {
+      popup.style.display = 'none';
+      popupContent.classList.remove('alert-' + color); 
+    }, 5000);
+  }
+
+  // Example variable
+  var exampleVariable = '<?php echo $logoutMessage; ?>'; 
+
+  if (exampleVariable.trim() !== '') {
+    displayPopup(exampleVariable, 'danger');
+    console.log(exampleVariable);
+  }
+</script>
 	</body>
 	
 </html>

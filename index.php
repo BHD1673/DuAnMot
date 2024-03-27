@@ -1,19 +1,20 @@
 <?php
+ob_start();
 session_start();
 
-include "model/login.php";
-include "model/pdo.php";
-include "model/product.php";
+require_once "model/login.php";
+require_once "model/pdo.php";
+require_once "model/product.php";
 $category = category();
 
-include "view/header.php";
+require_once "view/header.php";
 // Phần điều hướng chính
     if (isset($_GET['act'])) {
             $hanhDong = $_GET['act'];
             xuLyHanhDong($hanhDong);
         } else {
             $product = show_product();
-            include "view/home.php";
+            require_once "view/home.php";
         }
         function xuLyHanhDong($hanhDong) {
             switch ($hanhDong) {
@@ -23,6 +24,8 @@ include "view/header.php";
                     var_dump($_SESSION);
                     echo "</pre>";
                     unset($_SESSION['user']);
+                    $_SESSION['msg']['logout'] = "Bạn đã đăng xuất";
+                    header("LOCATION: index.php");
                     break;
                 case 'product':
                     hienthisanpham();
@@ -73,7 +76,8 @@ include "view/header.php";
                 var_dump($errow);
                 echo '<script>
                 alert("Đăng Nhập Thành Công");
-                window.location= " admin.php ";
+                window.location= " admin.php ";HEADER MY ASS THE FUCK YOU THINK ?
+                thằng admin lồn nào đang ở trang bình thường tự nhiên muốn sang admin luôn ?
                 </script>';
                 }
         }else{
@@ -123,5 +127,5 @@ include "view/header.php";
     }
 
 
-include "view/footer.php";
+require_once "view/footer.php";
 ?>
