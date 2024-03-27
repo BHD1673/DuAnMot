@@ -2,9 +2,9 @@
 ob_start();
 session_start();
 
-require_once "model/login.php";
-require_once "model/pdo.php";
-require_once "model/product.php";
+include "model/login.php";
+include "model/pdo.php";
+include "model/product.php";
 $category = category();
 
 require_once "view/header.php";
@@ -51,6 +51,9 @@ require_once "view/header.php";
                 case 'search_category':
                     timkiem();
                     break;
+                case 'dump':
+                    echo "ăklfjalwjfawl";
+                    break;
                 }
             }
 
@@ -70,50 +73,63 @@ require_once "view/header.php";
             $pass = $_POST['pass'];
             $errow = check_login($user, $pass);
             if(!is_array($errow)){
-                return $_SESSION['msg']['login'] = "Đăng nhập thất bại, có vấn đề, vui lòng kiểm tra lại";
+                 $_SESSION['msg']['login'] = "Đăng nhập thất bại, có vấn đề, vui lòng kiểm tra lại";
+                 header('LOCATION: index.php?act=login');
                 }else{
                 $_SESSION['user'] = $errow;
                 var_dump($errow);
-                echo '<script>
-                alert("Đăng Nhập Thành Công");
-                window.location= " admin.php ";HEADER MY ASS THE FUCK YOU THINK ?
-                thằng admin lồn nào đang ở trang bình thường tự nhiên muốn sang admin luôn ?
-                </script>';
+                $_SESSION['msg']['login'] = "Đăng nhập thành công";
+                header("LOCATION: index.php");
+                    
                 }
         }else{
         require_once "view/user/login.php";
         }
-        }
+    }
     function gioHang(){
         require_once "view/cart.php";
     }
     function dangKy(){
-        if(isset($_POST['submit'])){
-            $user = $_POST['user'];
-            $email = $_POST['email'];
-            $phone = $_POST['phonenumber'];
-            $pass = $_POST['pass'];
-            $check = check_taikhoan($email,$phone);
-            if(is_array($check)){
-            echo '<script>
-            alert("Tài khoản đã tồn tại");
-            window.location= " http://localhost:81/duan4/index.php?act=singup ";
-            </script>';
-            
-            }else{
-            insert_taikhoan($email,$user,$pass,$phone);
-            // Nhìn nó có dở hơi không ?
-            // Mà đã thế nó còn là link localhost mới hay 
-            echo '<script>
-            alert("Tài khoản đã tạo thành công");
-            window.location= " http://localhost:81/duan4/index.php?act=login ";
-            </script>';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $errors = array();
+        
+            if (empty($_POST["user"])) {
+               $errors["user"] = "Username is required";
+            } else {
+                $username = $_POST["user"];
             }
-            
-            require_once "view/user/login.php";
+        
+            if (empty($_POST["email"])) {
+                $errors["email"] = "Email is required";
+            } else {
+                $email = $_POST["email"];
+            }
+        
+            if (empty($_POST["pass"])) {
+                $errors["pass"] = "Password is required";
+            } else {
+                $password = $_POST["pass"];
+            }
+        
+            if (empty($_POST["phonenumber"])) {
+                $errors["phonenumber"] = "Phone number is required";
+            } else {
+                $phoneNumber = $_POST["phonenumber"];
+            }
+        
+            if (empty($errors)) {
+                // Assuming insert_taikhoan() is a function defined elsewhere
+                insert_taikhoan($email, $username, $password, $phoneNumber);
+                $_SESSION['msg']['register'] = 'Đăng ký tài khoản thành công';
+                header("Location: index.php?act=login");
+                exit(); // Always exit after a header redirect
+            } else {
+                $_SESSION['errors'] = $errors; // Store errors in session
+                header("Location: index.php?act=singup");
+                exit();
+            }
         }
         require_once "view/user/singin.php";
-        
     }
     function quenMatkhau(){
         require_once "view/user/forgotPassword.php";

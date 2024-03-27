@@ -96,7 +96,11 @@ unset($_SESSION['msg']['logout']);
   }
 
   // Example variable
-  var exampleVariable = '<?php echo $logoutMessage; ?>'; 
+  var exampleVariable = '<?php 
+  echo $_SESSION['msg']['login'] ?? "";
+  unset($_SESSION['msg']['login']);
+  echo $logoutMessage; 
+  ?>'; 
 
   if (exampleVariable.trim() !== '') {
     displayPopup(exampleVariable, 'danger');

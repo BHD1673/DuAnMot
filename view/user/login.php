@@ -13,6 +13,12 @@
     </style>
 </head>
 <body>
+ <?php                 
+ echo $_SESSION['msg']['register'] ?? "";
+ unset($_SESSION['msg']['register']);
+  echo $_SESSION['msg']['login'] ?? "";
+ unset($_SESSION['msg']['login']);
+ ?>
     <H1 style="text-align: center;">Dang Nhap</H1>
     <div class="container" style="width: 500px;">
         <div class="row">
