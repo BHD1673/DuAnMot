@@ -3,25 +3,32 @@ $id = $_GET['id_sp'];
 function get_product_detail($id)
 {
 	$sql = "SELECT 
-		sp.id AS product_id,
-		sp.ten_san_pham AS product_name,
-		dm.ten_danh_muc AS category_name,
-		sp.gia_co_ban AS product_price,
-		sp.mo_ta AS product_description,
-		COALESCE(SUM(spb.so_luong), 0) AS total_quantity,
-		GROUP_CONCAT(spbt.image) AS product_images
-	FROM 
-		san_pham sp
-	INNER JOIN 
-		danh_muc dm ON sp.id_danh_muc = dm.id
-	LEFT JOIN 
-		san_pham_bien_the spbt ON sp.id = spbt.id_san_pham
-	LEFT JOIN 
-		san_pham_bien_the spb ON sp.id = spb.id_san_pham
-	WHERE 
-		sp.id = ?
-	GROUP BY 
-		sp.id, sp.ten_san_pham, dm.ten_danh_muc, sp.gia_co_ban, sp.mo_ta;
+    sp.id AS product_id,
+    sp.ten_san_pham AS product_name,
+    dm.ten_danh_muc AS category_name,
+    sp.gia_co_ban AS product_price,
+    sp.mo_ta AS product_description,
+    COALESCE(spb.total_quantity, 0) AS total_quantity,
+    GROUP_CONCAT(spbt.image) AS product_images
+FROM 
+    san_pham sp
+INNER JOIN 
+    danh_muc dm ON sp.id_danh_muc = dm.id
+LEFT JOIN (
+    SELECT 
+        id_san_pham,
+        SUM(so_luong) AS total_quantity
+    FROM 
+        san_pham_bien_the
+    GROUP BY 
+        id_san_pham
+) spb ON sp.id = spb.id_san_pham
+LEFT JOIN san_pham_bien_the spbt ON sp.id = spbt.id_san_pham
+WHERE 
+    sp.id = ?
+GROUP BY 
+    sp.id, sp.ten_san_pham, dm.ten_danh_muc, sp.gia_co_ban, sp.mo_ta, spb.total_quantity;
+
 	";
 	return pdo_query_one($sql, $id);
 }
@@ -38,8 +45,10 @@ function get_product_variant($id)
 	return pdo_query($sql);
 }
 $variants = get_product_variant($id);
-
 $value = get_product_detail($id);
+
+
+pre_dump($value);	
 ?>
 <div class="section">
 	<!-- container -->
