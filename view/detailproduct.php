@@ -64,7 +64,7 @@ pre_dump($value);
 					if (!empty($image_paths)) {
 					?>
 						<div class="product-preview">
-							<img src="<?= trim($image_paths[0]) ?>" alt="">
+							<img src="uploads/<?= trim($image_paths[0]) ?>" alt="">
 						</div>
 					<?php
 					}
@@ -81,7 +81,7 @@ pre_dump($value);
 					for ($i = 1; $i < count($image_paths); $i++) {
 					?>
 						<div class="product-preview">
-							<img src="<?= trim($image_paths[$i]) ?>" alt="">
+							<img src="uploads/<?= trim($image_paths[$i]) ?>" alt="">
 						</div>
 					<?php
 					}
