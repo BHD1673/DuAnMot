@@ -7,6 +7,12 @@ include "model/pdo.php";
 include "model/product.php";
 $category = category();
 
+function pre_dump($variable) {
+    echo "<pre>";
+    var_dump($variable);
+    echo "</pre>";
+}
+
 require_once "view/header.php";
 // Phần điều hướng chính
     if (isset($_GET['act'])) {
