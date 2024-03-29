@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Trang bán hàng</title>
+		<title>Electro - HTML Ecommerce Template</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -28,19 +28,6 @@
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 		<link type="text/css" rel="stylesheet" href="css/cart.css"/>
 
-		<style>
-			.review-rating {
-				display: none;
-			}
-
-			.alert-popup {
-				position: fixed;
-				top: 10px;
-				right: 10px;
-				z-index: 1000;
-			}
-		</style>
-
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -53,25 +40,42 @@
 	<body>
 		<!-- HEADER -->
 		<header>
-		<div class="alert-popup" id="alertPopup" style="display: none;">
-			<div class="alert" role="alert" id="popupContent">
-				<!-- Variable value will be displayed here -->
-			</div>
-		</div>
 			<!-- TOP HEADER -->
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="admin.php"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="admin.php"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-						<li><a href="admin.php"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i> Đăng xuất</a></li>
-						<li><a href="admin.php"><i class="fa fa-user-o">Chuyển sang trang admin</i><?php
-						if(isset($_SESSION['user'])){
-							echo $_SESSION['user']['ho_ten'];
+					<?php
+						if(isset($_SESSION['user'])) {
+							if($_SESSION['user']['role'] == '1'){
+								echo '<li><a href="index.php?act=logout"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
+							}else if($_SESSION['user']['role'] == '0'){
+								echo '<li><a href="index.php?act=logout"><i class="fa fa-dollar"></i	>Đăng Xuất</a></li>';
+							}
+							
 						}
+
+						if (empty($_SESSION['user'])) {
+							echo '<li><a href="index.php?act=login"><i class="fa fa-user"></i>Đăng nhập</a></li>';
+							echo '<li><a href="index.php?act=singup"><i class="fa fa-user"></i>Đăng ký</a></li>';
+						}
+					?>
+
+						
+						<li><a href="#"><i class="fa fa-user-o"></i><?php
+						if(isset($_SESSION['user'])) {
+							if($_SESSION['user']['role'] == '1') {
+								echo '<a href="admin.php">' .  $_SESSION['user']['ho_ten']  . '</a>';
+
+							} else {
+								echo $_SESSION['user']['ho_ten'];
+							}
+						}
+			
 						?></a></li>
 					</ul>
 				</div>
@@ -97,56 +101,35 @@
 						<!-- SEARCH BAR -->
 						<div class="col-md-6">
 							<div class="header-search">
-							<form id="searchForm" method="get" action="index.php">
-								<select id="categorySelect" class="input-select" name="category_id">
-									<option value="0" selected>Tìm tất cả</option>
-									<?php foreach ($category as $value): ?>
-										<?php extract($value); ?>
-										<option value="<?= $id ?>"><?= $ten_danh_muc ?></option>
-									<?php endforeach; ?>
-								</select>
-								<input id="searchInput" class="input" name="search" placeholder="Search here">
-								<button class="search-btn" type="button" onclick="redirectForm()">Search</button>
-							</form>
+								<form method="post" action="index.php?act=">
+									<select class="input-select" name="category_id">
+										<option value="0" selected>
+											All_category
+											
+										</option>
+										<?php
+										foreach ($category as $value ):
+											extract($value);
+										?>
+										<option><a href="index.php?act=search-category&id=<?=$id ?>"> <?= $ten_danh_muc?> </a></option>
+										<?php endforeach ?>
+									</select>
+									<input class="input" placeholder="Search here">
+									<button class="search-btn" name="search">Search</button>
+								</form>
 							</div>
 						</div>
 						<!-- /SEARCH BAR -->
-						<script>
-							function redirectForm() {
-								var category_id = document.getElementById("categorySelect").value;
-								var search_query = document.getElementById("searchInput").value;
-
-								// Constructing the new URL
-								var newUrl = "index.php?act=search_category&category_id=" + encodeURIComponent(category_id);
-
-								// If search query is not empty, append it to the URL
-								if (search_query.trim() !== "") {
-									newUrl += "&search=" + encodeURIComponent(search_query);
-								}
-
-								// Redirect to the new URL
-								window.location.href = newUrl;
-							}
-						</script>
 
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
-								<!-- Wishlist -->
-								<div>
-									<a href="#">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty">2</div>
-									</a>
-								</div>
-								<!-- /Wishlist -->
 
 								<!-- Cart -->
 								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="index.php?act=">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
+										<span>Giỏ hàng của bạn</span>
 										<div class="qty">3</div>
 									</a>
 									<div class="cart-dropdown">
@@ -179,7 +162,7 @@
 										</div>
 										<div class="cart-btns">
 											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="index.php?act=cart">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -204,3 +187,27 @@
 			<!-- /MAIN HEADER -->
 		</header>
 		<!-- /HEADER -->
+						<!-- NAVIGATION -->
+						<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav text-center ">
+						<li><a href="index.php">Trang chủ</a></li>
+						<li><a href="index.php?act=product">Danh sách sản phẩm</a></li>
+						<li><a href="index.php?act=support">Hỗ trợ</a></li>
+						<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+		<!-- SECTION -->
+		
+		</div>
+		<!-- /SECTION -->
