@@ -33,22 +33,73 @@ GROUP BY
 	return pdo_query_one($sql, $id);
 }
 
-function get_product_variant($id)
+function getVariantsForProduct($productId)
 {
-	$sql = "SELECT st.id, st.ten_bien_the, GROUP_CONCAT(spbt.gia_tri) AS variant_values
-		FROM bien_the st
-		LEFT JOIN san_pham_bien_the spbt ON spbt.id_bien_the = st.id
-		WHERE spbt.id_san_pham = $id AND st.ten_bien_the IS NOT NULL
-		GROUP BY st.id, st.ten_bien_the
-		";
+	// Prepare SQL query
+	$sql = "SELECT st.id, st.ten_bien_the, GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values
+            FROM bien_the st
+            LEFT JOIN san_pham_bien_the spbt ON spbt.id_bien_the = st.id
+            WHERE spbt.id_san_pham = ?
+            AND st.ten_bien_the IS NOT NULL
+            GROUP BY st.id, st.ten_bien_the";
 
-	return pdo_query($sql);
+	// Execute query using PDO
+	$rows = pdo_query($sql, $productId);
+
+	$variants = array();
+
+	// Fetch variant information and store it in an array
+	foreach ($rows as $row) {
+		$variantId = $row["id"];
+		$variantName = $row["ten_bien_the"];
+		$variantValues = $row["variant_values"];
+
+		$variants[] = array(
+			"id" => $variantId,
+			"ten_bien_the" => $variantName,
+			"variant_values" => $variantValues
+		);
+	}
+
+	return $variants;
 }
-$variants = get_product_variant($id);
+$variants = getVariantsForProduct($id);
 $value = get_product_detail($id);
 
 
-pre_dump($value);	
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
+    $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
+    $variant_values = isset($_POST['variant_values']) ? $_POST['variant_values'] : array();
+    $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
+
+    if (!empty($product_id) && !empty($variant_values)) {
+        try {
+            // Check if the same product with the same variant combination already exists in the cart
+            $sql = "SELECT id, so_luong FROM gio_hang WHERE id_nguoi_dung = ? AND id_san_pham_bien_the = ?";
+            $existing_item = pdo_query_one($sql, $_SESSION['user_id'], $product_id);
+
+            if ($existing_item) {
+                // If the same product with the same variant combination exists, update the quantity
+                $new_quantity = $existing_item['so_luong'] + $quantity;
+                $update_sql = "UPDATE gio_hang SET so_luong = ? WHERE id = ?";
+                pdo_execute($update_sql, $new_quantity, $existing_item['id']);
+            } else {
+                // If the same product with the same variant combination does not exist, insert a new row
+                $insert_sql = "INSERT INTO gio_hang (id_nguoi_dung, id_san_pham_bien_the, so_luong) VALUES (?, ?, ?)";
+                pdo_execute($insert_sql, $_SESSION['user_id'], $product_id, $quantity);
+            }
+            header("Location: success.php");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+}
+
+
+
+pre_dump($_SESSION);
+// session_destroy();
 ?>
 <div class="section">
 	<!-- container -->
@@ -102,61 +153,53 @@ pre_dump($value);
 					</div>
 					<p><?= $value['category_name'] ?></p>
 
-					<!-- Product Options -->
-					<div class="product-options">
-						<?php
-						// Check if $variants is not null and is an array
-						if (!is_null($variants) && is_array($variants)) {
-							foreach ($variants as $variant) {
-								echo '<label>' . $variant['ten_bien_the'] . '<select class="input-select">';
-								// Check if variant_values is not null and is a string
-								if (!is_null($variant['variant_values']) && is_string($variant['variant_values'])) {
-									$values = explode(',', $variant['variant_values']);
-									foreach ($values as $value) {
-										echo '<option value="' . $value . '">' . $value . '</option>';
+					<!-- HTML form -->
+					<form method="post">
+						<!-- Product ID field (hidden) -->
+						<input type="hidden" name="product_id" value="1"> <!-- Replace '1' with actual product ID -->
+
+						<!-- Product Options -->
+						<div class="product-options">
+							<?php
+							if (empty($variants)) {
+								echo '<p>No variants found for the product.</p>';
+							} else {
+								echo '<div class="product-options">';
+								foreach ($variants as $variant) {
+									echo '<label>' . $variant['ten_bien_the'] . '<select name="variant_values[' . $variant['id'] . ']" class="input-select">';
+									if (!empty($variant['variant_values'])) {
+										$values = explode(',', $variant['variant_values']);
+										foreach ($values as $value) {
+											$pair = explode(':', $value);
+											$variantId = $pair[0];
+											$variantValue = $pair[1];
+											echo '<option value="' . $variantId . '">' . $variantId . ' - ' . $variantValue . '</option>';
+										}
 									}
+									echo '</select></label>';
 								}
-								echo '</select></label>';
+								echo '</div>';
 							}
-						}
-						?>
-					</div>
-					<!-- End Product Options -->
+							?>
 
-
-
-
-					<div class="add-to-cart">
-						<div class="qty-label">
-							Qty
-							<div class="input-number">
-								<input type="number">
-								<span class="qty-up">+</span>
-								<span class="qty-down">-</span>
-							</div>
 						</div>
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-					</div>
 
-					<!-- <ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
-							</ul>
+						<!-- End Product Options -->
 
-							<ul class="product-links">
-								<li>Danh mục:</li>
-								<li><a href="#">Headphones</a></li>
-								<li><a href="#">Accessories</a></li>
-							</ul>
-
-							<ul class="product-links">
-								<li>Share:</li>
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i></a></li>
-							</ul> -->
-
+						<!-- Quantity field -->
+						<div class="add-to-cart">
+							<div class="qty-label">
+								Qty
+								<div class="input-number">
+									<input type="number" name="quantity">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+							<!-- Add to cart button -->
+							<button type="submit" name="add_to_cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+						</div>
+					</form>
 				</div>
 			</div>
 			<!-- /Product details -->

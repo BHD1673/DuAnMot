@@ -58,14 +58,14 @@ CREATE TABLE `bien_the` (
 
 CREATE TABLE `danh_muc` (
   `id` int(11) NOT NULL,
-  `ten_danh_muc` varchar(255) DEFAULT NULL
+  `ten_dm` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `danh_muc`
 --
 
-INSERT INTO `danh_muc` (`id`, `ten_danh_muc`) VALUES
+INSERT INTO `danh_muc` (`id`, `ten_dm`) VALUES
 (1, 'Máy ảnh'),
 (2, 'Máy tính'),
 (3, 'Điện thoại');

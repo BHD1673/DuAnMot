@@ -13,6 +13,14 @@ function pre_dump($variable) {
     echo "</pre>";
 }
 
+function create_guest_session() {
+    if (!isset($_SESSION['guest_id'])) {
+        $guest_id = uniqid('guest_');
+        $_SESSION['guest_id'] = $guest_id;
+    }
+}
+create_guest_session();
+
 require_once "view/header.php";
 // Phần điều hướng chính
     if (isset($_GET['act'])) {
