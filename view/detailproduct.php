@@ -1,67 +1,6 @@
 <?php
 $id = $_GET['id_sp'];
 
-function get_product_detail($id)
-{
-    $sql = "SELECT 
-                sp.id AS product_id,
-                sp.ten_san_pham AS product_name,
-                dm.ten_danh_muc AS category_name,
-                sp.gia_co_ban AS product_price,
-                sp.mo_ta AS product_description,
-                COALESCE(spb.total_quantity, 0) AS total_quantity,
-                GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values,
-                GROUP_CONCAT(spbt.image) AS product_images
-            FROM 
-                san_pham sp
-            INNER JOIN 
-                danh_muc dm ON sp.id_danh_muc = dm.id
-            LEFT JOIN (
-                SELECT 
-                    id_san_pham,
-                    SUM(so_luong) AS total_quantity
-                FROM 
-                    san_pham_bien_the
-                GROUP BY 
-                    id_san_pham
-            ) spb ON sp.id = spb.id_san_pham
-            LEFT JOIN san_pham_bien_the spbt ON sp.id = spbt.id_san_pham
-            WHERE 
-                sp.id = ?
-            GROUP BY 
-                sp.id, sp.ten_san_pham, dm.ten_danh_muc, sp.gia_co_ban, sp.mo_ta, spb.total_quantity";
-
-    return pdo_query_one($sql, $id);
-}
-
-function getVariantsForProduct($productId)
-{
-    $sql = "SELECT st.id, st.ten_bien_the, GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values
-            FROM bien_the st
-            LEFT JOIN san_pham_bien_the spbt ON spbt.id_bien_the = st.id
-            WHERE spbt.id_san_pham = ?
-            AND st.ten_bien_the IS NOT NULL
-            GROUP BY st.id, st.ten_bien_the";
-
-    $rows = pdo_query($sql, $productId);
-
-    $variants = array();
-
-    foreach ($rows as $row) {
-        $variantId = $row["id"];
-        $variantName = $row["ten_bien_the"];
-        $variantValues = $row["variant_values"];
-
-        $variants[] = array(
-            "id" => $variantId,
-            "ten_bien_the" => $variantName,
-            "variant_values" => $variantValues
-        );
-    }
-
-    return $variants;
-}
-
 $variants = getVariantsForProduct($id);
 $value = get_product_detail($id);
 
@@ -99,21 +38,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
 // pre_dump($value);
 // // session_destroy();
 ?>
 <div class="section">
-	<!-- container -->
 	<div class="container">
-		<!-- row -->
 		<div class="row">
-			<!-- Product main img -->
 			<div class="col-md-5 col-md-push-2">
 				<div id="product-main-img">
 					<?php
 					$image_paths = explode(',', $value['product_images']);
-					// Display the first image as the main image
 					if (!empty($image_paths)) {
 					?>
 						<div class="product-preview">
@@ -124,13 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					?>
 				</div>
 			</div>
-			<!-- /Product main img -->
-
-			<!-- Product thumb imgs -->
 			<div class="col-md-2 col-md-pull-5">
 				<div id="product-imgs">
 					<?php
-					// Display the rest of the images as thumbnails
 					for ($i = 1; $i < count($image_paths); $i++) {
 					?>
 						<div class="product-preview">
@@ -141,26 +71,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					?>
 				</div>
 			</div>
-			<!-- /Product thumb imgs -->
 
-
-
-			<!-- Product details -->
 			<div class="col-md-5">
 				<div class="product-details">
 					<h2 class="product-name"><?= $value['product_name'] ?></h2>
 					<div>
 						<h3 class="product-price"><?= $value['product_price'] ?></h3>
-						<!-- <span class="product-available">In Stock</span> -->
 					</div>
 					<p><?= $value['category_name'] ?></p>
 
-					<!-- HTML form -->
 					<form method="post">
-						<!-- Product ID field (hidden) -->
-						<input type="hidden" name="product_id" value="<?= $_GET['id_sp'] ?>"> <!-- Replace '1' with actual product ID -->
-
-						<!-- Product Options -->
+						<input type="hidden" name="product_id" value="<?= $_GET['id_sp'] ?>">
 						<div class="product-options">
 							<?php
 							if (empty($variants)) {
@@ -185,40 +106,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							?>
 
 						</div>
-
-						<!-- End Product Options -->
-
-						<!-- Quantity field -->
 						<div class="add-to-cart">
 							<div class="qty-label">
-								Qty
+								Số lượng sản phẩm
 								<div class="input-number">
 									<input type="number" name="quantity">
 									<span class="qty-up">+</span>
 									<span class="qty-down">-</span>
 								</div>
 							</div>
-							<!-- Add to cart button -->
 							<button type="submit" name="add_to_cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 						</div>
 					</form>
 				</div>
 			</div>
-			<!-- /Product details -->
-
-			<!-- Product tab -->
 			<div class="col-md-12">
 				<div id="product-tab">
-					<!-- product tab nav -->
 					<ul class="tab-nav">
-						<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-						<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+						<li class="active"><a data-toggle="tab" href="#tab1">Mô tả sản phẩm</a></li>
+						<li><a data-toggle="tab" href="#tab3">Comment về sản phẩm</a></li>
 					</ul>
-					<!-- /product tab nav -->
-
-					<!-- product tab content -->
 					<div class="tab-content">
-						<!-- tab1  -->
 						<div id="tab1" class="tab-pane fade in active">
 							<div class="row">
 								<div class="col-md-12">
@@ -229,27 +137,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 								</div>
 							</div>
 						</div>
-						<!-- /tab1  -->
-
-						<!-- tab3  -->
 						<div id="tab3" class="tab-pane fade in">
 							<div class="row">
-
-								<!-- Reviews -->
-								<div class="col-md-6">
+								<div class="col-md-9">
 									<div id="reviews">
 										<ul class="reviews">
 											<li>
 												<div class="review-heading">
 													<h5 class="name">John</h5>
 													<p class="date">27 DEC 2018, 8:0 PM</p>
-													<div class="review-rating">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-o empty"></i>
-													</div>
 												</div>
 												<div class="review-body">
 													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
@@ -259,13 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 												<div class="review-heading">
 													<h5 class="name">John</h5>
 													<p class="date">27 DEC 2018, 8:0 PM</p>
-													<div class="review-rating">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-o empty"></i>
-													</div>
 												</div>
 												<div class="review-body">
 													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
@@ -275,13 +164,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 												<div class="review-heading">
 													<h5 class="name">John</h5>
 													<p class="date">27 DEC 2018, 8:0 PM</p>
-													<div class="review-rating">
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star"></i>
-														<i class="fa fa-star-o empty"></i>
-													</div>
 												</div>
 												<div class="review-body">
 													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
@@ -297,25 +179,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 										</ul>
 									</div>
 								</div>
-								<!-- /Reviews -->
-
-								<!-- Review Form -->
 								<div class="col-md-3">
 									<div id="review-form">
 										<form class="review-form">
 											<input class="input" type="text" placeholder="Your Name">
 											<input class="input" type="email" placeholder="Your Email">
 											<textarea class="input" placeholder="Your Review"></textarea>
-											<div class="input-rating">
-												<span>Your Rating: </span>
-												<div class="stars">
-													<input id="star5" name="rating" value="5" type="radio"><label for="star5"></label>
-													<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
-													<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
-													<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-													<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
-												</div>
-											</div>
 											<button class="primary-btn">Submit</button>
 										</form>
 									</div>

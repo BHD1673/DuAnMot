@@ -1,5 +1,6 @@
 <?php 
 
+
 function getCartValue() {
     $sql = 'SELECT 
     id, 

@@ -26,22 +26,12 @@ function create_guest_session()
 create_guest_session();
 
 if (isset($_SESSION['user']) && $_SESSION['user']['id'] !== null) {
-    // If user is logged in, assign $_SESSION['user']['id'] to $_SESSION['user_identify']
     $_SESSION['user_identify'] = $_SESSION['user']['id'];
 } else {
-    // If user is not logged in, assign guest_id to $_SESSION['user_identify']
     $_SESSION['user_identify'] = $_SESSION['guest_id'];
 }
 
-require_once "view/header.php";
-// Phần điều hướng chính
-if (isset($_GET['act'])) {
-    $hanhDong = $_GET['act'];
-    xuLyHanhDong($hanhDong);
-} else {
-    $product = show_product();
-    require_once "view/home.php";
-}
+
 function xuLyHanhDong($hanhDong)
 {
     switch ($hanhDong) {
@@ -74,7 +64,7 @@ function xuLyHanhDong($hanhDong)
         case 'forgot':
             quenMatkhau();
             break;
-        case 'search_category':
+        case 'search':
             timkiem();
             break;
         case 'dump':
@@ -117,6 +107,11 @@ function dangNhap()
 }
 function gioHang()
 {
+    if (empty($_SESSION['user'])) {
+        $_SESSION['msg']['cart-warning'] = "Vui lòng đăng nhập để có thể mua hàng !";
+        header('Location: index.php?act=login');
+        exit;
+    }
     $cartItems = getCartValue();
     // pre_dump($cart);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -171,13 +166,12 @@ function dangKy()
         }
 
         if (empty($errors)) {
-            // Assuming insert_taikhoan() is a function defined elsewhere
             insert_taikhoan($email, $username, $password, $phoneNumber);
             $_SESSION['msg']['register'] = 'Đăng ký tài khoản thành công';
             header("Location: index.php?act=login");
-            exit(); // Always exit after a header redirect
+            exit();
         } else {
-            $_SESSION['errors'] = $errors; // Store errors in session
+            $_SESSION['errors'] = $errors;
             header("Location: index.php?act=singup");
             exit();
         }
@@ -192,10 +186,19 @@ function quenMatkhau()
 function timkiem()
 {
     $category_id = $_GET['category_id'] ?? "";
-    $search_result = get_item_by_category($category_id);
+    $product_name = $_GET['product_name'] ?? "";
+    $search_result = get_item_by_category_or_name($category_id, $product_name);
 
     require_once "view/store.php";
 }
 
-
+require_once "view/header.php";
+// Phần điều hướng chính
+if (isset($_GET['act'])) {
+    $hanhDong = $_GET['act'];
+    xuLyHanhDong($hanhDong);
+} else {
+    $product = show_product();
+    require_once "view/home.php";
+}
 require_once "view/footer.php";
