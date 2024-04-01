@@ -85,7 +85,7 @@ unset($_SESSION['msg']);
           max-height: 100px;
         
         "
-         src="<?php echo $product['variant_image']; ?>" alt="<?php echo $product['variant_image']; ?> "></td>
+         src="uploads/<?php echo $product['variant_image']; ?>" alt="<?php echo $product['variant_image']; ?> "></td>
         <td><a href="admin.php?act=editloaisp&id=<?php echo $product['category_id'] ?? ""; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category_id']; ?></a></td>
         <td><?php echo $product['product_based_price']; ?></td>
         <td><?php //echo $product['product_update_at']; ?></td>

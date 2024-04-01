@@ -36,7 +36,7 @@
 										?>
 										<div class="product">
 											<div class="product-img">
-												<img src="<?= $pro['product_image']  ?>" alt="">
+												<img src="uploads/<?= $pro['product_image']  ?>" alt="">
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>

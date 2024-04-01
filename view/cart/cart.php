@@ -1,29 +1,11 @@
 <?php
 
-$cartItems = getCartValue();
-// pre_dump($cart);
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset($_POST['quantity']) && isset($_POST['item_id'])) {
-
-        $item_id = $_POST['item_id'];
-        $quantity_change = $_POST['quantity'] == '+' ? 1 : -1; 
-
-        try {
-            $conn = pdo_get_connection();
-            $sql = "UPDATE gio_hang SET so_luong = so_luong + ? WHERE id = ?";
-            pdo_execute($sql, $quantity_change, $item_id);
-        } catch (PDOException $e) {
-
-            echo "Error: " . $e->getMessage();
-        } finally {
-            unset($conn);
-        }
-    }
-}
 
 ?>
 <div class="container">
+    <h1 style="color: red;">Giỏ hàng</h1>
+
     <table class="table">
         <thead>
             <tr>
@@ -31,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <th>Tên sản phẩm</th>
                 <th>Biến thể</th>
                 <th>Giá trị một sản phẩm</th>
-                <th>Tổng giá trị sản phẩm</th>
                 <th>Số lượng</th>
+                <th>Tổng giá trị sản phẩm</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -43,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <td><?php echo $item['ten_san_pham']; ?></td>
                     <td><?php echo $item['attributes']; ?></td>
                     <td><?php echo $item['item_total_price']; ?></td>
-                    <td class="total-price"><?php echo $item['total_price_with_quantity']; ?></td>
                     <td>
                         <form action="" method="POST">
                             <div class="input-group">
@@ -54,13 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </form>
                     </td>
+                    <td class="total-price"><?php echo $item['total_price_with_quantity']; ?></td>
                     <td>
-                        <a href="delete_item.php?id=<?php echo $item['id']; ?>" class="btn btn-danger">Xoá</a>
-                        <a href="item_detail.php?id=<?php echo $item['id']; ?>" class="btn btn-primary">Về trang chi tiết sản phẩm</a>
+                        <a href="index.php?act=thanhtoan&id=<?php echo $item['id']; ?>" class="btn btn-success">Thanh toán sản phẩm</a>
+                        <a href="index.php?act=xoakhoigiohang&id=<?php echo $item['id']; ?>" class="btn btn-danger">Xoá</a>
+                        <a href="index.php?act=detailProduct&id=<?php echo $item['id']; ?>" class="btn btn-primary">Về trang chi tiết sản phẩm</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
-            <div class="total-cart-value"></div>
+            <h3><div class="total-cart-value"></div></h1>
+            <a href="index.php?act=thanhtoantong" class="btn btn-success" style="    display: flex;
+    justify-content: center;">Thanh toán tất cả</a>
         </tbody>
     </table>
 </div>

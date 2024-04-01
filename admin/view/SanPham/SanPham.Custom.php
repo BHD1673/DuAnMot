@@ -5,21 +5,19 @@ $categories = get_danh_muc();
 $productValue = get_product_one($_GET['id']);
 
 // echo "<pre>";
-// var_dump($categories);
 // var_dump($productValue);
 // echo "</pre>";
 
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $sql = "UPDATE product SET name = ?, category_id = ?, description = ? WHERE id = ?";
+    $sql = "UPDATE san_pham SET ten_san_pham = ?, id_danh_muc = ?, mo_ta = ? WHERE id = ?";
     pdo_execute($sql, $_POST['name'], $_POST['category_id'], $_POST['description'], $_GET['id']);
     header("Location: admin.php?act=sanpham");
 }
 ?>
 
-
 <div class="container">
-<form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
     <h1><i class="fas fa-edit"></i> Cập nhật sản phẩm</h1>
     <div class="row">
         <div class="col">
@@ -29,32 +27,50 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
     </div>
 
-        <div class="form-group">
-            <label for="name"><i class="fas fa-tag"></i> Tên sản phẩm:</label>
-            <input type="text" class="form-control" id="name" name="name" value="<?= $productValue['ten_san_pham'] ?>">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-tag"></i> Tên sản phẩm:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $productValue['ten_san_pham'] ?>">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="category_id"><i class="fas fa-tags"></i> Danh mục sản phẩm:</label>
-            <select class="form-control" id="category_id" name="category_id" required>
-                <option value="">Chọn danh mục</option>
-                <?php foreach ($categories as $category) : ?>
-                    <?php $selected = ($category['id'] == $productValue['id_danh_muc']) ? 'selected' : ''; ?>
-                    <option value="<?= htmlspecialchars($category['id']) ?>" <?= $selected ?>>
-                        <?= htmlspecialchars($category['ten_danh_muc']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="category_id"><i class="fas fa-tags"></i> Danh mục sản phẩm:</label>
+                    <select class="form-control" id="category_id" name="category_id" required>
+                        <option value="">Chọn danh mục</option>
+                        <?php foreach ($categories as $category) : ?>
+                            <?php $selected = ($category['id'] == $productValue['id_danh_muc']) ? 'selected' : ''; ?>
+                            <option value="<?= htmlspecialchars($category['id']) ?>" <?= $selected ?>>
+                                <?= htmlspecialchars($category['ten_danh_muc']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="description"><i class="fas fa-align-left"></i> Mô tả:</label>
-            <div id="editor" style="height: 300px;"></div>
-            <textarea id="description" name="description" style="display: none;"></textarea>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="price" class="form-label"><i class="fas fa-dollar-sign"></i> Giá cơ bản</label>
+                    <input type="text" class="form-control" id="price" name="price" value="<?= $productValue['gia_co_ban'] ?>">
+                </div>
+            </div>
         </div>
-
-
-
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="description"><i class="fas fa-align-left"></i> Mô tả:</label>
+                    <div id="editor" style="height: 300px;"></div>
+                    <textarea id="description" name="description" style="display: none;"></textarea>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
+
 
 
 <!-- Popper.js -->
@@ -90,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     });
 
     // Set the initial content of Quill editor to the value of the description
-    var descriptionValue = <?= json_encode($productValue['mo_ta']) ?>;
+    var descriptionValue = <?= json_encode(html_entity_decode($productValue['mo_ta'])) ?>;
     quill.root.innerHTML = descriptionValue;
 
     // Save the HTML content to the hidden textarea for form submission

@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
-pre_dump($_SESSION);
+// pre_dump($value);
 // // session_destroy();
 ?>
 <div class="section">
@@ -175,7 +175,7 @@ pre_dump($_SESSION);
 											$pair = explode(':', $value);
 											$variantId = $pair[0];
 											$variantValue = $pair[1];
-											echo '<option value="' . $variantId . '">' . $variantId . ' - ' . $variantValue . '</option>';
+											echo '<option value="' . $variantId . '">' . $variantValue . '</option>';
 										}
 									}
 									echo '</select></label>';
@@ -212,7 +212,6 @@ pre_dump($_SESSION);
 					<!-- product tab nav -->
 					<ul class="tab-nav">
 						<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-						<li><a data-toggle="tab" href="#tab2">Details</a></li>
 						<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
 					</ul>
 					<!-- /product tab nav -->
@@ -223,19 +222,14 @@ pre_dump($_SESSION);
 						<div id="tab1" class="tab-pane fade in active">
 							<div class="row">
 								<div class="col-md-12">
+									<p><?php 
+									$description = pdo_query_one("SELECT san_pham.mo_ta FROM `san_pham` WHERE `id` = $id");
+									echo $description['mo_ta'];
+									?></p>
 								</div>
 							</div>
 						</div>
 						<!-- /tab1  -->
-
-						<!-- tab2  -->
-						<div id="tab2" class="tab-pane fade in">
-							<div class="row">
-								<div class="col-md-12">
-								</div>
-							</div>
-						</div>
-						<!-- /tab2  -->
 
 						<!-- tab3  -->
 						<div id="tab3" class="tab-pane fade in">
