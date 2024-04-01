@@ -1,95 +1,98 @@
 <?php
 $id = $_GET['id_sp'];
+
 function get_product_detail($id)
 {
-	$sql = "SELECT 
-    sp.id AS product_id,
-    sp.ten_san_pham AS product_name,
-    dm.ten_danh_muc AS category_name,
-    sp.gia_co_ban AS product_price,
-    sp.mo_ta AS product_description,
-    COALESCE(spb.total_quantity, 0) AS total_quantity,
-    GROUP_CONCAT(spbt.image) AS product_images
-FROM 
-    san_pham sp
-INNER JOIN 
-    danh_muc dm ON sp.id_danh_muc = dm.id
-LEFT JOIN (
-    SELECT 
-        id_san_pham,
-        SUM(so_luong) AS total_quantity
-    FROM 
-        san_pham_bien_the
-    GROUP BY 
-        id_san_pham
-) spb ON sp.id = spb.id_san_pham
-LEFT JOIN san_pham_bien_the spbt ON sp.id = spbt.id_san_pham
-WHERE 
-    sp.id = ?
-GROUP BY 
-    sp.id, sp.ten_san_pham, dm.ten_danh_muc, sp.gia_co_ban, sp.mo_ta, spb.total_quantity;
+    $sql = "SELECT 
+                sp.id AS product_id,
+                sp.ten_san_pham AS product_name,
+                dm.ten_danh_muc AS category_name,
+                sp.gia_co_ban AS product_price,
+                sp.mo_ta AS product_description,
+                COALESCE(spb.total_quantity, 0) AS total_quantity,
+                GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values,
+                GROUP_CONCAT(spbt.image) AS product_images
+            FROM 
+                san_pham sp
+            INNER JOIN 
+                danh_muc dm ON sp.id_danh_muc = dm.id
+            LEFT JOIN (
+                SELECT 
+                    id_san_pham,
+                    SUM(so_luong) AS total_quantity
+                FROM 
+                    san_pham_bien_the
+                GROUP BY 
+                    id_san_pham
+            ) spb ON sp.id = spb.id_san_pham
+            LEFT JOIN san_pham_bien_the spbt ON sp.id = spbt.id_san_pham
+            WHERE 
+                sp.id = ?
+            GROUP BY 
+                sp.id, sp.ten_san_pham, dm.ten_danh_muc, sp.gia_co_ban, sp.mo_ta, spb.total_quantity";
 
-	";
-	return pdo_query_one($sql, $id);
+    return pdo_query_one($sql, $id);
 }
 
 function getVariantsForProduct($productId)
 {
-	// Prepare SQL query
-	$sql = "SELECT st.id, st.ten_bien_the, GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values
+    $sql = "SELECT st.id, st.ten_bien_the, GROUP_CONCAT(spbt.id, ':', spbt.gia_tri) AS variant_values
             FROM bien_the st
             LEFT JOIN san_pham_bien_the spbt ON spbt.id_bien_the = st.id
             WHERE spbt.id_san_pham = ?
             AND st.ten_bien_the IS NOT NULL
             GROUP BY st.id, st.ten_bien_the";
 
-	// Execute query using PDO
-	$rows = pdo_query($sql, $productId);
+    $rows = pdo_query($sql, $productId);
 
-	$variants = array();
+    $variants = array();
 
-	// Fetch variant information and store it in an array
-	foreach ($rows as $row) {
-		$variantId = $row["id"];
-		$variantName = $row["ten_bien_the"];
-		$variantValues = $row["variant_values"];
+    foreach ($rows as $row) {
+        $variantId = $row["id"];
+        $variantName = $row["ten_bien_the"];
+        $variantValues = $row["variant_values"];
 
-		$variants[] = array(
-			"id" => $variantId,
-			"ten_bien_the" => $variantName,
-			"variant_values" => $variantValues
-		);
-	}
+        $variants[] = array(
+            "id" => $variantId,
+            "ten_bien_the" => $variantName,
+            "variant_values" => $variantValues
+        );
+    }
 
-	return $variants;
+    return $variants;
 }
+
 $variants = getVariantsForProduct($id);
 $value = get_product_detail($id);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["add_to_cart"])) {
+        $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+        $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 0;
+        
+        $variant_values = isset($_POST['variant_values']) ? $_POST['variant_values'] : array();
+        
+        $variant_values = array_slice($variant_values, 0, 5);
+        $variant_values = array_pad($variant_values, 5, null);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
-    $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : '';
-    $variant_values = isset($_POST['variant_values']) ? $_POST['variant_values'] : array();
-    $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-
-    if (!empty($product_id) && !empty($variant_values)) {
+        $user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : null;
+        
         try {
-            // Check if the same product with the same variant combination already exists in the cart
-            $sql = "SELECT id, so_luong FROM gio_hang WHERE id_nguoi_dung = ? AND id_san_pham_bien_the = ?";
-            $existing_item = pdo_query_one($sql, $_SESSION['user_id'], $product_id);
-
-            if ($existing_item) {
-                // If the same product with the same variant combination exists, update the quantity
-                $new_quantity = $existing_item['so_luong'] + $quantity;
-                $update_sql = "UPDATE gio_hang SET so_luong = ? WHERE id = ?";
-                pdo_execute($update_sql, $new_quantity, $existing_item['id']);
+            // Check if the product already exists in the user's cart
+            $existing_product = pdo_query_one("SELECT * FROM gio_hang WHERE id_nguoi_dung = ? AND id_san_pham_bien_the_1 = ?", $user_id, $variant_values[0]);
+            
+            if ($existing_product) {
+                // Update quantity if the product already exists
+                $new_quantity = $existing_product['so_luong'] + $quantity;
+                $affected_rows = pdo_execute("UPDATE gio_hang SET so_luong = ? WHERE id_nguoi_dung = ? AND id_san_pham_bien_the_1 = ?", $new_quantity, $user_id, $variant_values[0]);
+                
+                echo "Cập nhật số lượng sản phẩm trong giỏ hàng thành công";
             } else {
-                // If the same product with the same variant combination does not exist, insert a new row
-                $insert_sql = "INSERT INTO gio_hang (id_nguoi_dung, id_san_pham_bien_the, so_luong) VALUES (?, ?, ?)";
-                pdo_execute($insert_sql, $_SESSION['user_id'], $product_id, $quantity);
+                // Insert new product if it doesn't exist
+                $affected_rows = pdo_execute("INSERT INTO gio_hang (id_nguoi_dung, session_guest, id_san_pham_bien_the_1, id_san_pham_bien_the_2, id_san_pham_bien_the_3, id_san_pham_bien_the_4, id_san_pham_bien_the_5, so_luong) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", $user_id, $_SESSION['guest_id'], $variant_values[0], $variant_values[1], $variant_values[2], $variant_values[3], $variant_values[4], $quantity);
+                
+                echo "Thêm sản phẩm vào giỏ hàng thành công";
             }
-            header("Location: success.php");
-            exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -97,9 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
 }
 
 
-
 pre_dump($_SESSION);
-// session_destroy();
+// // session_destroy();
 ?>
 <div class="section">
 	<!-- container -->
@@ -156,7 +158,7 @@ pre_dump($_SESSION);
 					<!-- HTML form -->
 					<form method="post">
 						<!-- Product ID field (hidden) -->
-						<input type="hidden" name="product_id" value="1"> <!-- Replace '1' with actual product ID -->
+						<input type="hidden" name="product_id" value="<?= $_GET['id_sp'] ?>"> <!-- Replace '1' with actual product ID -->
 
 						<!-- Product Options -->
 						<div class="product-options">

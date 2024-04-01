@@ -5,6 +5,7 @@ session_start();
 include "model/login.php";
 include "model/pdo.php";
 include "model/product.php";
+include "model/cart.php";
 $category = category();
 
 function pre_dump($variable) {
@@ -19,7 +20,16 @@ function create_guest_session() {
         $_SESSION['guest_id'] = $guest_id;
     }
 }
+
 create_guest_session();
+
+if (isset($_SESSION['user']) && $_SESSION['user']['id'] !== null) {
+    // If user is logged in, assign $_SESSION['user']['id'] to $_SESSION['user_identify']
+    $_SESSION['user_identify'] = $_SESSION['user']['id'];
+} else {
+    // If user is not logged in, assign guest_id to $_SESSION['user_identify']
+    $_SESSION['user_identify'] = $_SESSION['guest_id'];
+}
 
 require_once "view/header.php";
 // Phần điều hướng chính
@@ -101,7 +111,7 @@ require_once "view/header.php";
         }
     }
     function gioHang(){
-        require_once "view/cart.php";
+        require_once "view/cart/cart.php";
     }
     function dangKy(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

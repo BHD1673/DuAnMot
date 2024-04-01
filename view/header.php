@@ -52,9 +52,9 @@
 					<?php
 						if(isset($_SESSION['user'])) {
 							if($_SESSION['user']['role'] == '1'){
-								echo '<li><a href="index.php?act=logout"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
+								echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
 							}else if($_SESSION['user']['role'] == '0'){
-								echo '<li><a href="index.php?act=logout"><i class="fa fa-dollar"></i	>Đăng Xuất</a></li>';
+								echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
 							}
 							
 						}
@@ -199,6 +199,8 @@
 						<li><a href="index.php?act=product">Danh sách sản phẩm</a></li>
 						<li><a href="index.php?act=support">Hỗ trợ</a></li>
 						<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
+						<li><a href="index.php?act=contact">Liên hệ</a></li>
+						<li><a href="index.php?act=cart">Giỏ hàng</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
