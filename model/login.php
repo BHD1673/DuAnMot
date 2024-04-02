@@ -14,5 +14,11 @@ function check_login($user, $pass) {
 }
 
 
+function profile($id) {
+    $sql = "SELECT * FROM nguoi_dung WHERE id = ?";
+    return pdo_query_one($sql, $id);
+}
+
+
 
 ?>

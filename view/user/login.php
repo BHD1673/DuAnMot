@@ -8,8 +8,12 @@
         }
     </style>
 
-    <p class="text-center"><?php if (isset($_SESSION['msg']['cart-warning'])) echo $_SESSION['msg']['cart-warning'] ?></p>
+    <p class="text-center" style="color: red;">
+        <?php if (isset($_SESSION['msg']['cart-warning'])) echo $_SESSION['msg']['cart-warning'] ?>
+        <?php if (isset($_SESSION['msg']['login'])) echo $_SESSION['msg']['login'] ?>
+    </p>
     <?php unset($_SESSION['msg']['cart-warning']); ?>
+    <?php unset($_SESSION['msg']['login']); ?>
 
     <H1 style="text-align: center;">Đăng nhập</H1>
     <div class="container" style="width: 500px;">

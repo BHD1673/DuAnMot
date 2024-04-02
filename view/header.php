@@ -2,47 +2,36 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Web Electro Việt Nam</title>
+	<meta name="description" content="Electro is your one-stop shop for high-quality laptops. Browse our wide selection of laptops from top brands at competitive prices.">
+	<meta name="keywords" content="Electro, laptops, computers, electronics, technology, shop, online shop, pc, tshirt">
+	<meta name="author" content="Electro Việt">
+	<meta name="robots" content="index, follow">
+	<meta name="revisit-after" content="7 days">
+	<meta name="og:title" content="Electro - Your Destination for Quality Laptops">
+	<meta name="og:description" content="Electro is your one-stop shop for high-quality laptops. Browse our wide selection of laptops from top brands at competitive prices.">
+	<meta name="og:image" content="url_to_your_image.jpg">
+	<meta name="og:url" content="https://www.example.com">
+	<meta name="og:type" content="website">
+	<meta name="twitter:title" content="Electro - Your Destination for Quality Laptops">
+	<meta name="twitter:description" content="Electro is your one-stop shop for high-quality laptops. Browse our wide selection of laptops from top brands at competitive prices.">
 
-	<title>Electro - HTML Ecommerce Template</title>
-
-	<!-- Google font -->
+	<title>Electr0 Việt Nam</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
-	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
-
-	<!-- Slick -->
 	<link type="text/css" rel="stylesheet" href="css/slick.css" />
 	<link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
-
-	<!-- nouislider -->
 	<link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
-
-	<!-- Font Awesome Icon -->
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-
-	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/cart.css" />
-
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
 </head>
-<link rel="stylesheet" href="model/login.php">
 
 <body>
-	<!-- HEADER -->
 	<header>
-		<!-- TOP HEADER -->
 		<div id="top-header">
 			<div class="container">
 				<ul class="header-links pull-left">
@@ -57,6 +46,7 @@
 							echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
 						} else if ($_SESSION['user']['role'] == '0') {
 							echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
+							echo '<li><a href="index.php?act=profile"><i class="fa fa-user"></i>Chi tiết tài khoản</a></li>';
 						}
 					}
 
@@ -67,28 +57,24 @@
 					?>
 
 
-					<li><a href="#"><i class="fa fa-user-o"></i><?php
-																if (isset($_SESSION['user'])) {
-																	if ($_SESSION['user']['role'] == '1') {
-																		echo '<a href="admin.php">' .  $_SESSION['user']['ho_ten']  . '</a>';
-																	} else {
-																		echo $_SESSION['user']['ho_ten'];
-																	}
-																}
+					<li>
+						<?php
+						if (isset($_SESSION['user'])) {
+							if ($_SESSION['user']['role'] == '1') {
+								echo '<a href="admin.php"><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
+							} else {
+								echo '<a href="admin.php"><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
+							}
+						}
+						?>
+					</li>
 
-																?></a></li>
 				</ul>
 			</div>
 		</div>
-		<!-- /TOP HEADER -->
-
-		<!-- MAIN HEADER -->
 		<div id="header">
-			<!-- container -->
 			<div class="container">
-				<!-- row -->
 				<div class="row">
-					<!-- LOGO -->
 					<div class="col-md-3">
 						<div class="header-logo">
 							<a href="index.php" class="logo">
@@ -96,9 +82,6 @@
 							</a>
 						</div>
 					</div>
-					<!-- /LOGO -->
-
-					<!-- SEARCH BAR -->
 					<div class="col-md-6">
 						<div class="header-search">
 							<form method="post" action="">
@@ -137,15 +120,9 @@
 							});
 						});
 					</script>
-
-
-					<!-- /SEARCH BAR -->
-
-					<!-- ACCOUNT -->
 					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
 
-							<!-- Cart -->
 							<div class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="index.php?act=">
 									<i class="fa fa-shopping-cart"></i>
@@ -186,50 +163,34 @@
 									</div>
 								</div>
 							</div>
-							<!-- /Cart -->
 
-							<!-- Menu Toogle -->
 							<div class="menu-toggle">
 								<a href="#">
 									<i class="fa fa-bars"></i>
 									<span>Menu</span>
 								</a>
 							</div>
-							<!-- /Menu Toogle -->
+
 						</div>
 					</div>
-					<!-- /ACCOUNT -->
+
 				</div>
-				<!-- row -->
+
 			</div>
-			<!-- container -->
 		</div>
-		<!-- /MAIN HEADER -->
 	</header>
-	<!-- /HEADER -->
-	<!-- NAVIGATION -->
 	<nav id="navigation">
-		<!-- container -->
 		<div class="container">
-			<!-- responsive-nav -->
 			<div id="responsive-nav">
-				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav text-center ">
 					<li><a href="index.php">Trang chủ</a></li>
-					<li><a href="index.php?act=product">Danh sách sản phẩm</a></li>
+					<li><a href="index.php?act=search">Danh sách sản phẩm</a></li>
 					<li><a href="index.php?act=support">Hỗ trợ</a></li>
 					<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
 					<li><a href="index.php?act=contact">Liên hệ</a></li>
 					<li><a href="index.php?act=cart">Giỏ hàng</a></li>
 				</ul>
-				<!-- /NAV -->
 			</div>
-			<!-- /responsive-nav -->
 		</div>
-		<!-- /container -->
 	</nav>
-	<!-- /NAVIGATION -->
-	<!-- SECTION -->
-
 	</div>
-	<!-- /SECTION -->

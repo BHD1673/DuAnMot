@@ -6,14 +6,18 @@ include "model/login.php";
 include "model/pdo.php";
 include "model/product.php";
 include "model/cart.php";
+include "indexRoute.php";
 $category = category();
 
-function pre_dump($variable)
+function pre_dump(...$variables)
 {
     echo "<pre>";
-    var_dump($variable);
+    foreach ($variables as $variable) {
+        var_dump($variable);
+    }
     echo "</pre>";
 }
+
 
 function create_guest_session()
 {
@@ -21,6 +25,10 @@ function create_guest_session()
         $guest_id = uniqid('guest_');
         $_SESSION['guest_id'] = $guest_id;
     }
+}
+
+function setPageTitle($title) {
+    echo "<script>document.title = '$title';</script>";
 }
 
 create_guest_session();
@@ -32,46 +40,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']['id'] !== null) {
 }
 
 
-function xuLyHanhDong($hanhDong)
-{
-    switch ($hanhDong) {
-        case 'unsetLoginValue':
-            echo "<pre>";
-            var_dump($_SESSION);
-            echo "</pre>";
-            unset($_SESSION['user']);
-            $_SESSION['msg']['logout'] = "Bạn đã đăng xuất";
-            header("LOCATION: index.php");
-            break;
-        case 'product':
-            hienthisanpham();
-            break;
-        case 'detailProduct':
-            chitietsanpham();
-            break;
-        case 'checkout':
-            hoadonSp();
-            break;
-        case 'cart':
-            gioHang();
-            break;
-        case 'login':
-            dangNhap();
-            break;
-        case 'singup':
-            dangKy();
-            break;
-        case 'forgot':
-            quenMatkhau();
-            break;
-        case 'search':
-            timkiem();
-            break;
-        case 'dump':
-            echo "ăklfjalwjfawl";
-            break;
-    }
-}
 
 function hienthisanpham()
 {
@@ -117,23 +85,34 @@ function gioHang()
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (isset($_POST['quantity']) && isset($_POST['item_id'])) {
-
+    
             $item_id = $_POST['item_id'];
             $quantity_change = $_POST['quantity'] == '+' ? 1 : -1;
-
+    
             try {
                 $conn = pdo_get_connection();
-                $sql = "UPDATE gio_hang SET so_luong = so_luong + ? WHERE id = ?";
-                pdo_execute($sql, $quantity_change, $item_id);
+                $sql_update_quantity = "UPDATE gio_hang SET so_luong = so_luong + ? WHERE id = ?";
+                pdo_execute($sql_update_quantity, $quantity_change, $item_id);
+    
+                // Check if quantity is less than or equal to 0
+                $sql_check_quantity = "SELECT so_luong FROM gio_hang WHERE id = ?";
+                $current_quantity = pdo_query_one($sql_check_quantity, $item_id)['so_luong'];
+                if ($current_quantity <= 0) {
+                    // If quantity is less than or equal to 0, remove the product from the cart
+                    $sql_remove_product = "DELETE FROM gio_hang WHERE id = ?";
+                    pdo_execute($sql_remove_product, $item_id);
+                }
+    
                 header("location: index.php?act=cart");
             } catch (PDOException $e) {
-
                 echo "Lỗi: " . $e->getMessage();
             } finally {
                 unset($conn);
             }
         }
     }
+    
+    
     require_once "view/cart/cart.php";
 }
 function dangKy()
@@ -183,6 +162,36 @@ function quenMatkhau()
     require_once "view/user/forgotPassword.php";
 }
 
+function chiTietKhachHang() {
+
+    require_once "view/user/profile.php";
+}
+
+function hienThiLichSuMuaHang() {
+
+    require_once "view/user/history.php";
+}
+
+function hienThiDiaChiKhachHang() {
+
+    require_once "view/user/address.php";
+}
+
+function themDiaChiKhachHang() {
+
+    require_once "view/user/addAddress.php";
+}
+
+function capNhatDiaChiKhachHang() {
+
+    require_once "view/user/updateAddress.php";
+}
+
+function xoaDiaChiKhachHang() {
+
+    // Riêng mấy cái xoá này không cần phải require vào làm gì
+}
+
 function timkiem()
 {
     $category_id = $_GET['category_id'] ?? "";
@@ -190,6 +199,18 @@ function timkiem()
     $search_result = get_item_by_category_or_name($category_id, $product_name);
 
     require_once "view/store.php";
+}
+
+function xoaKhoiGioHang() {
+
+    if (isset($_GET['id'])) {
+        $item_id = $_GET['id'];
+        $sql = "DELETE FROM gio_hang WHERE id = ?";
+        pdo_execute($sql, $item_id);
+        header("location: index.php?act=cart");
+    } else {
+        header("location: index.php?act=cart");
+    }
 }
 
 require_once "view/header.php";
