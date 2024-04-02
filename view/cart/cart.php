@@ -1,11 +1,5 @@
-<?php
-
-
-
-?>
 <div class="container">
     <h1 style="color: red;">Giỏ hàng</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -25,7 +19,7 @@
                     <td><?php echo $item['ten_san_pham']; ?></td>
                     <td><?php echo $item['attributes']; ?></td>
                     <td><?php echo $item['item_total_price']; ?></td>
-                    <td>
+                    <td>    
                         <form action="" method="POST">
                             <div class="input-group">
                                 <input type="hidden" name="item_id" value="<?php echo $item['id']; ?>">
