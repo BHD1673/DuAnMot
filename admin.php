@@ -4,6 +4,14 @@ session_start();
 require_once "model/pdo.php";
 require_once "admin/model/DAO.php";
 require_once "admin/model/Validate.php";
+function pre_dump(...$variables)
+{
+    echo "<pre>";
+    foreach ($variables as $variable) {
+        var_dump($variable);
+    }
+    echo "</pre>";
+}
 
 
 //Hàm xử lý hành động cho admin
@@ -68,6 +76,12 @@ function xuLyHanhDong($hanhDong) {
         case 'xoaloaisp':
             xoaLoaiSanPham();
             break;
+        case 'donhang':
+            hienThiDonHang();
+            break;
+        case 'chitietdonhang':
+            hienThiChiTietDonHang();
+            break;
         case 'oof':
             echo "WHAT ?";
             break;
@@ -105,10 +119,6 @@ function hienThiChiTietDanhMucBaiViet() {
 function hienThiDanhMucBaiViet() {
     require_once "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Phần xử lý biến thể
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,16 +295,6 @@ function hienThiTaiKhoan() {
 // Phần xử lý đơn hàng
 //TODO: NHỚ VIẾT
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Onlan = Đặt hàng trực tiếp tại của hàng
-//Online = Đặt hàng cho khách làm online
-
-function taoDonHangOnLan() {
-    require_once "admin/view/DonHang/DonHang.Create.OnLan.php";
-}
-
-function taoDonHangOnline() {
-    require_once "admin/view/DonHang/DonHang.Add.php";
-}
 
 function hienThiChiTietDonHang() {
     require_once "admin/view/DonHang/DonHang.Custom.php";
@@ -302,6 +302,11 @@ function hienThiChiTietDonHang() {
 
 function hienThiDonHang() {
     require_once "admin/view/DonHang/DonHang.All.php";
+}
+
+function xoaDonHang() {
+    
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
