@@ -64,6 +64,7 @@
 								echo '<a href="admin.php"><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
 							} else {
 								echo '<a href="admin.php"><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
+								echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
 							}
 						}
 						?>
