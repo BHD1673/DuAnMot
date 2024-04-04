@@ -40,37 +40,25 @@
 					<li><a href="admin.php"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 				</ul>
 				<ul class="header-links pull-right">
-					<?php
-					if (isset($_SESSION['user'])) {
-						if ($_SESSION['user']['role'] == '1') {
-							echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
-						} else if ($_SESSION['user']['role'] == '0') {
-							echo '<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>';
-							echo '<li><a href="index.php?act=profile"><i class="fa fa-user"></i>Chi tiết tài khoản</a></li>';
-						}
-					}
-
-					if (empty($_SESSION['user'])) {
-						echo '<li><a href="index.php?act=login"><i class="fa fa-user"></i>Đăng nhập</a></li>';
-						echo '<li><a href="index.php?act=singup"><i class="fa fa-user"></i>Đăng ký</a></li>';
-					}
-					?>
-
+					<?php if (isset($_SESSION['user'])) : ?>
+						<?php if ($_SESSION['user']['role'] == '1') : ?>
+							<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>
+						<?php else : ?>
+							<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>
+							<li><a href="index.php?act=profile"><i class="fa fa-user"></i>Chi tiết tài khoản</a></li>
+						<?php endif; ?>
+					<?php else : ?>
+						<li><a href="index.php?act=login"><i class="fa fa-user"></i>Đăng nhập</a></li>
+						<li><a href="index.php?act=singup"><i class="fa fa-user"></i>Đăng ký</a></li>
+					<?php endif; ?>
 
 					<li>
-						<?php
-						if (isset($_SESSION['user'])) {
-							if ($_SESSION['user']['role'] == '1') {
-								echo '<a href="admin.php"><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
-
-							} else {
-								echo '<a href=""><i class="fa fa-user-o"></i>' . $_SESSION['user']['ho_ten'] . '</a>';
-							}
-						}
-						?>
+						<?php if (isset($_SESSION['user'])) : ?>
+							<a href="<?php echo ($_SESSION['user']['role'] == '1') ? 'admin.php' : ''; ?>"><i class="fa fa-user-o"></i><?php echo $_SESSION['user']['ho_ten']; ?></a>
+						<?php endif; ?>
 					</li>
-
 				</ul>
+
 			</div>
 		</div>
 		<div id="header">
@@ -159,7 +147,7 @@
 										<h5>SUBTOTAL: $2940.00</h5>
 									</div>
 									<div class="cart-btns">
-										<a href="#">View Cart</a>
+										<a href="#">Xem giỏ hàng</a>
 										<a href="index.php?act=cart">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 									</div>
 								</div>
