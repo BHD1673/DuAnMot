@@ -49,6 +49,10 @@ function xuLyHanhDong($hanhDong)
         case 'capnhatdiachi':
             capNhatDiaChiKhachHang();
             break;
+        case 'thanhtoan':
+            $title = "Nhập thông tin";
+            thanhToan();
+            break;
         case 'login':
             dangNhap();
             break;
@@ -64,6 +68,9 @@ function xuLyHanhDong($hanhDong)
             break;
         case 'dump':
             echo "ăklfjalwjfawl";
+            break;
+        case 'thanhtoanthanhcong':
+            datHangThanhCong();
             break;
     }
     setPageTitle($title);

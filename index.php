@@ -90,15 +90,11 @@ function gioHang()
             $quantity_change = $_POST['quantity'] == '+' ? 1 : -1;
     
             try {
-                $conn = pdo_get_connection();
                 $sql_update_quantity = "UPDATE gio_hang SET so_luong = so_luong + ? WHERE id = ?";
                 pdo_execute($sql_update_quantity, $quantity_change, $item_id);
-    
-                // Check if quantity is less than or equal to 0
                 $sql_check_quantity = "SELECT so_luong FROM gio_hang WHERE id = ?";
                 $current_quantity = pdo_query_one($sql_check_quantity, $item_id)['so_luong'];
                 if ($current_quantity <= 0) {
-                    // If quantity is less than or equal to 0, remove the product from the cart
                     $sql_remove_product = "DELETE FROM gio_hang WHERE id = ?";
                     pdo_execute($sql_remove_product, $item_id);
                 }
@@ -115,6 +111,19 @@ function gioHang()
     
     require_once "view/cart/cart.php";
 }
+
+function thanhToan() {
+
+    
+
+    require_once "view/cart/checkoutFake.php";
+}
+
+function datHangThanhCong() {
+
+    require_once "view/cart/checkoutsuccessFake.php";
+}
+
 function dangKy()
 {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
