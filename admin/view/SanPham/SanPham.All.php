@@ -5,6 +5,8 @@ function get_all_san_pham_index() {
 sp.id AS product_id,
 sp.ten_san_pham AS product_name,
 sp.gia_co_ban AS product_based_price,
+sp.ngay_cap_nhat AS ngay_cap_nhat,
+sp.ngay_tao AS ngay_tao,
 COALESCE(SUM(spb.so_luong), 0) AS total_quantity,
 MAX(spb.image) AS variant_image,
 dm.id AS category_id,
@@ -64,6 +66,7 @@ unset($_SESSION['msg']);
         <th>Ảnh xem qua</th>
         <th>Danh mục sản phẩm</th>
         <th>Giá cơ bản</th>
+        <th>Ngày tạo</th>
         <th>Cập nhật gần nhất</th>
         <th>Thao tác</th>
       </tr>
@@ -88,7 +91,8 @@ unset($_SESSION['msg']);
          src="uploads/<?php echo $product['variant_image']; ?>" alt="<?php echo $product['variant_image']; ?> "></td>
         <td><a href="admin.php?act=editloaisp&id=<?php echo $product['category_id'] ?? ""; ?>" class="btn btn-primary"> Chuyển đến trang danh mục <?php echo $product['category_id']; ?></a></td>
         <td><?php echo $product['product_based_price']; ?></td>
-        <td><?php //echo $product['product_update_at']; ?></td>
+        <td><?php echo $product['ngay_tao']; ?></td>
+        <td><?php echo $product['ngay_cap_nhat']; ?></td>
         <td>
             <!-- Phần chi tiếts sản phẩm ở đây -->
             <a href="admin.php?act=bienthe&id=<?php echo $product[0]; ?>" class="btn btn-success">Xem danh sách biến thể của sản phẩm</a>
