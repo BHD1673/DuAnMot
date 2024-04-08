@@ -8,25 +8,26 @@ function pdo_get_connection(){
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
+        echo "Lỗi kết nối: " . $e->getMessage();
     }
 }
 //Thực thi câu truy vấn insert, update, delete
 function pdo_execute($sql){
-    $sql_args=array_slice(func_get_args(),1);
-    try{
-        $conn=pdo_get_connection();
-        $stmt=$conn->prepare($sql);
+    $sql_args = array_slice(func_get_args(), 1);
+    try {
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
         $stmt->execute($sql_args);
-
-    }
-    catch(PDOException $e){
+        // I add this on purpose. It will help me 
+        // retrive the last insertID from the connection from the user connection
+        return $conn->lastInsertId();
+    } catch(PDOException $e) {
         throw $e;
-    } 
-    finally{
+    } finally {
         unset($conn);
     }
 }
+
 // truy vấn nhiều dữ liệu
 function pdo_query($sql){
     $sql_args=array_slice(func_get_args(),1);
