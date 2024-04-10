@@ -140,52 +140,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							</div>
 						</div>
 						<div id="tab3" class="tab-pane fade in">
-							<div class="row">
-								<div class="col-md-9">
-									<div id="reviews">
-										<ul class="reviews">
-											<li>
-												<div class="review-heading">
-													<h5 class="name">John</h5>
-													<p class="date">27 DEC 2018, 8:0 PM</p>
+						<div class="container mt-5">
+						<h2 class="mb-4">Comment Section</h2>
+						<div class="row">
+							<div class="col-md-6">
+								<div id="reviews">
+									<div class="card">
+										<div class="card-body">
+											<h3 class="card-title">Đánh giá sản phẩm</h3>
+											<form action="index.php?act=comment_add" method="post">
+												<?php
+												$product_id = isset($_GET['id_sp']) ? $_GET['id_sp'] : '';
+												?>
+												<input type="hidden" name="product_id" value="<?= $product_id ?>">
+												
+												<div class="form-group">
+													<?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['ho_ten'])) : ?>
+														<label for="username">Tài khoản:</label>
+														<p><?= htmlspecialchars($_SESSION['user']['ho_ten']) ?></p>
+													<?php else : ?>
+														<p>Bạn cần <a href="index.php?act=login">đăng nhập</a> để đánh giá.</p>
+													<?php endif; ?>
 												</div>
-												<div class="review-body">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+												
+												<div class="form-group">
+													<label for="content">Nội dung bình luận:</label>
+													<textarea name="content" class="form-control" rows="4" style="max-width: 500px" placeholder="Nhập nội dung bình luận"></textarea>
 												</div>
-											</li>
-											<li>
-												<div class="review-heading">
-													<h5 class="name">John</h5>
-													<p class="date">27 DEC 2018, 8:0 PM</p>
-												</div>
-												<div class="review-body">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-												</div>
-											</li>
-											<li>
-												<div class="review-heading">
-													<h5 class="name">John</h5>
-													<p class="date">27 DEC 2018, 8:0 PM</p>
-												</div>
-												<div class="review-body">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-												</div>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div id="review-form">
-										<form class="review-form">
-											<input class="input" type="text" placeholder="Your Name">
-											<input class="input" type="email" placeholder="Your Email">
-											<textarea class="input" placeholder="Your Review"></textarea>
-											<button class="primary-btn">Submit</button>
-										</form>
+												
+												<button type="submit" class="btn btn-primary" name="submit">Thêm Bình Luận</button>
+											</form>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title">Các Đánh Giá Trước Đó</h5>
+										<!-- Hiển thị các bình luận -->
+										<?php foreach ($list_comments as $comment): ?>
+											<div class="card mb-3">
+												<div class="card-body">
+													<h6 class="card-subtitle mb-2 text-muted"><?php echo $comment['user_name']; ?></h6>
+													<p class="card-text"><?php echo $comment['comment']; ?></p>
+													<p class="card-text"><small class="text-muted"><?php echo $comment['created_at']; ?></small></p>
+												</div>
+											</div>
+										<?php endforeach; ?>
+										<!-- Thêm các phần tử comment cần thiết cho các bình luận khác -->
+                </div>
 					</div>
 				</div>
 			</div>

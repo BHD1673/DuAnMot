@@ -6,6 +6,7 @@ include "model/login.php";
 include "model/pdo.php";
 include "model/product.php";
 include "model/cart.php";
+include "model/comment.php";
 include "indexRoute.php";
 $category = category();
 
@@ -47,7 +48,10 @@ function hienthisanpham()
 }
 function chitietsanpham()
 {
-    require_once "view/detailproduct.php";
+    if (isset($_GET['id_sp']) && ($_GET['id_sp'] > 0)) {
+        $list_comments = load_comments($_GET['id_sp']); // Load comments for the specified product
+    }
+    require_once "view/detailproduct.php"; // Include your HTML template
 }
 function hienThiDonHang()
 {
@@ -219,6 +223,29 @@ function xoaKhoiGioHang() {
     } else {
         header("location: index.php?act=cart");
     }
+}
+function comment_add() {
+    if (!isset($_SESSION['user'])) {
+        echo '<script>
+        alert("Ban can phai dang nhap");
+        window.location= "http://localhost/duan6/index.php?act=login";
+        
+    </script>';
+        
+    }
+    if(isset($_POST['submit'])) {
+        $id_user = $_SESSION['user']['id']; // Lấy ID của người dùng từ session
+        $product_id = $_POST['product_id'];
+        $comment_content = $_POST['content']; // Lấy nội dung bình luận từ form
+        $date = date('Y-m-d H:i:s');
+    
+        addComment($id_user, $product_id, $comment_content, $date);
+        echo '<script>
+            alert("Thêm Bình Luận Thành Công");
+            
+        </script>';
+    }    
+    require_once "view/detailproduct.php";
 }
 
 require_once "view/header.php";
