@@ -224,30 +224,6 @@ function xoaKhoiGioHang() {
         header("location: index.php?act=cart");
     }
 }
-function comment_add() {
-    if (!isset($_SESSION['user'])) {
-        echo '<script>
-        alert("Ban can phai dang nhap");
-        window.location= "http://localhost/duan6/index.php?act=login";
-        
-    </script>';
-        
-    }
-    if(isset($_POST['submit'])) {
-        $id_user = $_SESSION['user']['id']; // Lấy ID của người dùng từ session
-        $product_id = $_POST['product_id'];
-        $comment_content = $_POST['content']; // Lấy nội dung bình luận từ form
-        $date = date('Y-m-d H:i:s');
-    
-        addComment($id_user, $product_id, $comment_content, $date);
-        echo '<script>
-            alert("Thêm Bình Luận Thành Công");
-            
-        </script>';
-    }    
-    require_once "view/detailproduct.php";
-}
-
 require_once "view/header.php";
 // Phần điều hướng chính
 if (isset($_GET['act'])) {

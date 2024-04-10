@@ -1,5 +1,16 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(isset($_POST['quantity'])) {
+        // Update quantity of items in the cart
+        $itemId = isset($_POST['item_id']) ? $_POST['item_id'] : null;
+        $quantityChange = $_POST['quantity'] === '+' ? 1 : ($_POST['quantity'] === '-' ? -1 : 0); // Determine if quantity should be incremented or decremented
+
+        if($itemId !== null && $quantityChange !== 0 && isset($_SESSION['cartValue'][$itemId])) {
+            $_SESSION['cartValue'][$itemId]['so_luong'] += $quantityChange;
+            // Calculate new total price for the item
+            $_SESSION['cartValue'][$itemId]['total_price_with_quantity'] = $_SESSION['cartValue'][$itemId]['so_luong'] * $_SESSION['cartValue'][$itemId]['item_total_price'];
+        }
+    }
     // JSON string received via POST
     $jsonData = isset($_POST['itemsData']) ? $_POST['itemsData'] : null;
 

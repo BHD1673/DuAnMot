@@ -12,8 +12,8 @@ function load_comments($idsp)
 }
  
 
-function addComment($id_user, $product_id, $comment_content, $date) {
+function addComment($id_user, $product_id, $comment_content) {
     $sql = "INSERT INTO comments (name, comment, created_at, id_user, product_id) VALUES (?, ?, ?, ?, ?)";
-    pdo_execute($sql, $_SESSION['user']['ho_ten'], $comment_content, $date, $id_user, $product_id);
+    pdo_execute($sql, $_SESSION['user']['ho_ten'], $comment_content, $id_user, $product_id);
 }
 ?>
