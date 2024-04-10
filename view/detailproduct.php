@@ -76,9 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<div class="product-details">
 					<h2 class="product-name"><?= $value['product_name'] ?></h2>
 					<div>
-						<h3 class="product-price"><?= $value['product_price'] ?></h3>
+						<h3 class="product-price"> Giá: <?= $value['product_price'] ?> VNĐ	</h3>
 					</div>
-					<p><?= $value['category_name'] ?></p>
+					<p>Thuộc danh mục: <?= $value['category_name'] ?></p>
 
 					<form method="post">
 						<input type="hidden" name="product_id" value="<?= $_GET['id_sp'] ?>">
@@ -131,8 +131,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							<div class="row">
 								<div class="col-md-12">
 									<p><?php 
-									$description = pdo_query_one("SELECT san_pham.mo_ta FROM `san_pham` WHERE `id` = $id");
-									echo $description['mo_ta'];
+										$description = pdo_query_one("SELECT san_pham.mo_ta FROM `san_pham` WHERE `id` = $id");
+										$decoded_description = html_entity_decode($description['mo_ta']);
+										echo $decoded_description;
+
 									?></p>
 								</div>
 							</div>
@@ -170,13 +172,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 												</div>
 											</li>
 										</ul>
-										<ul class="reviews-pagination">
-											<li class="active">1</li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li><a href="#">4</a></li>
-											<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-										</ul>
 									</div>
 								</div>
 								<div class="col-md-3">
@@ -189,27 +184,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 										</form>
 									</div>
 								</div>
-								<!-- /Review Form -->
 							</div>
 						</div>
-						<!-- /tab3  -->
 					</div>
-					<!-- /product tab content  -->
 				</div>
 			</div>
-			<!-- /product tab -->
 		</div>
-		<!-- /row -->
 	</div>
-	<!-- /container -->
 </div>
-<!-- /SECTION -->
-
-<!-- Section -->
-<div class="section">
-	<!-- container -->
+<!-- <div class="section">
 	<div class="container">
-		<!-- row -->
 		<div class="row">
 
 			<div class="col-md-12">
@@ -217,8 +201,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					<h3 class="title">Related Products</h3>
 				</div>
 			</div>
-
-			<!-- product -->
 			<div class="col-md-3 col-xs-6">
 				<div class="product">
 					<div class="product-img">
@@ -244,9 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					</div>
 				</div>
 			</div>
-			<!-- /product -->
-
-			<!-- product -->
 			<div class="col-md-3 col-xs-6">
 				<div class="product">
 					<div class="product-img">
@@ -277,13 +256,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					</div>
 				</div>
 			</div>
-			<!-- /product -->
 
 			<div class="clearfix visible-sm visible-xs"></div>
 
 		</div>
-		<!-- /row -->
 	</div>
-	<!-- /container -->
-</div>
-<!-- /Section -->
+</div> -->

@@ -1,178 +1,126 @@
-	<!-- SECTION -->
-    <div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
+<?php
+$sql = "SELECT * FROM `dia_chi_nguoi_dung` WHERE id_nguoi_dung = ? AND la_dia_chi_chinh = ?";
+$value = pdo_query($sql, $_SESSION['user']['id'], 1);
 
-					<div class="col-md-7">
-						<!-- Billing Details -->
-						<div class="billing-details">
-							<div class="section-title">
-								<h3 class="title">Billing address</h3>
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
-							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Address">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="City">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Country">
-							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Telephone">
-							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="create-account">
-									<label for="create-account">
-										<span></span>
-										Create Account?
-									</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-										<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $order_notes = $_POST['order-notes'];
+    $payment_method = $_POST['payment_method'];
+	$id_dia_chi_nguoi_dung = $value[0]['id'];
+	$id_nguoi_dung = $_SESSION['user']['id'];
+
+    $order_items = $_SESSION['cartValue'];
+    
+    // Inserting order details
+    $order_id = pdo_execute(
+		"INSERT INTO orders (id_nguoi_dung, id_dia_chi_nguoi_dung, ghi_chu, phuong_thuc_thanh_toan) VALUES (?, ?, ?, ?)", 
+		$id_nguoi_dung, 
+		$id_dia_chi_nguoi_dung, 
+		$order_notes,
+		$payment_method);
+    
+    // Inserting order items
+    foreach ($order_items as $item) {
+        $item_name = $item['itemName'];
+        $item_variant = $item['itemVariant'];
+        $item_price = $item['itemPrice'];
+        $item_quantity = $item['itemQuantity'];
+        $item_total_price = $item['itemTotalPrice'];
+        
+        pdo_execute("INSERT INTO order_items (order_id, item_name, item_variant, item_price, item_quantity, item_total_price) VALUES (?, ?, ?, ?, ?, ?)",
+                    $order_id, $item_name, $item_variant, $item_price, $item_quantity, $item_total_price);
+    }
+    
+    header('location: index.php?act=thanhtoanthanhcong');
+}
+
+
+
+?>
+<form action="" method="post">
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="billing-details">
+						<div class="section-title">
+							<h3 class="title">Địa chỉ người nhận</h3>
+							<?php
+
+
+							?>
+						</div>
+						<div class="caption">
+							<?php foreach ($value as $item) : ?>
+								<div class="form-group">
+									<input class="input" type="text" name="name" placeholder="Tên người nhận" value="<?php echo $item['ten_nguoi_nhan']; ?>" disabled>
 								</div>
-							</div>
-						</div>
-						<!-- /Billing Details -->
-
-						<!-- Shiping Details -->
-						<div class="shiping-details">
-							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
-							</div>
-							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
-								<label for="shiping-address">
-									<span></span>
-									Ship to a diffrent address?
-								</label>
-								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="email" name="email" placeholder="Email">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Address">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="country" placeholder="Country">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
-									</div>
+								<div class="form-group">
+									<input class="input" type="text" name="address" placeholder="Địa chỉ người nhận" value="<?php echo $item['dia_chi']; ?>" disabled>
 								</div>
-							</div>
+								<div class="form-group">
+									<input class="input" type="tel" name="tel" placeholder="Số điện thoại người nhận" value="<?php echo $item['so_dien_thoai']; ?>" disabled>
+								</div>
+							<?php endforeach; ?>
 						</div>
-						<!-- /Shiping Details -->
-
-						<!-- Order notes -->
-						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
-						</div>
-						<!-- /Order notes -->
 					</div>
-
-					<!-- Order Details -->
-					<div class="col-md-5 order-details">
-						<div class="section-title text-center">
-							<h3 class="title">Your Order</h3>
-						</div>
-						<div class="order-summary">
-							<div class="order-col">
-								<div><strong>PRODUCT</strong></div>
-								<div><strong>TOTAL</strong></div>
-							</div>
-							<div class="order-products">
-								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-							</div>
-							<div class="order-col">
-								<div>Shiping</div>
-								<div><strong>FREE</strong></div>
-							</div>
-							<div class="order-col">
-								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
-							</div>
-						</div>
-						<div class="payment-method">
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-1">
-								<label for="payment-1">
-									<span></span>
-									Direct Bank Transfer
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
-								<label for="payment-2">
-									<span></span>
-									Cheque Payment
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
-								<label for="payment-3">
-									<span></span>
-									Paypal System
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-						</div>
-						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
-							<label for="terms">
-								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
-							</label>
-						</div>
-						<a href="#" class="primary-btn order-submit">Place order</a>
+					<div class="order-notes">
+						<textarea class="input" name="order-notes" placeholder="Ghi chú cho bên vận chuyển"></textarea>
 					</div>
-					<!-- /Order Details -->
 				</div>
-				<!-- /row -->
+				<?php
+				if (isset($_SESSION['cartValue'])) {
+					$cartValue = $_SESSION['cartValue'];
+				} else {
+					$cartValue = array();
+				}
+
+				$total = 0;
+
+				foreach ($cartValue as $item) {
+					$total += (float)$item['itemTotalPrice'];
+				}
+
+				?>
+
+				<div class="col-md-5 order-details">
+					<div class="section-title text-center">
+						<h3 class="title">Đơn hàng của bạn</h3>
+					</div>
+					<div class="order-summary">
+						<div class="order-col">
+							<div><strong>Sản phẩm</strong></div>
+							<div><strong>Tổng</strong></div>
+						</div>
+						<div class="order-products">
+							<?php foreach ($cartValue as $item) : ?>
+								<div class="order-col">
+									<div><?php echo $item['itemQuantity'] . "x " . $item['itemName']; ?></div>
+									<div style="color: red;"><?php echo $item['itemVariant']; ?></div>
+									<div><?php echo number_format((float)$item['itemTotalPrice'], 2); ?> VNĐ</div>
+								</div>
+							<?php endforeach; ?>
+						</div>
+						<div class="order-col">
+							<div><strong>Tổng</strong></div>
+							<div><strong class="order-total"><?php echo number_format($total, 2); ?> VNĐ</strong></div>
+						</div>
+					</div>
+					<div class="payment-method">
+						<h4>Phương thức thanh toán</h4>
+						<label><input type="radio" name="payment_method" value="COD"> Thanh toán COD</label>
+					</div>
+					<input type="hidden" name="order_id" value="<?php $order_id = uniqid();
+																echo $order_id ?>">
+					<input type="hidden" name="customer_id" value="<?php echo $_SESSION['user']['id']; ?>">
+					<input type="hidden" name="shipping_id" value="<?php
+
+																	$sql = "SELECT id FROM dia_chi_nguoi_dung WHERE id_nguoi_dung = ? AND la_dia_chi_chinh = ?";
+																	$customer_id = pdo_query($sql, $_SESSION['user']['id'], 1);
+																	echo $customer_id[0]['id']; ?>">
+					<button class="submit primary-btn order-submit">Đặt đơn hàng</button>
+				</div>
+
 			</div>
-			<!-- /container -->
 		</div>
-		<!-- /SECTION -->
+	</div>
+</form>

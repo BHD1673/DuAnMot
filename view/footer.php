@@ -1,35 +1,19 @@
 <?php  
 $logoutMessage = isset($_SESSION['msg']['logout']) && !empty($_SESSION['msg']['logout']) ? $_SESSION['msg']['logout'] : ""; 
 unset($_SESSION['msg']['logout']);
-?>		<!-- FOOTER -->
+?>
 		<footer id="footer" style="margin-top: 50px">
-			<!-- top footer -->
 			<div class="section">
-				<!-- container -->
 				<div class="container">
-					<!-- row -->
 					<div class="row">
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">About Us</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+								<h3 class="footer-title">Về chúng tôi</h3>
+								<p>Electro là website bán hàng Việt Nam</p>
 								<ul class="footer-links">
-									<li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
-									<li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-									<li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<div class="col-md-3 col-xs-6">
-							<div class="footer">
-								<h3 class="footer-title">Categories</h3>
-								<ul class="footer-links">
-									<li><a href="#">Hot deals</a></li>
-									<li><a href="#">Laptops</a></li>
-									<li><a href="#">Smartphones</a></li>
-									<li><a href="#">Cameras</a></li>
-									<li><a href="#">Accessories</a></li>
+									<li><i class="fa fa-map-marker"></i>26 An Trai</li>
+									<li><i class="fa fa-phone"></i>+84 365 486 687</li>
+									<li><i class="fa fa-envelope-o"></i>duongbhph41427@email.com</li>
 								</ul>
 							</div>
 						</div>
@@ -38,37 +22,29 @@ unset($_SESSION['msg']['logout']);
 
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Information</h3>
+								<h3 class="footer-title">Thông tin</h3>
 								<ul class="footer-links">
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Contact Us</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Orders and Returns</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
+									<li><a href="#">Về chúng tôi </a></li>
+									<li><a href="#">Liên hệ</a></li>
 								</ul>
 							</div>
 						</div>
 
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
-								<h3 class="footer-title">Service</h3>
+								<h3 class="footer-title">Dịch vụ</h3>
 								<ul class="footer-links">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">View Cart</a></li>
-									<li><a href="#">Wishlist</a></li>
-									<li><a href="#">Track My Order</a></li>
-									<li><a href="#">Help</a></li>
+									<li><a href="index.php?act=login">Đăng nhập</a></li>
+									<li><a href="index.php?act=singup">Đăng ký tài khoản</a></li>
+									<!-- blud said try to get a AI EO degree, yet somehow still write the signup to sing up, sing up what ? My ass ? -->
+									<li><a href="index.php?act=profile">Tài khoản của tôi</a></li>
+									<li><a href="#">Xem chi tiết giỏ hàng</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<!-- /row -->
 				</div>
-				<!-- /container -->
 			</div>
-			<!-- /top footer -->
-
-		<!-- jQuery Plugins -->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/slick.min.js"></script>

@@ -15,20 +15,11 @@ function pre_dump(...$variables)
 
 
 //Hàm xử lý hành động cho admin
+
+// Comment do nothing. I dont even thing u can read a docs, nor code comment.
+// just kys
 function xuLyHanhDong($hanhDong) {
     switch ($hanhDong) {
-        // case 'themdanhmucbienthe': 
-        //     taoDanhMucBienThe();
-        //     break;
-        // case 'chitietdanhmucbienthe':
-        //     hienThiChiTietDanhMucBienThe();
-        //     break;
-        // case 'danhmucbienthe':
-        //     hienThiDanhMucBienThe();
-        //     break;
-        // case 'xoadanhmucbienthe':
-        //     xoaDanhMucBienThe();
-        //     break;
         case 'giatribienthe': 
             hienThiGiaTriBienThe();
             break;
@@ -47,8 +38,6 @@ function xuLyHanhDong($hanhDong) {
         case 'taosanpham':
             taoSanPham();
             break;
-            // Phần hiển thị tổng thể tất cả sản phẩm có thể sẽ chỉ hiển thị sơ qua
-            // sẽ chỉ hiển thị chi tiết khi vào trang chi tiết sản phẩm
         case 'sanpham':
             hienThiSanPham();
             break;
@@ -56,10 +45,6 @@ function xuLyHanhDong($hanhDong) {
             hienThiChiTietSanPham();
             break;
         case 'xoasanpham':
-            // Có thể thêm thanh trạng thái trong db cho phần sản phẩm, để sản phẩm khi xoá thì sẽ chỉ ẩn tạm thời
-            // rồi viết một cái cronjob cho tầm n thời gian nếu quá cái n thời gian đấy thì mới xoá chính thức
-            // cho như một cái lịch sử
-            // HOẶC DẸP
             xoaSanPham();
             break;
         case 'loaisp':
@@ -69,8 +54,6 @@ function xuLyHanhDong($hanhDong) {
             hienThiChiTietLoaiSanPham();
             break;
         case 'danhmucsanpham':
-            //Ghi chú: Phần danh mục sản phẩm gộp luôn cái form thêm danh mục
-            //nên không cần viết thêm cái thêm danh mục 
             hienThiLoaiSanPham();
             break;
         case 'xoaloaisp':
@@ -91,35 +74,7 @@ function xuLyHanhDong($hanhDong) {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Phần xử lý bài viết 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function taoBaiViet() {
-    require_once "admin/view/BaiViet/BaiViet.Create.php";
-}
-
-function hienThiBaiViet() {
-    require_once "admin/view/BaiViet/BaiViet.All.php";
-}
-
-function hienThiBaiVietChiTiet() {
-    require_once "admin/view/BaiViet/BaiViet.Custom.php";
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Phần xử lý danh mục bài viết
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function taoLoaiBaiViet() {
-    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.Create.php";
-}
-
-function hienThiChiTietDanhMucBaiViet() {
-    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.Custom.php";
-}
-
-function hienThiDanhMucBaiViet() {
-    require_once "admin/view/LoaiBaiViet/LoaiBaiViet.All.php";
-}
-
+//dump some trash
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý biến thể

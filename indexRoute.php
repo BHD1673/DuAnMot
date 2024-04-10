@@ -11,6 +11,10 @@ function xuLyHanhDong($hanhDong)
             $_SESSION['msg']['logout'] = "Bạn đã đăng xuất";
             header("LOCATION: index.php");
             break;
+        case 'donhang':
+            $title = "Hoàn tất đơn hàng";
+            hienThiDonHang();
+            break;
         case 'xoakhoigiohang':
             xoaKhoiGioHang();
             break;
@@ -22,14 +26,10 @@ function xuLyHanhDong($hanhDong)
             $title = "Chi tiết sản phẩm";
             chitietsanpham();
             break;
-        case 'checkout':
-            hoadonSp();
-            break;
         case 'cart':
             $title = "Giỏ hàng";
             gioHang();
             break;
-            //////////////////////////
         case 'profile':
             $title = "Chi tiết tài khoản";
             chiTietKhachHang();

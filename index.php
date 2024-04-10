@@ -18,7 +18,6 @@ function pre_dump(...$variables)
     echo "</pre>";
 }
 
-
 function create_guest_session()
 {
     if (!isset($_SESSION['guest_id'])) {
@@ -50,7 +49,7 @@ function chitietsanpham()
 {
     require_once "view/detailproduct.php";
 }
-function hoadonSp()
+function hienThiDonHang()
 {
     require_once "view/checkout.php";
 }
@@ -232,3 +231,5 @@ if (isset($_GET['act'])) {
     require_once "view/home.php";
 }
 require_once "view/footer.php";
+
+
