@@ -72,6 +72,9 @@ function xuLyHanhDong($hanhDong)
         case 'thanhtoanthanhcong':
             datHangThanhCong();
             break;
+        case 'comment_add':
+            comment_add();
+            break;
     }
     setPageTitle($title);
 }
