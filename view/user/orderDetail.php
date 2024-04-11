@@ -17,7 +17,7 @@ WHERE oi.order_id = $id;
 
 $addressValue = pdo_query_one($getAdressQuery);
 ?>
-<div class="container-fluid">
+<div class="container-fluid col-12">
     <div class="row">
         <div class="col-md-12">
             <div class="card card-body printableArea">
