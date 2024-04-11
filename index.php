@@ -63,17 +63,37 @@ function dangNhap()
         $user = $_POST['user'];
         $pass = $_POST['pass'];
         $errow = check_login($user, $pass);
+        var_dump($errow);
+        if (empty($_POST['user']) || empty($_POST['pass'])) {
+            echo '<script>
+            alert("Vui lòng điền đầy đủ thông tin");
+            window.location= "index.php?act=login";
+            </script>';
+            exit; // Dừng việc thực thi tiếp tục nếu có trường trống
+        }
         if (!is_array($errow)) {
-            $_SESSION['msg']['login'] = "Đăng nhập thất bại, có vấn đề, vui lòng kiểm tra lại";
-            header('LOCATION: index.php?act=login');
+            echo '<script>
+            alert("Sai tên và mật khẩu");
+            window.location= " index.php?act=login ";
+            </script>';
         } else {
             $_SESSION['user'] = $errow;
-            var_dump($errow);
-            $_SESSION['msg']['login'] = "Đăng nhập thành công";
-            header("LOCATION: index.php");
+            if ($_SESSION['user']['role'] == '1') {
+                // Nếu là admin
+                echo '<script>
+                alert("Đăng Nhập Thành Công - Quản trị viên");
+                window.location= "index.php"; // Đường dẫn đến trang quản trị
+                </script>';
+            } elseif ($_SESSION['user']['role'] == '0') {
+                // Nếu là user
+                echo '<script>
+                alert("Đăng Nhập Thành Công - Người dùng");
+                window.location= "index.php"; // Đường dẫn đến trang người dùng
+                </script>';
+            }
         }
     } else {
-        require_once "view/user/login.php";
+        require "view/user/login.php";
     }
 }
 function gioHang()
@@ -129,44 +149,70 @@ function datHangThanhCong() {
 
 function dangKy()
 {
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $errors = array();
-
-        if (empty($_POST["user"])) {
-            $errors["user"] = "Username is required";
-        } else {
-            $username = $_POST["user"];
+    if (isset($_POST['submit'])) {
+        // Kiểm tra xem các trường đã được điền đầy đủ không
+        $user = $_POST['user'];
+        $email = $_POST['email'];
+        $phone = $_POST['phonenumber'];
+        $pass = $_POST['pass'];
+        $check = check_taikhoan($email, $phone);
+        if (empty($_POST['user']) || empty($_POST['email']) || empty($_POST['phonenumber']) || empty($_POST['pass'])) {
+            echo '<script>
+            alert("Vui lòng điền đầy đủ thông tin");
+            window.location= "index.php?act=singup";
+            </script>';
+            exit; // Dừng việc thực thi tiếp tục nếu có trường trống
         }
-
-        if (empty($_POST["email"])) {
-            $errors["email"] = "Email is required";
-        } else {
-            $email = $_POST["email"];
+    
+        // Kiểm tra tính hợp lệ của tên người dùng (không có dấu và khoảng trắng)
+        if (preg_match('/[^a-zA-Z0-9]/', $_POST['user'])) {
+            echo '<script>
+            alert("Tên không được chứa dấu và khoảng trắng");
+            window.location= "index.php?act=singup";
+            </script>';
+            exit;
         }
-
-        if (empty($_POST["pass"])) {
-            $errors["pass"] = "Password is required";
-        } else {
-            $password = $_POST["pass"];
+    
+        // Kiểm tra tính hợp lệ của email
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            echo '<script>
+            alert("Email không hợp lệ");
+            window.location= "index.php?act=singup";
+            </script>';
+            exit;
         }
-
-        if (empty($_POST["phonenumber"])) {
-            $errors["phonenumber"] = "Phone number is required";
-        } else {
-            $phoneNumber = $_POST["phonenumber"];
+    
+        // Kiểm tra tính hợp lệ của số điện thoại
+        if (!preg_match("/^[0-9]{10}$/", $_POST['phonenumber'])) {
+            echo '<script>
+            alert("Số điện thoại không hợp lệ");
+            window.location= "index.php?act=singup";
+            </script>';
+            exit;
         }
-
-        if (empty($errors)) {
-            insert_taikhoan($email, $username, $password, $phoneNumber);
-            $_SESSION['msg']['register'] = 'Đăng ký tài khoản thành công';
-            header("Location: index.php?act=login");
-            exit();
-        } else {
-            $_SESSION['errors'] = $errors;
-            header("Location: index.php?act=singup");
-            exit();
+    
+        // Kiểm tra tính hợp lệ của mật khẩu (ví dụ: ít nhất 8 ký tự, bao gồm ít nhất một chữ hoa, một chữ thường, một số và một ký tự đặc biệt)
+        if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $_POST['pass'])) {
+            echo '<script>
+            alert("Mật khẩu không hợp lệ");
+            window.location= "index.php?act=singup";
+            </script>';
+            exit;
         }
-    }
+        if (is_array($check)) {
+            echo '<script>
+            alert("Tài khoản đã tồn tại");
+            window.location= " index.php?act=singup ";
+            </script>';
+        } else {
+            insert_taikhoan($email, $user, $pass, $phone);
+            echo '<script>
+            alert("Tài khoản đã tạo thành công");
+            window.location= " index.php?act=login ";
+            </script>';
+        }
+    
+       }
     require_once "view/user/singin.php";
 }
 function quenMatkhau()

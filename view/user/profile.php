@@ -35,12 +35,20 @@ function handleProfileForm()
 
     $errors = array();
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Không đúng định dạng email";
+    if (empty($username)) {
+        $errors[] = "Vui lòng nhập tên người dùng";
     }
 
-    if (strlen($phone) < 9) {
-        $errors[] = "Số điện thoại phải có ít nhất 9 kí tự trở lên";
+    if (empty($email)) {
+        $errors[] = "Vui lòng nhập địa chỉ email";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Địa chỉ email không hợp lệ";
+    }
+
+    if (empty($phone)) {
+        $errors[] = "Vui lòng nhập số điện thoại";
+    } elseif (strlen($phone) < 9) {
+        $errors[] = "Số điện thoại phải có ít nhất 9 ký tự";
     }
 
     if (!empty($errors)) {
@@ -50,10 +58,14 @@ function handleProfileForm()
     } else {
         $sql = "UPDATE nguoi_dung SET ho_ten = ?, email = ?, so_dien_thoai = ? WHERE id = ?";
         pdo_execute($sql, $username, $email, $phone, $id);
-        $_SESSION['msg']['profile'] = "Cập nhật thành công";
-        header("location: index.php?act=profile");
+        echo '<script>
+            alert("Cập Nhật Thành Công");
+            window.location= "index.php?act=profile";
+            </script>';
+        
     }
 }
+
 function handleAddressForm() {
     if(isset($_POST["la_dia_chi_chinh"]) && isset($_POST["id"])) {
         $id = $_POST["id"];
@@ -116,7 +128,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
                 <div class="form-group row">
                     <label for="username" class="col-sm-4 col-form-label"><strong>Tên đăng nhập:</strong></label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['ho_ten']; ?>" disabled>
+                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['ho_ten']; ?>" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -128,7 +140,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
                 <div class="form-group row">
                     <label for="phone" class="col-sm-4 col-form-label"><strong>Số điện thoại:</strong></label>
                     <div class="col-sm-8">
-                        <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $user['so_dien_thoai']; ?>">
+                        <input type="number" class="form-control" id="phone" name="phone" value="<?php echo $user['so_dien_thoai']; ?>">
                     </div>
                 </div>
                 <div class="form-group row">

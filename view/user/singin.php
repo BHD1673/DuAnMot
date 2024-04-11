@@ -15,7 +15,7 @@ if(isset($_SESSION['errors'])) {
 <div class="container">
   <div class="row">
     <div class="col-9">
-      <form class="row g-3" method="post">
+      <form class="row g-3" method="post" novalidate>
         <div class="col-md-6">
           <label for="inputAddress" class="form-label">User Name</label>
           <input type="text" class="form-control" name="user" id="inputAddress" placeholder="UserName">
