@@ -176,6 +176,9 @@ function quenMatkhau()
 
 function chiTietKhachHang() {
 
+    if (isset($_GET['msg']) == "xoathanhcong") {
+        echo "Xoá thành công";
+    }
     require_once "view/user/profile.php";
 }
 
@@ -196,12 +199,14 @@ function themDiaChiKhachHang() {
 
 function capNhatDiaChiKhachHang() {
 
-    require_once "view/user/updateAddress.php";
+    require_once "view/user/editAddress.php";
 }
 
 function xoaDiaChiKhachHang() {
 
-    // Riêng mấy cái xoá này không cần phải require vào làm gì
+    $sql = "DELETE FROM dia_chi_nguoi_dung WHERE `dia_chi_nguoi_dung`.`id` = " . $_GET['id'];
+    pdo_execute($sql);
+    header('location: index.php?act=profile&msg=xoathanhcong');
 }
 
 function timkiem()

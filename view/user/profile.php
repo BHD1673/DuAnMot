@@ -130,7 +130,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
         </div>
         <div class="col-md-5">
             <h3>Danh sách địa chỉ</h3>
-            <a href="admin.php?act=themdiachi" class="btn btn-info">Thêm địa chỉ mới</a>
+            <a href="index.php?act=themdiachi" class="btn btn-info">Thêm địa chỉ mới</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -160,8 +160,8 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
                                     </select>
                                 </td>
                                 <td>
-                                    <a href="admin.php?act=deletediachi&id=<?php echo $array['id']; ?>" class="btn btn-danger">Xóa</a>
-                                    <a href="admin.php?act=editdiachi&id='<?php echo $array['id']; ?>'" class="btn btn-primary">Sửa</a>
+                                    <a href="index.php?act=xoadiachi&id=<?php echo $array['id']; ?>" class="btn btn-danger">Xóa</a>
+                                    <a href="index.php?act=capnhatdiachi&id=<?php echo $array['id']; ?>" class="btn btn-primary">Sửa</a>
                                 </td>
                             </form>
                         </tr>

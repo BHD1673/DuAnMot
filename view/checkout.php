@@ -10,15 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $order_items = $_SESSION['cartValue'];
     
-    // Inserting order details
     $order_id = pdo_execute(
 		"INSERT INTO orders (id_nguoi_dung, id_dia_chi_nguoi_dung, ghi_chu, phuong_thuc_thanh_toan) VALUES (?, ?, ?, ?)", 
 		$id_nguoi_dung, 
 		$id_dia_chi_nguoi_dung, 
 		$order_notes,
 		$payment_method);
-    
-    // Inserting order items
+
     foreach ($order_items as $item) {
         $item_name = $item['itemName'];
         $item_variant = $item['itemVariant'];
