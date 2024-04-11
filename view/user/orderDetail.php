@@ -76,11 +76,16 @@ $addressValue = pdo_query_one($getAdressQuery);
                         <div class="pull-right m-t-30 text-right">
                             <h3><b>Tổng đơn hàng :</b> <span id="total-sum-up"></span> VNĐ</h3>
                         </div>
-                        <div class="clearfix"><h4>Trạng thái đơn hàng : <?php echo $addressValue['trang_thai']; ?></h4></div>
+                        <div class="clearfix">
+                            <h4>Trạng thái đơn hàng : <?php echo $addressValue['trang_thai']; ?></h4>
+                        </div>
                         <hr>
                         <div class="text-right">
-                            <a class="btn btn-danger" href="index.php?act=huydonhang&id=<?php echo $id; ?>"> Huỷ đơn hàng ? </a>
+                            <?php if ($addressValue['trang_thai'] != 'Huỷ đơn hàng') : ?>
+                                <a class="btn btn-danger" href="index.php?act=huydonhang&id=<?php echo $id; ?>" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này ?')"> Huỷ đơn hàng ? </a>
+                            <?php endif; ?>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -97,6 +102,6 @@ $addressValue = pdo_query_one($getAdressQuery);
         });
 
         var totalSumUpDiv = document.getElementById("total-sum-up");
-        totalSumUpDiv.textContent =+ totalSum;
+        totalSumUpDiv.textContent = +totalSum;
     });
 </script>

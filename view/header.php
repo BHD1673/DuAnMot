@@ -64,6 +64,7 @@
 					<?php if (isset($_SESSION['user'])) : ?>
 						<?php if ($_SESSION['user']['role'] == '1') : ?>
 							<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>
+							<li><a href="admin.php"><i class="fa fa-user"></i>Quản lý</a></li>
 						<?php else : ?>
 							<li><a href="index.php?act=unsetLoginValue"><i class="fa fa-dollar"></i>Đăng Xuất</a></li>
 							<li><a href="index.php?act=profile"><i class="fa fa-user"></i>Chi tiết tài khoản</a></li>
