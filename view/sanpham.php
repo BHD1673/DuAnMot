@@ -27,11 +27,13 @@
 											extract($pro);
 										?>
 										<div class="product">
-											<div class="product-img">
-												<img src="uploads/<?= $pro['product_image']  ?>" alt="">
-											</div>
+										<div class="product-img" style="width: 200px; height: 200px;">
+											<img src="uploads/<?= $pro['product_image'] ?>" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+										</div>
+
 											<div class="product-body">
-												<h3 class="product-name"><a href="index.php?act=detailProduct&id_sp=<?php echo $pro['product_id'] ?>""><?php echo $pro['product_name'] ?></a></h3>
+												<p class="product-category">Category</p>
+												<h3 class="product-name" style="width: 200px; height: 100px;"><a href="index.php?act=detailProduct&id_sp=<?php echo $pro['product_id'] ?>""><?php echo $pro['product_name'] ?></a></h3>
 												<h4 class="product-price"><?php echo $pro['product_price'] ?></h4>
 											</div>
 										</div>

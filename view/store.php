@@ -11,7 +11,7 @@
 							<?php foreach ($search_result as $product) : ?>
 								<div class="col-md-4 col-xs-6">
 									<div class="product">
-										<div class="product-img">
+										<div class="product-img" style="width: 200px; height: 150px;">
 											<img src="uploads/<?= $product['product_image'] ?>" alt="">
 											<div class="product-label">
 												<!-- <span class="sale">-30%</span>
@@ -20,7 +20,7 @@
 										</div>
 										<div class="product-body">
 											<p class="product-category"><?= $product['category_name'] ?></p>
-											<h3 class="product-name"><a href="index.php?act=detailProduct&id_sp=<?= $product['product_id'] ?>"><?= $product['product_name'] ?></a></h3>
+											<h3 class="product-name" style="width: 200px; height: 100px;"><a href="index.php?act=detailProduct&id_sp=<?= $product['product_id'] ?>"><?= $product['product_name'] ?></a></h3>
 											<h4 class="product-price">$<?= $product['product_price'] ?>.00 <del class="product-old-price">$990.00</del></h4>
 										</div>
 										<div class="add-to-cart">

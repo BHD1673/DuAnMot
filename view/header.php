@@ -29,7 +29,33 @@
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<link type="text/css" rel="stylesheet" href="css/cart.css" />
 </head>
+<style>
+	.header-search .search-form {
+    display: flex;
+    align-items: center;
+}
 
+.header-search .form-select,
+.header-search .form-control,
+.header-search .btn {
+    margin-right: 10px;
+}
+.search-form select.form-select {
+    width: auto; /* Đặt chiều rộng tự động */
+    padding: 10px; /* Khoảng cách giữa nội dung và viền */
+    font-size: 10px; /* Kích thước font chữ */
+    margin-right: 10px; /* Khoảng cách với phần tử tiếp theo */
+	height: 35px;
+}
+
+.search-form input.form-control {
+    width: 500px; /* Đặt chiều rộng tự động */
+    padding: 10px; /* Khoảng cách giữa nội dung và viền */
+    font-size: 16px; /* Kích thước font chữ */
+    margin-right: 10px; /* Khoảng cách với phần tử tiếp theo */
+}
+
+</style>
 <body>
 	<header>
 		<div id="top-header">
@@ -67,23 +93,19 @@
 						</div>
 					</div>
 					<div class="col-md-8">
-						<div class="header-search">
-							<form method="post" action="">
-								<select class="input-select" name="category_id">
-									<option value="0" selected>
-										All_category
-									</option>
-									<?php
-									foreach ($category as $value) :
-										extract($value);
-									?>
-										<option value="<?= $id ?>"><?= $ten_danh_muc ?> </option>
-									<?php endforeach ?>
-								</select>
-								<input class="input" placeholder="Search here" name="product_name"> <!-- Added name attribute here -->
-								<button class="search-btn" name="search">Search</button>
-							</form>
-						</div>
+					<div class="header-search">
+					<form method="post" action="" class="search-form">
+						<select class="form-select" name="category_id">
+							<option value="0" selected>All_category</option>
+							<?php foreach ($category as $value) : extract($value); ?>
+								<option value="<?= $id ?>"><?= $ten_danh_muc ?></option>
+							<?php endforeach ?>
+						</select>
+						<input class="form-control" placeholder="Search here" name="product_name">
+						<button type="submit" class="btn btn-danger" name="search">Search</button>
+					</form>
+				</div>
+
 					</div>
 					<script>
 						document.addEventListener("DOMContentLoaded", function() {
