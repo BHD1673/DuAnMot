@@ -285,6 +285,12 @@ function xoaKhoiGioHang() {
         header("location: index.php?act=cart");
     }
 }
+
+function huyDonHang() {
+
+    $sql = "UPDATE `orders` SET `trang_thai` = 'Huỷ đơn hàng' WHERE `orders`.`order_id` = ?";
+    pdo_execute($sql, $_GET['id']);
+}
 require_once "view/header.php";
 // Phần điều hướng chính
 if (isset($_GET['act'])) {

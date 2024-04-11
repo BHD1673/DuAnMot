@@ -79,7 +79,7 @@ $addressValue = pdo_query_one($getAdressQuery);
                         <div class="clearfix"><h4>Trạng thái đơn hàng : <?php echo $addressValue['trang_thai']; ?></h4></div>
                         <hr>
                         <div class="text-right">
-                            <a class="btn btn-danger" href="index.php?act=huydonhang&idDonHang="> Huỷ đơn hàng ? </a>
+                            <a class="btn btn-danger" href="index.php?act=huydonhang&id=<?php echo $id; ?>"> Huỷ đơn hàng ? </a>
                         </div>
                     </div>
                 </div>

@@ -70,6 +70,9 @@ function xuLyHanhDong($hanhDong)
             $title = "Lịch sử đặt hàng";
             hienThiLichSuDatHang();
             break;
+        case 'huydonhang':
+            huyDonHang();
+            break;
         case 'chitietdonhang':
             $title = "Chi tiết đơn hàng";
             hienThiChiTietDonHang();
