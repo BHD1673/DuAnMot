@@ -3,6 +3,7 @@
 $sql = "SELECT * FROM bien_the";
 $array = pdo_query($sql);
 
+$getId = $_GET['id'] ?? "";
 
 ?>
 <div class="container">
@@ -22,7 +23,7 @@ $array = pdo_query($sql);
         <td><?= $value['id'] ?></td>
         <td><?= $value['ten_bien_the'] ?></td>
         <td>
-            <a href="admin.php?act=giatribienthe&id=<?= $value['id'] ?>&product_id=<?php echo $_GET['id'] ?? "" ?>" class="btn btn-primary">Chi tiết</a>
+            <a href="admin.php?act=giatribienthe&id=<?= $value['id'] ?>&product_id=<?php echo $getId; ?>" class="btn btn-primary">Chi tiết</a>
             <a href="admin.php?act=xoabienthe&id=<?= $value['id'] ?>" class="btn btn-danger">Xoá</a>
         </td>
       </tr>

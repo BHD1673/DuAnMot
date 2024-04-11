@@ -84,7 +84,7 @@ function dangNhap()
                 alert("Đăng Nhập Thành Công - Quản trị viên");
                 window.location= "index.php"; // Đường dẫn đến trang quản trị
                 </script>';
-            } elseif ($_SESSION['user']['role'] == '0') {
+            } elseif ($_SESSION['user']['role'] == '') {
                 // Nếu là user
                 echo '<script>
                 alert("Đăng Nhập Thành Công - Người dùng");

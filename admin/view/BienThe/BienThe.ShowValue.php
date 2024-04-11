@@ -57,7 +57,7 @@ $array = @pdo_query($sql);
 
 <div class="container mt-5">
     <a href="admin.php?act=bienthe" class="btn btn-secondary">Quay trước</a>
-    <a href="admin.php?act=thembienthe" class="btn btn-primary">Thêm giá trị biến thể mới</a>
+    <a href="admin.php?act=chitietbienthe&id=<?php echo $_GET['id']; ?>&product_id=<?php echo $_GET['product_id']; ?>" class="btn btn-primary">Thêm giá trị biến thể mới</a>
     <h2>Giá trị của biến thể: <span style="font-weight: bold; color: blue;"><?php echo isset($array[0]['variant_name']) ? $array[0]['variant_name'] : ''; ?></span></h2>
     <table class="table">
       <thead>
