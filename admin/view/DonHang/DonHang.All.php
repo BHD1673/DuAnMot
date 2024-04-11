@@ -1,50 +1,55 @@
+<?php 
+
+$sql = "SELECT 
+o.order_id,
+o.id_nguoi_dung,
+nd.ho_ten AS user_name,
+dcn.ten_nguoi_nhan AS receiver_name,
+dcn.dia_chi AS delivery_address,
+o.ghi_chu,
+o.trang_thai,
+o.tao_vao_luc
+FROM orders o
+LEFT JOIN nguoi_dung nd ON o.id_nguoi_dung = nd.id
+LEFT JOIN dia_chi_nguoi_dung dcn ON o.id_dia_chi_nguoi_dung = dcn.id
+ORDER BY o.tao_vao_luc DESC;
+";
+
+$value = pdo_query($sql);
+
+
+
+?>
+
 <div class="container">
-        <h2>Orders Table</h2>
+        <h2>Danh sách đơn hàng</h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Tổng giá trị đơn hàng</th>
-                    <th>Phương thức thanh toán</th>
+                    <th>ID</th>
+                    <th>Tên người nhận</th>
+                    <th>Nơi nhận</th>
+                    <th>Ghi chú</th>
+                    <th>Trạng thái</th>
                     <th>Ngày tạo</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "thithu";
+                <?php foreach ($value as $order): ?>
+                <tr>
+                    <td><?php echo $order['order_id']; ?></td>
+                    <td><?php echo $order['receiver_name'] ?? 'N/A'; ?></td>
+                    <td><?php echo $order['delivery_address'] ?? 'N/A'; ?></td>
+                    <td><?php echo $order['ghi_chu']; ?></td>
+                    <td><?php echo $order['trang_thai']; ?></td>
+                    <td><?php echo $order['tao_vao_luc']; ?></td>
+                    <td>
+                    <a href="admin.php?act=chitietdonhang&id=<?php echo $order['order_id']; ?>" class="btn btn-success">Xem chi tiết</a>
 
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-                    $sql = "SELECT * FROM orders";
-
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row["order_id"] . "</td>";
-                            echo "<td>" . $row["total_price"] . "</td>";
-                            echo "<td>" . $row["payment_method"] . "</td>";
-                            echo "<td>" . $row["created_at"] . "</td>";
-                            echo '<td>            <a href="#" class="btn btn-primary">Xem chi tiết đơn hàng</a>
-                            <a href="#" class="btn btn-secondary">Xoá đơn hàng</a>
-                            <a href="#" class="btn btn-secondary">Cập nhật đơn hàng đơn hàng</a>
-                            </td>
-                            ';
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='5'>No results found</td></tr>";
-                    }
-                    $conn->close();
-                ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
