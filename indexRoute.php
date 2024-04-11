@@ -66,6 +66,14 @@ function xuLyHanhDong($hanhDong)
             $title = "Tìm kiếm";
             timkiem();
             break;
+        case 'lichsudonhang':
+            $title = "Lịch sử đặt hàng";
+            hienThiLichSuDatHang();
+            break;
+        case 'chitietdonhang':
+            $title = "Chi tiết đơn hàng";
+            hienThiChiTietDonHang();
+            break;
         case 'dump':
             echo "ăklfjalwjfawl";
             break;

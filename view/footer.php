@@ -38,7 +38,8 @@ unset($_SESSION['msg']['logout']);
 									<li><a href="index.php?act=singup">Đăng ký tài khoản</a></li>
 									<!-- blud said try to get a AI EO degree, yet somehow still write the signup to sing up, sing up what ? My ass ? -->
 									<li><a href="index.php?act=profile">Tài khoản của tôi</a></li>
-									<li><a href="#">Xem chi tiết giỏ hàng</a></li>
+									<li><a href="index.php?act=cart">Xem chi tiết giỏ hàng</a></li>
+									<li><a href="index.php?act=lichsudonhang">Xem lịch sử đặt hàng</a></li>
 								</ul>
 							</div>
 						</div>

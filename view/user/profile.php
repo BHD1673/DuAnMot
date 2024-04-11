@@ -95,6 +95,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
             unset($_SESSION['msg']['profile']);
             ?>
             <h3>Thông tin tài khoản</h3>
+            <a href="index.php?act=lichsudonhang" class="btn btn-success">Xem lịch sử đơn hàng</a>
             <form method="post">
                 <input type="hidden" name="form_type" value="profile">
                 <div class="form-group row">
@@ -107,7 +108,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
                 <div class="form-group row">
                     <label for="username" class="col-sm-4 col-form-label"><strong>Tên đăng nhập:</strong></label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['ho_ten']; ?>">
+                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['ho_ten']; ?>" disabled>
                     </div>
                 </div>
                 <div class="form-group row">

@@ -213,6 +213,16 @@ function timkiem()
     require_once "view/store.php";
 }
 
+function hienThiLichSuDatHang() {
+    
+    require_once "view/user/orderLog.php";
+}
+
+function hienThiChiTietDonHang() {
+
+    require_once "view/user/orderDetail.php";
+}
+
 function xoaKhoiGioHang() {
 
     if (isset($_GET['id'])) {
