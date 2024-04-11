@@ -1,96 +1,102 @@
-<?php 
+<?php
 $id = $_GET['id'];
-    $sql = "SELECT oi.item_id, oi.item_name, oi.item_variant, oi.item_price, oi.item_quantity, oi.item_total_price
+$sql = "SELECT oi.item_id, oi.item_name, oi.item_variant, oi.item_price, oi.item_quantity, oi.item_total_price
     FROM order_items oi
     JOIN orders o ON oi.order_id = o.order_id
     WHERE o.order_id = $id;";
 
-pre_dump(pdo_query($sql));
+$orderValue = pdo_query($sql);
+
+$getAdressQuery = "SELECT o.*, dcn.* 
+FROM order_items oi
+JOIN orders o ON oi.order_id = o.order_id
+JOIN dia_chi_nguoi_dung dcn ON o.id_dia_chi_nguoi_dung = dcn.id
+WHERE oi.order_id = $id;
+
+";
+
+$addressValue = pdo_query_one($getAdressQuery);
 ?>
 <div class="container-fluid">
-                <div class="page-wrapper">
-            <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body printableArea">
+                <hr>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-body printableArea">
-                            <h3><b>Hóa đơn mã số :</b> <a href=""><span class="pull-right">#5669626</span></a></h3>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="pull-left">
-                                        <address>
-                                            <h3> &nbsp;<b class="text-danger">Đơn hàng được gửi từ :</b></h3>
-                                            <p class="text-muted m-l-5">Tây Yên Tử,
-                                                <br> Sơn Động,
-                                                <br> Bắc Giang,
-                                        </p></address>
-                                    </div>
-                                    <div class="pull-right text-right">
-                                        <address>
-                                            <h3>Tới,</h3>
-                                            <h4 class="font-bold">Nguyễn Văn A</h4>
-                                            <p class="text-muted m-l-5">Tây Yên Tử,
-                                                <br> Sơn Động,
-                                                <br> Bắc Giang,
-                                            </p><p class="m-t-30"><b>Hóa đơn tạo lúc :</b> <i class="fa fa-calendar"></i> 23rd Jan 2018</p>
-                                            <p><b>Due Date :</b> <i class="fa fa-calendar"></i> 25th Jan 2018</p>
-                                        </address>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="table-responsive m-t-40" style="clear: both;">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">#</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th class="text-right">Số lượng sản phẩm</th>
-                                                    <th class="text-right">Giá một sản phẩm</th>
-                                                    <th class="text-right">Tổng giá trị</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td>Card đồ họa</td>
-                                                    <td class="text-right">2 </td>
-                                                    <td class="text-right"> 500.000 VNĐ </td>
-                                                    <td class="text-right"> 1.000.000 VNĐ </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td>Card đồ họa</td>
-                                                    <td class="text-right">2 </td>
-                                                    <td class="text-right"> 500.000 VNĐ </td>
-                                                    <td class="text-right"> 1.000.000 VNĐ </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td>Card đồ họa</td>
-                                                    <td class="text-right">2 </td>
-                                                    <td class="text-right"> 500.000 VNĐ </td>
-                                                    <td class="text-right"> 1.000.000 VNĐ </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="pull-right m-t-30 text-right">
-                                        <p>Tổng giá trị đơn hàng trước thuế: 5.000.000 VNĐ</p>
-                                        <p>Thuế VAT (10%) : 10.000 VNĐ </p>
-                                        <hr>
-                                        <h3><b>Tổng đơn hàng :</b> 5.010.000 VNĐ</h3>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <hr>
-                                    <div class="text-right">
-                                        <button class="btn btn-danger" type="submit"> Chuyển đến trang thanh toán </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="pull-left">
+                            <address>
+                                <h3> &nbsp;<b class="text-danger">Đơn hàng được gửi từ :</b></h3>
+                                <p class="text-muted m-l-5">26 An Trai, Hà Nội
+                                </p>
+                            </address>
+                        </div>
+                        <div class="pull-right text-right">
+                            <address>
+                                <h3>Tới,</h3>
+                                <h4 class="font-bold"><?php echo $addressValue['ten_nguoi_nhan'] ?></h4>
+                                <p class="text-muted m-l-5">
+                                    <?php
+                                    echo $addressValue['dia_chi'];
+                                    ?>
+
+                                </p>
+                                <p class="m-t-30"><b>Hóa đơn tạo lúc :</b> <i class="fa fa-calendar"></i> <?php echo $addressValue['tao_vao_luc'] ?></p>
+                            </address>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive m-t-40" style="clear: both;">
+
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Chi tiết</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($orderValue as $item) : ?>
+                                        <tr>
+                                            <td><?= $item['item_name'] ?></td>
+                                            <td><?= $item['item_variant'] ?></td>
+                                            <td><?= $item['item_price'] ?></td>
+                                            <td><?= $item['item_quantity'] ?></td>
+                                            <td id="total-quantity"><?= $item['item_total_price'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pull-right m-t-30 text-right">
+                            <h3><b>Tổng đơn hàng :</b> <span id="total-sum-up"></span> VNĐ</h3>
+                        </div>
+                        <div class="clearfix"><h4>Trạng thái đơn hàng : <?php echo $addressValue['trang_thai']; ?></h4></div>
+                        <hr>
+                        <div class="text-right">
+                            <a class="btn btn-danger" href="index.php?act=huydonhang&idDonHang="> Huỷ đơn hàng ? </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>                </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var totalQuantityElements = document.querySelectorAll("#total-quantity");
+        var totalSum = 0;
+
+        totalQuantityElements.forEach(function(element) {
+            totalSum += parseFloat(element.textContent);
+        });
+
+        var totalSumUpDiv = document.getElementById("total-sum-up");
+        totalSumUpDiv.textContent =+ totalSum;
+    });
+</script>

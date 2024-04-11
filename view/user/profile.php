@@ -10,10 +10,10 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if(isset($_POST['form_type'])) {
+    if (isset($_POST['form_type'])) {
         $form_type = $_POST['form_type'];
-        
-        switch($form_type) {
+
+        switch ($form_type) {
             case 'profile':
                 handleProfileForm();
                 break;
@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
-function handleProfileForm() {
+function handleProfileForm()
+{
     $id = $_POST["uid_hidden"];
     $username = $_POST["username"];
     $phone = $_POST["phone"];
@@ -41,7 +42,7 @@ function handleProfileForm() {
     if (strlen($phone) < 9) {
         $errors[] = "Số điện thoại phải có ít nhất 9 kí tự trở lên";
     }
-    
+
     if (!empty($errors)) {
         foreach ($errors as $error) {
             echo $error . "<br>";
@@ -53,15 +54,22 @@ function handleProfileForm() {
         header("location: index.php?act=profile");
     }
 }
-
 function handleAddressForm() {
-    $id = $_SESSION['user']['id'];
-    $choice = $_POST["la_dia_chi_chinh"];
-    $sql = "UPDATE `dia_chi_nguoi_dung` SET `la_dia_chi_chinh` = ? WHERE `dia_chi_nguoi_dung`.`id` = ?";
-    pdo_execute($sql, $choice, $id);
-    $_SESSION['msg']['address'] = "Cập nhật thành công địa chỉ chính thành công";
-    header("location: index.php?act=profile");  
+    if(isset($_POST["la_dia_chi_chinh"]) && isset($_POST["id"])) {
+        $id = $_POST["id"];
+        $choice = $_POST["la_dia_chi_chinh"];
+        $sql_update_all = "UPDATE `dia_chi_nguoi_dung` SET `la_dia_chi_chinh` = 0 WHERE `id_nguoi_dung` = ?";
+        pdo_execute($sql_update_all, $_SESSION['user']['id']);
+        $sql_update_selected = "UPDATE `dia_chi_nguoi_dung` SET `la_dia_chi_chinh` = ? WHERE `id` = ?";
+        pdo_execute($sql_update_selected, $choice, $id);
+        $_SESSION['msg']['address'] = "Cập nhật thành công địa chỉ chính";
+        header("location: index.php?act=profile");
+    } else {
+        $_SESSION['msg']['address'] = "Lỗi: không thể cập nhật địa chỉ chính";
+        header("location: index.php?act=profile");
+    }
 }
+
 
 
 $sql = "SELECT * FROM dia_chi_nguoi_dung WHERE id_nguoi_dung = ?";
@@ -145,7 +153,7 @@ $list = pdo_query($sql, $_SESSION['user']['id']);
                 <tbody>
                     <?php foreach ($list as $array) { ?>
                         <tr>
-                            <form id="form_<?php echo $array['id']; ?>" method="post" action>
+                            <form id="form_<?php echo $array['id']; ?>" method="post" action="">
                                 <input type="hidden" name="form_type" value="address">
                                 <input type="hidden" name="id" value="<?php echo $array['id']; ?>">
                                 <td><?php echo $array['id']; ?></td>

@@ -1,6 +1,8 @@
 <?php
 $sql = "DELETE FROM gio_hang WHERE id_nguoi_dung = " . $_SESSION['user']['id'];
 pdo_execute($sql);
+
+unset($_SESSION['cartValue']);
 ?>
 <div class="container">
     <div class="row">
