@@ -68,6 +68,15 @@ function xuLyHanhDong($hanhDong) {
         case 'thongke':
             hienThiThongKe();
             break;
+        case 'xoataikhoan':
+            xoaTaiKhoan();
+            break;
+        case 'taikhoan':
+            hienThiTaiKhoan();
+            break;
+        case 'chitiettaikhoan':
+            hienThiChiTietTaiKhoan();
+            break;
         default:
             hienThiTrangChuAdmin();
             break;
@@ -227,17 +236,14 @@ function xoaSanPham() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý tài khoản
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Phần tạo tài khoản sẽ bao gồm cả phần tạo thêm địa chỉ trong trường 
-//hợp muốn tạo đơn ship cho khách hàng. Hoặc tùy. Chúa chịu đoạn này đang
-//hơi lú
-//Có thể để sau cùng vì nghe hơi ngáo, có thể chỉ dành cho admin
-function taoTaiKhoan() {
-    require_once "admin/view/TaiKhoan/TaiKhoan.Create.php";
+
+function xoaTaiKhoan() {
+    $sql = "DELETE FROM `nguoi_dung` WHERE `id` = " . $_GET['id'];
+    pdo_execute($sql);
+    echo "<script>alert('Đã xóa thành công!')</script>";
+    header('location: admin.php?act=taikhoan');
 }
 
-//Hàm này sẽ bao gồm cả phần cập nhật, vì vẫn có khả năng có người vào chỉ muốn xem thông tin trang
-//TODO: Xử lý qua js cho cái trang này có nút có thể chuyển từ form hiện thông tin thành điền được thông tin
-//với cái điều kiện là nó phải nhất nút sửa tài khoản, còn không thì chỉ xem qua
 function hienThiChiTietTaiKhoan() {
     require_once "admin/view/TaiKhoan/TaiKhoan.Custom.php";
 }

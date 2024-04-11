@@ -36,9 +36,9 @@
             <span>Thông tin đơn hàng</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="admin.php?act=khachhang">
+        <a class="nav-link" href="admin.php?act=taikhoan">
             <i class="fas fa-fw fa-table"></i>
-            <span>Thông tin tài khoản</span></a>
+            <span>Phân quyền </span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="admin.php?act=thongke">
