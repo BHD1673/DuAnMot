@@ -34,11 +34,6 @@
 	<header>
 		<div id="top-header">
 			<div class="container">
-				<ul class="header-links pull-left">
-					<li><a href="admin.php"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-					<li><a href="admin.php"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-					<li><a href="admin.php"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-				</ul>
 				<ul class="header-links pull-right">
 					<?php if (isset($_SESSION['user'])) : ?>
 						<?php if ($_SESSION['user']['role'] == '1') : ?>
@@ -71,7 +66,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<div class="header-search">
 							<form method="post" action="">
 								<select class="input-select" name="category_id">
@@ -111,46 +106,6 @@
 					</script>
 					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
-
-							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" href="index.php?act=">
-									<i class="fa fa-shopping-cart"></i>
-									<span>Giỏ hàng của bạn</span>
-									<div class="qty">3</div>
-								</a>
-								<div class="cart-dropdown">
-									<div class="cart-list">
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="./img/product01.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">Laptop cũ</a></h3>
-												<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
-										</div>
-
-										<div class="product-widget">
-											<div class="product-img">
-												<img src="./img/product02.png" alt="">
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="#">Laptop</a></h3>
-												<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-											</div>
-											<button class="delete"><i class="fa fa-close"></i></button>
-										</div>
-									</div>
-									<div class="cart-summary">
-										<h5>Giá trị: $2940.00</h5>
-									</div>
-									<div class="cart-btns">
-										<a href="index.php?act=cart">Xem giỏ hàng</a>
-										<a href="index.php?act=cart">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-									</div>
-								</div>
-							</div>
 
 							<div class="menu-toggle">
 								<a href="#">
