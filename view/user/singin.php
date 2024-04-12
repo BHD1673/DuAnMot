@@ -18,19 +18,19 @@ if(isset($_SESSION['errors'])) {
       <form class="row g-3" method="post" novalidate>
         <div class="col-md-6">
           <label for="inputAddress" class="form-label">User Name</label>
-          <input type="text" class="form-control" name="user" id="inputAddress" placeholder="UserName">
+          <input type="text" class="form-control" name="user" id="inputAddress" placeholder="Tên đăng nhập không cách không dấu">
         </div>
         <div class="col-md-6">
           <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" name="email" id="inputEmail4" placeholder="email chính của bạn">
+          <input type="email" class="form-control" name="email" id="inputEmail4" placeholder="Email của bạn">
         </div>
         <div class="col-md-6">
           <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" name="pass" id="inputPassword4" placeholder="NHập đủ chữ hoa,chữ thường,số,và 1 ký tự đặc biệt">
+          <input type="password" class="form-control" name="pass" id="inputPassword4" placeholder="Mật khẩu">
         </div>
         <div class="col-md-6">
           <label for="inputCity" class="form-label">Phone</label>
-          <input type="number" class="form-control" name="phonenumber" id="inputCity" placeholder="Số điện thoại chính của bạn">
+          <input type="number" class="form-control" name="phonenumber" id="inputCity" placeholder="Số điện thoại của bạn">
         </div>
         <div class="col-md-8">
           <div class="form-check">

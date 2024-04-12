@@ -152,8 +152,6 @@
 					<li><a href="index.php">Trang chủ</a></li>
 					<li><a href="index.php?act=search">Danh sách sản phẩm</a></li>
 					<li><a href="index.php?act=support">Hỗ trợ</a></li>
-					<li><a href="index.php?act=aboutus">Về chúng tôi</a></li>
-					<li><a href="index.php?act=contact">Liên hệ</a></li>
 					<li><a href="index.php?act=cart">Giỏ hàng</a></li>
 				</ul>
 			</div>

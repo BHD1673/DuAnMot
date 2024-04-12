@@ -41,7 +41,6 @@
               </div>
             </div>
           </div>
-          <!-- Add more FAQ items as needed -->
         </div>
       </div>
     </div>
