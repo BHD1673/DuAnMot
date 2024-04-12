@@ -62,8 +62,7 @@ function dangNhap()
     if (isset($_POST['submit'])) {
         $user = $_POST['user'];
         $pass = $_POST['pass'];
-        $errow = check_login($user, $pass);
-        var_dump($errow);
+        $error = check_login($user, $pass);
         if (empty($_POST['user']) || empty($_POST['pass'])) {
             echo '<script>
             alert("Vui lòng điền đầy đủ thông tin");
@@ -71,13 +70,13 @@ function dangNhap()
             </script>';
             exit; // Dừng việc thực thi tiếp tục nếu có trường trống
         }
-        if (!is_array($errow)) {
+        if (!is_array($error)) {
             echo '<script>
             alert("Sai tên và mật khẩu");
             window.location= " index.php?act=login ";
             </script>';
         } else {
-            $_SESSION['user'] = $errow;
+            $_SESSION['user'] = $error;
             if ($_SESSION['user']['role'] == '1') {
                 // Nếu là admin
                 echo '<script>

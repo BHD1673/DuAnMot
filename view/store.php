@@ -14,14 +14,12 @@
 										<div class="product-img" style="width: 200px; height: 150px;">
 											<img src="uploads/<?= $product['product_image'] ?>" alt="">
 											<div class="product-label">
-												<!-- <span class="sale">-30%</span>
-											<span class="new">NEW</span> -->
 											</div>
 										</div>
 										<div class="product-body">
 											<p class="product-category"><?= $product['category_name'] ?></p>
 											<h3 class="product-name" style="width: 200px; height: 100px;"><a href="index.php?act=detailProduct&id_sp=<?= $product['product_id'] ?>"><?= $product['product_name'] ?></a></h3>
-											<h4 class="product-price">$<?= $product['product_price'] ?>.00 <del class="product-old-price">$990.00</del></h4>
+											<h4 class="product-price">$<?= $product['product_price'] ?>.000 VNĐ</h4>
 										</div>
 										<div class="add-to-cart">
 											<a href="index.php?act=detailProduct&id_sp=<?= $product['product_id'] ?>" class="add-to-cart-btn">
