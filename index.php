@@ -290,6 +290,11 @@ function huyDonHang() {
     $sql = "UPDATE `orders` SET `trang_thai` = 'Huỷ đơn hàng' WHERE `orders`.`order_id` = ?";
     pdo_execute($sql, $_GET['id']);
 }
+
+function hienThiTrangHoTro() {
+    
+    require_once "view/non/contact.php";
+}
 require_once "view/header.php";
 // Phần điều hướng chính
 if (isset($_GET['act'])) {

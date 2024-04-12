@@ -80,6 +80,10 @@ function xuLyHanhDong($hanhDong)
         case 'dump':
             echo "ăklfjalwjfawl";
             break;
+        case 'support':
+            $title = "Hỗ trợ";
+            hienThiTrangHoTro();
+            break;
         case 'thanhtoanthanhcong':
             datHangThanhCong();
             break;
