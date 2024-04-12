@@ -25,12 +25,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$new_quantity = $existing_product['so_luong'] + $quantity;
 				$affected_rows = pdo_execute("UPDATE gio_hang SET so_luong = ? WHERE id_nguoi_dung = ? AND id_san_pham_bien_the_1 = ?", $new_quantity, $user_id, $variant_values[0]);
 
-				echo "Cập nhật số lượng sản phẩm trong giỏ hàng thành công";
+				
+				echo '<script>
+				alert("Cập nhật số lượng sản phẩm trong giỏ hàng thành công");
+				window.location= "index.php?act=cart";
+				</script>';
 			} else {
 				// Insert new product if it doesn't exist
 				$affected_rows = pdo_execute("INSERT INTO gio_hang (id_nguoi_dung, session_guest, id_san_pham_bien_the_1, id_san_pham_bien_the_2, id_san_pham_bien_the_3, id_san_pham_bien_the_4, id_san_pham_bien_the_5, so_luong) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", $user_id, $_SESSION['guest_id'], $variant_values[0], $variant_values[1], $variant_values[2], $variant_values[3], $variant_values[4], $quantity);
 
-				echo "Thêm sản phẩm vào giỏ hàng thành công";
+				
+				echo '<script>
+				alert("Thêm sản phẩm vào giỏ hàng thành công");
+				window.location= "index.php?act=cart";
+				</script>';
 			}
 		} catch (PDOException $e) {
 			echo "Error: " . $e->getMessage();
@@ -142,8 +150,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									<span class="qty-down">-</span>
 								</div>
 							</div>
-							<button type="submit" name="add_to_cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-						</div>
+							<?php if (isset($_SESSION['user']) && !empty($_SESSION['user']['ho_ten'])) : ?>
+								<hr>
+								<hr>
+								<button type="submit" name="add_to_cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+															<?php else : ?>
+																<hr>
+																<hr>
+																<p>Bạn cần <a href="index.php?act=login">đăng nhập</a> để tiếp tục mua hàng.</p>
+															<?php endif; ?>
+													</div>
 					</form>
 				</div>
 			</div>
