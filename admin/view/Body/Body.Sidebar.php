@@ -46,9 +46,9 @@
             <span>Thống kê</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="admin.php?act=cauhinh">
+        <a class="nav-link" href="admin.php?act=comment">
             <i class="fas fa-fw fa-table"></i>
-            <span>Cấu hình trang</span></a>
+            <span>Quản lý comment</span></a>
     </li>
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">

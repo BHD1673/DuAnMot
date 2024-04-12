@@ -49,10 +49,10 @@
 }
 
 .search-form input.form-control {
-    width: 500px; /* Đặt chiều rộng tự động */
-    padding: 10px; /* Khoảng cách giữa nội dung và viền */
-    font-size: 16px; /* Kích thước font chữ */
-    margin-right: 10px; /* Khoảng cách với phần tử tiếp theo */
+    width: 500px;
+    padding: 10px; 
+    font-size: 16px; 
+    margin-right: 10px; 
 }
 
 </style>

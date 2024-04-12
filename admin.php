@@ -77,6 +77,12 @@ function xuLyHanhDong($hanhDong) {
         case 'chitiettaikhoan':
             hienThiChiTietTaiKhoan();
             break;
+        case 'comment':
+            hienThiDanhSachComment();
+            break;
+        case 'xoacomment':
+            xoaComment();
+            break;
         default:
             hienThiTrangChuAdmin();
             break;
@@ -110,6 +116,23 @@ function xoaBienThe() {
     pdo_execute($sql);
     header("Location: admin.php?act=bienthe");
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Phần xử lý danh mục/loại sản phẩm
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function hienThiDanhSachComment() {
+    
+    require_once "admin/view/Comment/Comment.All.php";
+}
+
+function xoaComment() {
+    echo "<script>alert('Đã xóa thành công!')</script>";
+    $sql = "DELETE FROM `comments` WHERE comment_id = " . $_GET['id'];
+    pdo_execute($sql);
+    echo "<script>alert('Đã xóa thành công!')</script>";
+    header("Location: admin.php?act=comment");
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Phần xử lý danh mục/loại sản phẩm
@@ -211,25 +234,25 @@ function hienThiChiTietSanPham() {
 
 function xoaSanPham() {
 
-    // if (isset($_GET['id'])) {
-    //     try {
-    //         if (delete_product($_GET['id'])) {
-    //             $_SESSION['msg']['xoadanhmuc'] = "Xoá danh mục này.";
-    //             header('LOCATION: admin.php?act=sanpham');
-    //             die;
-    //         }
-    //     } catch (PDOException $e) {
-    //         if ($e->getCode() == '23000') { // Kiểm tra lỗi trả về
-    //             $_SESSION['msg']['xoadanhmuc'] = "Bạn phải xoá tất cả các biến thể của sản phẩm này thì mới có thể xoá được sản phẩm này. Vui lòng kiểm tra lại";
-    //             header('LOCATION: admin.php?act=sanpham');
-    //             die;
-    //         } else {
-    //             echo "Lỗi: " . $e->getMessage();
-    //         }
-    //     }
-    // } else {
-    //     $_SESSION['msg']['xoadanhmuc'] = "Sản phẩm không tồn tại. Vui fomat thử được thay đổi.";
-    // }
+    if (isset($_GET['id'])) {
+        try {
+            if (delete_product($_GET['id'])) {
+                $_SESSION['msg']['xoadanhmuc'] = "Xoá danh mục này.";
+                header('LOCATION: admin.php?act=sanpham');
+                die;
+            }
+        } catch (PDOException $e) {
+            if ($e->getCode() == '23000') {
+                $_SESSION['msg']['xoadanhmuc'] = "Bạn phải xoá tất cả các biến thể của sản phẩm này thì mới có thể xoá được sản phẩm này. Vui lòng kiểm tra lại";
+                header('LOCATION: admin.php?act=sanpham');
+                die;
+            } else {
+                echo "Lỗi: " . $e->getMessage();
+            }
+        }
+    } else {
+        $_SESSION['msg']['xoadanhmuc'] = "Sản phẩm không tồn tại. Vui lòng kiểm tra lại.";
+    }
     
     
 }

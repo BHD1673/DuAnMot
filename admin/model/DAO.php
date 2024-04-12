@@ -292,3 +292,20 @@ function delete_product_variant_danh_muc($id) {
     $sql = "DELETE FROM `product_variant_danh_muc``product_variant_danh_muc`.`id` = ?";
     pdo_execute($sql, $id);
 }
+
+function delete_product($id) {
+    $sql = "DELETE FROM `san_pham` WHERE `id` = ?";
+    pdo_execute($sql, $id);
+}
+
+function get_all_comments() {
+    $sql = "SELECT com.comment_id, nd.ho_ten AS nguoi_comment, sp.ten_san_pham, com.comment, com.created_at
+    FROM comments com
+    INNER JOIN nguoi_dung nd ON com.id_user = nd.id
+    INNER JOIN san_pham_bien_the spbt ON com.product_id = spbt.id
+    INNER JOIN san_pham sp ON spbt.id_san_pham = sp.id;
+    
+    ";
+
+    return pdo_query($sql);
+}
